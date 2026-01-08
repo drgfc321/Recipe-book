@@ -1,0 +1,1236 @@
+# Page snapshot
+
+```yaml
+- generic:
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - button "Toggle navigation panel" [expanded]:
+                  - generic:
+                    - generic: 
+                  - text: 
+                - heading "D&D Campaign Manager" [level=1]
+                - generic:
+                  - generic:
+                    - generic: uitester1767886843501
+                    - generic: (PLAYER)
+                    - button "Logout":
+                      - generic:
+                        - generic:
+                          - generic:
+                            - img
+                        - generic:
+                          - generic: Logout
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - navigation:
+                  - list:
+                    - generic:
+                      - listitem:
+                        - generic:
+                          - link "Dashboard":
+                            - /url: ""
+                            - generic:
+                              - generic:
+                                - img
+                            - generic: Dashboard
+                          - text: 
+                      - listitem:
+                        - generic:
+                          - link "Campaigns":
+                            - /url: campaigns
+                            - generic:
+                              - generic:
+                                - img
+                            - generic: Campaigns
+                          - text: 
+                      - listitem:
+                        - generic:
+                          - link "Characters":
+                            - /url: characters
+                            - generic:
+                              - generic:
+                                - img
+                            - generic: Characters
+                          - text: 
+                      - listitem:
+                        - generic:
+                          - link "Dice Roller":
+                            - /url: dice
+                            - generic:
+                              - generic:
+                                - img
+                            - generic: Dice Roller
+                          - text: 
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - heading "Characters" [level=2]
+                    - button "New Character":
+                      - generic:
+                        - generic:
+                          - generic:
+                            - img
+                        - generic:
+                          - generic: New Character
+                - generic:
+                  - generic:
+                    - treegrid:
+                      - rowgroup:
+                        - row "Sort by Name Sort by Race Sort by Class Level HP AC Actions":
+                          - columnheader "Sort by Name":
+                            - generic:
+                              - generic:
+                                - generic "Sort by Name":
+                                  - generic:
+                                    - generic: Name
+                                  - generic: 
+                          - columnheader "Sort by Race":
+                            - generic:
+                              - generic:
+                                - generic "Sort by Race":
+                                  - generic:
+                                    - generic: Race
+                                  - generic: 
+                          - columnheader "Sort by Class":
+                            - generic:
+                              - generic:
+                                - generic "Sort by Class":
+                                  - generic:
+                                    - generic: Class
+                                  - generic: 
+                          - columnheader "Level":
+                            - generic:
+                              - generic: Level
+                          - columnheader "HP":
+                            - generic:
+                              - generic: HP
+                          - columnheader "AC":
+                            - generic:
+                              - generic: AC
+                          - columnheader "Actions":
+                            - generic:
+                              - generic: Actions
+                      - rowgroup:
+                        - row "Thorin Ironforge Dwarf Fighter 5 52 HP AC 18":
+                          - gridcell "Thorin Ironforge":
+                            - generic:
+                              - generic: Thorin Ironforge
+                          - gridcell "Dwarf":
+                            - generic:
+                              - generic: Dwarf
+                          - gridcell "Fighter":
+                            - generic:
+                              - generic: Fighter
+                          - gridcell "5":
+                            - generic:
+                              - generic: "5"
+                          - gridcell "52 HP":
+                            - generic:
+                              - generic: 52 HP
+                          - gridcell "AC 18":
+                            - generic:
+                              - generic: AC 18
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                        - row "Elara Moonwhisper Elf Wizard 5 32 HP AC 12":
+                          - gridcell "Elara Moonwhisper":
+                            - generic:
+                              - generic: Elara Moonwhisper
+                          - gridcell "Elf":
+                            - generic:
+                              - generic: Elf
+                          - gridcell "Wizard":
+                            - generic:
+                              - generic: Wizard
+                          - gridcell "5":
+                            - generic:
+                              - generic: "5"
+                          - gridcell "32 HP":
+                            - generic:
+                              - generic: 32 HP
+                          - gridcell "AC 12":
+                            - generic:
+                              - generic: AC 12
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                        - row "Shadow Halfling Rogue 4 28 HP AC 15":
+                          - gridcell "Shadow":
+                            - generic:
+                              - generic: Shadow
+                          - gridcell "Halfling":
+                            - generic:
+                              - generic: Halfling
+                          - gridcell "Rogue":
+                            - generic:
+                              - generic: Rogue
+                          - gridcell "4":
+                            - generic:
+                              - generic: "4"
+                          - gridcell "28 HP":
+                            - generic:
+                              - generic: 28 HP
+                          - gridcell "AC 15":
+                            - generic:
+                              - generic: AC 15
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                        - row "Viktor Belmont Human Paladin 6 58 HP AC 18":
+                          - gridcell "Viktor Belmont":
+                            - generic:
+                              - generic: Viktor Belmont
+                          - gridcell "Human":
+                            - generic:
+                              - generic: Human
+                          - gridcell "Paladin":
+                            - generic:
+                              - generic: Paladin
+                          - gridcell "6":
+                            - generic:
+                              - generic: "6"
+                          - gridcell "58 HP":
+                            - generic:
+                              - generic: 58 HP
+                          - gridcell "AC 18":
+                            - generic:
+                              - generic: AC 18
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                        - row "Updated Character Name Half-Elf Ranger 5 45 HP AC 16":
+                          - gridcell "Updated Character Name":
+                            - generic:
+                              - generic: Updated Character Name
+                          - gridcell "Half-Elf":
+                            - generic:
+                              - generic: Half-Elf
+                          - gridcell "Ranger":
+                            - generic:
+                              - generic: Ranger
+                          - gridcell "5":
+                            - generic:
+                              - generic: "5"
+                          - gridcell "45 HP":
+                            - generic:
+                              - generic: 45 HP
+                          - gridcell "AC 16":
+                            - generic:
+                              - generic: AC 16
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                        - row "Test Human Fighter 1 10 HP AC 10":
+                          - gridcell "Test":
+                            - generic:
+                              - generic: Test
+                          - gridcell "Human":
+                            - generic:
+                              - generic: Human
+                          - gridcell "Fighter":
+                            - generic:
+                              - generic: Fighter
+                          - gridcell "1":
+                            - generic:
+                              - generic: "1"
+                          - gridcell "10 HP":
+                            - generic:
+                              - generic: 10 HP
+                          - gridcell "AC 10":
+                            - generic:
+                              - generic: AC 10
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                        - row "Test Hero Human Barbarian 3 35 HP AC 14":
+                          - gridcell "Test Hero":
+                            - generic:
+                              - generic: Test Hero
+                          - gridcell "Human":
+                            - generic:
+                              - generic: Human
+                          - gridcell "Barbarian":
+                            - generic:
+                              - generic: Barbarian
+                          - gridcell "3":
+                            - generic:
+                              - generic: "3"
+                          - gridcell "35 HP":
+                            - generic:
+                              - generic: 35 HP
+                          - gridcell "AC 14":
+                            - generic:
+                              - generic: AC 14
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                        - row "Updated Character Name Half-Elf Ranger 5 45 HP AC 16":
+                          - gridcell "Updated Character Name":
+                            - generic:
+                              - generic: Updated Character Name
+                          - gridcell "Half-Elf":
+                            - generic:
+                              - generic: Half-Elf
+                          - gridcell "Ranger":
+                            - generic:
+                              - generic: Ranger
+                          - gridcell "5":
+                            - generic:
+                              - generic: "5"
+                          - gridcell "45 HP":
+                            - generic:
+                              - generic: 45 HP
+                          - gridcell "AC 16":
+                            - generic:
+                              - generic: AC 16
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                        - row "Test Hero Human Barbarian 3 35 HP AC 14":
+                          - gridcell "Test Hero":
+                            - generic:
+                              - generic: Test Hero
+                          - gridcell "Human":
+                            - generic:
+                              - generic: Human
+                          - gridcell "Barbarian":
+                            - generic:
+                              - generic: Barbarian
+                          - gridcell "3":
+                            - generic:
+                              - generic: "3"
+                          - gridcell "35 HP":
+                            - generic:
+                              - generic: 35 HP
+                          - gridcell "AC 14":
+                            - generic:
+                              - generic: AC 14
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                        - row "Get Test Elf Wizard 1 10 HP AC 10":
+                          - gridcell "Get Test":
+                            - generic:
+                              - generic: Get Test
+                          - gridcell "Elf":
+                            - generic:
+                              - generic: Elf
+                          - gridcell "Wizard":
+                            - generic:
+                              - generic: Wizard
+                          - gridcell "1":
+                            - generic:
+                              - generic: "1"
+                          - gridcell "10 HP":
+                            - generic:
+                              - generic: 10 HP
+                          - gridcell "AC 10":
+                            - generic:
+                              - generic: AC 10
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                        - row "Updated Name Half-Dwarf Fighter 5 50 HP AC 18":
+                          - gridcell "Updated Name":
+                            - generic:
+                              - generic: Updated Name
+                          - gridcell "Half-Dwarf":
+                            - generic:
+                              - generic: Half-Dwarf
+                          - gridcell "Fighter":
+                            - generic:
+                              - generic: Fighter
+                          - gridcell "5":
+                            - generic:
+                              - generic: "5"
+                          - gridcell "50 HP":
+                            - generic:
+                              - generic: 50 HP
+                          - gridcell "AC 18":
+                            - generic:
+                              - generic: AC 18
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                        - row "Test Hero Human Barbarian 3 35 HP AC 14":
+                          - gridcell "Test Hero":
+                            - generic:
+                              - generic: Test Hero
+                          - gridcell "Human":
+                            - generic:
+                              - generic: Human
+                          - gridcell "Barbarian":
+                            - generic:
+                              - generic: Barbarian
+                          - gridcell "3":
+                            - generic:
+                              - generic: "3"
+                          - gridcell "35 HP":
+                            - generic:
+                              - generic: 35 HP
+                          - gridcell "AC 14":
+                            - generic:
+                              - generic: AC 14
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                        - row "Get Test Elf Wizard 1 10 HP AC 10":
+                          - gridcell "Get Test":
+                            - generic:
+                              - generic: Get Test
+                          - gridcell "Elf":
+                            - generic:
+                              - generic: Elf
+                          - gridcell "Wizard":
+                            - generic:
+                              - generic: Wizard
+                          - gridcell "1":
+                            - generic:
+                              - generic: "1"
+                          - gridcell "10 HP":
+                            - generic:
+                              - generic: 10 HP
+                          - gridcell "AC 10":
+                            - generic:
+                              - generic: AC 10
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                        - row "Updated Name Half-Dwarf Fighter 5 50 HP AC 18":
+                          - gridcell "Updated Name":
+                            - generic:
+                              - generic: Updated Name
+                          - gridcell "Half-Dwarf":
+                            - generic:
+                              - generic: Half-Dwarf
+                          - gridcell "Fighter":
+                            - generic:
+                              - generic: Fighter
+                          - gridcell "5":
+                            - generic:
+                              - generic: "5"
+                          - gridcell "50 HP":
+                            - generic:
+                              - generic: 50 HP
+                          - gridcell "AC 18":
+                            - generic:
+                              - generic: AC 18
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                        - row "Updated Name Half-Dwarf Fighter 5 50 HP AC 18":
+                          - gridcell "Updated Name":
+                            - generic:
+                              - generic: Updated Name
+                          - gridcell "Half-Dwarf":
+                            - generic:
+                              - generic: Half-Dwarf
+                          - gridcell "Fighter":
+                            - generic:
+                              - generic: Fighter
+                          - gridcell "5":
+                            - generic:
+                              - generic: "5"
+                          - gridcell "50 HP":
+                            - generic:
+                              - generic: 50 HP
+                          - gridcell "AC 18":
+                            - generic:
+                              - generic: AC 18
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                        - row "Test Hero Human Barbarian 3 35 HP AC 14":
+                          - gridcell "Test Hero":
+                            - generic:
+                              - generic: Test Hero
+                          - gridcell "Human":
+                            - generic:
+                              - generic: Human
+                          - gridcell "Barbarian":
+                            - generic:
+                              - generic: Barbarian
+                          - gridcell "3":
+                            - generic:
+                              - generic: "3"
+                          - gridcell "35 HP":
+                            - generic:
+                              - generic: 35 HP
+                          - gridcell "AC 14":
+                            - generic:
+                              - generic: AC 14
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                        - row "Get Test Elf Wizard 1 10 HP AC 10":
+                          - gridcell "Get Test":
+                            - generic:
+                              - generic: Get Test
+                          - gridcell "Elf":
+                            - generic:
+                              - generic: Elf
+                          - gridcell "Wizard":
+                            - generic:
+                              - generic: Wizard
+                          - gridcell "1":
+                            - generic:
+                              - generic: "1"
+                          - gridcell "10 HP":
+                            - generic:
+                              - generic: 10 HP
+                          - gridcell "AC 10":
+                            - generic:
+                              - generic: AC 10
+                          - gridcell:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic:
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                                    - button:
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - generic:
+                                              - img
+                      - rowgroup
+  - menubar [ref=e2]:
+    - menuitem "Vaadin Copilot" [ref=e4]:
+      - generic [ref=e7]:
+        - generic: Vaadin Copilot
+  - generic:
+    - generic: Log
+  - generic:
+    - generic:
+      - generic: Online
+  - dialog "New Character":
+    - generic:
+      - generic:
+        - generic:
+          - heading "New Character" [level=2] [ref=e10]
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: Name
+                                  - text: •
+                                - generic:
+                                  - generic:
+                                    - generic:
+                                      - textbox "Name"
+                                  - generic: 
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: Race
+                                - generic:
+                                  - generic:
+                                    - generic:
+                                      - button "Race"
+                                  - generic:
+                                    - generic: 
+                              - generic:
+                                - text: 
+                                - generic: Human
+                                - text: 
+                                - generic: Elf
+                                - text: 
+                                - generic: Dwarf
+                                - text: 
+                                - generic: Halfling
+                                - text: 
+                                - generic: Dragonborn
+                                - text: 
+                                - generic: Gnome
+                                - text: 
+                                - generic: Half-Elf
+                                - text: 
+                                - generic: Half-Orc
+                                - text: 
+                                - generic: Tiefling
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: Class
+                                - generic:
+                                  - generic:
+                                    - generic:
+                                      - button "Class" [expanded]
+                                  - generic:
+                                    - generic: 
+                              - listbox [ref=e14]:
+                                - generic [ref=e15]:
+                                  - generic:
+                                    - option "Barbarian" [active] [ref=e16]:
+                                      - generic [ref=e17]: 
+                                      - generic [ref=e18]:
+                                        - generic: Barbarian
+                                    - option "Bard" [ref=e19]:
+                                      - generic [ref=e20]: 
+                                      - generic [ref=e21]:
+                                        - generic: Bard
+                                    - option "Cleric" [ref=e22]:
+                                      - generic [ref=e23]: 
+                                      - generic [ref=e24]:
+                                        - generic: Cleric
+                                    - option "Druid" [ref=e25]:
+                                      - generic [ref=e26]: 
+                                      - generic [ref=e27]:
+                                        - generic: Druid
+                                    - option "Fighter" [ref=e28]:
+                                      - generic [ref=e29]: 
+                                      - generic [ref=e30]:
+                                        - generic: Fighter
+                                    - option "Monk" [ref=e31]:
+                                      - generic [ref=e32]: 
+                                      - generic [ref=e33]:
+                                        - generic: Monk
+                                    - option "Paladin" [ref=e34]:
+                                      - generic [ref=e35]: 
+                                      - generic [ref=e36]:
+                                        - generic: Paladin
+                                    - option "Ranger" [ref=e37]:
+                                      - generic [ref=e38]: 
+                                      - generic [ref=e39]:
+                                        - generic: Ranger
+                                    - option "Rogue" [ref=e40]:
+                                      - generic [ref=e41]: 
+                                      - generic [ref=e42]:
+                                        - generic: Rogue
+                                    - option "Sorcerer" [ref=e43]:
+                                      - generic [ref=e44]: 
+                                      - generic [ref=e45]:
+                                        - generic: Sorcerer
+                                    - option "Warlock" [ref=e46]:
+                                      - generic [ref=e47]: 
+                                      - generic [ref=e48]:
+                                        - generic: Warlock
+                                    - option "Wizard" [ref=e49]:
+                                      - generic [ref=e50]: 
+                                      - generic [ref=e51]:
+                                        - generic: Wizard
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: Level
+                                - generic:
+                                  - generic: 
+                                  - generic:
+                                    - generic:
+                                      - spinbutton "Level": "1"
+                                  - generic:  
+                      - heading "Ability Scores" [level=4]
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: STR
+                                - generic:
+                                  - generic:
+                                    - generic: 
+                                  - generic:
+                                    - generic:
+                                      - spinbutton "STR": "10"
+                                  - generic:
+                                    - text: 
+                                    - generic: 
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: DEX
+                                - generic:
+                                  - generic:
+                                    - generic: 
+                                  - generic:
+                                    - generic:
+                                      - spinbutton "DEX": "10"
+                                  - generic:
+                                    - text: 
+                                    - generic: 
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: CON
+                                - generic:
+                                  - generic:
+                                    - generic: 
+                                  - generic:
+                                    - generic:
+                                      - spinbutton "CON": "10"
+                                  - generic:
+                                    - text: 
+                                    - generic: 
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: INT
+                                - generic:
+                                  - generic:
+                                    - generic: 
+                                  - generic:
+                                    - generic:
+                                      - spinbutton "INT": "10"
+                                  - generic:
+                                    - text: 
+                                    - generic: 
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: WIS
+                                - generic:
+                                  - generic:
+                                    - generic: 
+                                  - generic:
+                                    - generic:
+                                      - spinbutton "WIS": "10"
+                                  - generic:
+                                    - text: 
+                                    - generic: 
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: CHA
+                                - generic:
+                                  - generic:
+                                    - generic: 
+                                  - generic:
+                                    - generic:
+                                      - spinbutton "CHA": "10"
+                                  - generic:
+                                    - text: 
+                                    - generic: 
+                      - heading "Combat Stats" [level=4]
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: Hit Points
+                                - generic:
+                                  - generic: 
+                                  - generic:
+                                    - generic:
+                                      - spinbutton "Hit Points": "10"
+                                  - generic:  
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: Armor Class
+                                - generic:
+                                  - generic: 
+                                  - generic:
+                                    - generic:
+                                      - spinbutton "Armor Class": "10"
+                                  - generic:  
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - generic: Speed
+                                - generic:
+                                  - generic: 
+                                  - generic:
+                                    - generic:
+                                      - spinbutton "Speed": "30"
+                                  - generic:  
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Campaign (Optional)
+                          - generic:
+                            - generic:
+                              - generic:
+                                - button "Campaign (Optional)"
+                            - generic:
+                              - generic: 
+                        - generic:
+                          - text: 
+                          - text: 
+                          - generic: Curse of Strahd
+                          - text: 
+                          - generic: Test Campaign 1767878312002
+                          - text: 
+                          - generic: Test Campaign 1767878311979
+                          - text: 
+                          - generic: Test Campaign 1767878496185
+                          - text: 
+                          - generic: Test Campaign 1767878800622
+                          - text: 
+                          - generic: Test Campaign 1767878800668
+                          - text: 
+                          - generic: Test Campaign 1767878845832
+                          - text: 
+                          - generic: Test Campaign 1767879303395
+                          - text: 
+                          - generic: Test Campaign 1767879304505
+                          - text: 
+                          - generic: Test Campaign 1767879304747
+                          - text: 
+                          - generic: Test Campaign 1767879324758
+                          - text: 
+                          - generic: Lost Mines of Phandelver2
+                          - text: 
+                          - generic: Tomb of Annihilation
+                          - text: 
+                          - generic: New Session Test
+                          - text: 
+                          - generic: Session Get Test
+                          - text: 
+                          - generic: Session Update Test
+                          - text: 
+                          - generic: Test Campaign 1767877686346
+                          - text: 
+                          - generic: Test Campaign 1767878311979
+                          - text: 
+                          - generic: Test Campaign 1767878386699
+                          - text: 
+                          - generic: Test Campaign 1767878386710
+                          - text: 
+                          - generic: Test Campaign 1767878386648
+                          - text: 
+                          - generic: Test Campaign 1767878719195
+                          - text: 
+                          - generic: Test Campaign 1767878719712
+                          - text: 
+                          - generic: Test Campaign 1767878849607
+                          - text: 
+                          - generic: Test Campaign 1767878849973
+                          - text: 
+                          - generic: Test Campaign 1767878850258
+                          - text: 
+                          - generic: Test Campaign 1767878849447 Updated
+                          - text: 
+                          - generic: Test Campaign 1767878875794
+                          - text: 
+                          - generic: Test Campaign 1767878876537
+                          - text: 
+                          - generic: Test Campaign 1767878876919
+                          - text: 
+                          - generic: Test Campaign 1767878877013
+                          - text: 
+                          - generic: Test Campaign 1767878877055
+                          - text: 
+                          - generic: Test Campaign 1767878878227
+                          - text: 
+                          - generic: Test Campaign 1767878890095
+                          - text: 
+                          - generic: Test Campaign 1767878890939
+                          - text: 
+                          - generic: Test Campaign 1767878891509
+                          - text: 
+                          - generic: Test Campaign 1767878891702
+                          - text: 
+                          - generic: Test Campaign 1767878897518
+                          - text: 
+                          - generic: Test Campaign 1767878901638 Updated
+                          - text: 
+                          - generic: Test Campaign 1767879304744
+                          - text: 
+                          - generic: Test Campaign 1767879304818
+                          - text: 
+                          - generic: Test Campaign 1767879305890
+                          - text: 
+                          - generic: Test Campaign 1767879310901
+                          - text: 
+                          - generic: Test Campaign 1767879312509
+                          - text: 
+                          - generic: Test Campaign 1767879312837
+                          - text: 
+                          - generic: Test Campaign 1767879312992
+                          - text: 
+                          - generic: Test Campaign 1767879320627
+                          - text: 
+                          - generic: Test Campaign 1767879326565
+                          - text: 
+                          - generic: Test Campaign 1767879326889
+                          - text: 
+                          - generic: Test Campaign 1767879324549 Updated
+                          - text: 
+                          - generic: Test Campaign 1767877690470
+                          - text: 
+                          - generic: Test Campaign 1767877690545
+                          - text: 
+                          - generic: Test Campaign 1767877690540
+                          - text: 
+                          - generic: Test Campaign 1767877690762
+                          - text: 
+                          - generic: Test Campaign 1767877690139 Updated
+                          - text: 
+                          - generic: Test Campaign 1767878496217
+                          - text: 
+                          - generic: Test Campaign 1767878904270
+                          - text: 
+                          - generic: Test Campaign 1767878904452
+                          - text: 
+                          - generic: Test Campaign 1767878905940
+                          - text: 
+                          - generic: Char Campaign
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic: Backstory
+                          - generic:
+                            - generic:
+                              - generic:
+                                - textbox "Backstory"
+                            - generic: 
+          - generic [ref=e53]:
+            - button "Cancel" [ref=e54]:
+              - generic [ref=e56]:
+                - generic: Cancel
+            - button "Save" [ref=e57]:
+              - generic [ref=e59]:
+                - generic: Save
+```

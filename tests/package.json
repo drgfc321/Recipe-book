@@ -1,0 +1,16 @@
+{
+  "name": "dnd-api-tests",
+  "version": "1.0.0",
+  "description": "Playwright API and UI tests for D&D Campaign Manager",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:api": "npx playwright test --project=api",
+    "test:ui": "npx playwright test --project=ui-chromium",
+    "test:ui:headed": "npx playwright test --project=ui-chromium --headed",
+    "test:ui:debug": "npx playwright test --project=ui-chromium --debug"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  }
+}
