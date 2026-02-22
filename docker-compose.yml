@@ -3,17 +3,17 @@ version: '3.8'
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: dnd-postgres
+    container_name: recipebook-postgres
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-dnd_campaign}
-      POSTGRES_USER: ${POSTGRES_USER:-dnd_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dnd_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-recipebook}
+      POSTGRES_USER: ${POSTGRES_USER:-recipebook_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-recipebook_secret}
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-dnd_user} -d ${POSTGRES_DB:-dnd_campaign}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-recipebook_user} -d ${POSTGRES_DB:-recipebook}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -21,7 +21,7 @@ services:
 
   adminer:
     image: adminer:latest
-    container_name: dnd-adminer
+    container_name: recipebook-adminer
     ports:
       - "${ADMINER_PORT:-8082}:8080"
     depends_on:

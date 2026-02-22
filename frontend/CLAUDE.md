@@ -39,11 +39,11 @@ This project follows a **feature-based package structure** rather than tradition
 
 ### Package Structure
 
-- **`com.dnd.base`**: Reusable components and base classes for all features
+- **`com.recipebook.base`**: Reusable components and base classes for all features
   - `base.ui.MainLayout`: AppLayout with drawer navigation using SideNav, automatically populated from @Menu annotations
   - `base.ui.component.ViewToolbar`: Reusable toolbar component for views
 
-- **`com.dnd.examplefeature`**: Example feature demonstrating the structure
+- **`com.recipebook.examplefeature`**: Example feature demonstrating the structure
   - `Task.java`: JPA entity with validation
   - `TaskRepository.java`: Spring Data JPA repository
   - `TaskService.java`: Service layer with @Transactional methods
@@ -63,7 +63,7 @@ This project follows a **feature-based package structure** rather than tradition
 ## Adding New Features
 
 When creating a new feature:
-1. Create a new package under `com.dnd` (e.g., `com.dnd.myfeature`)
+1. Create a new package under `com.recipebook` (e.g., `com.recipebook.myfeature`)
 2. Include: Entity, Repository, Service, and UI view classes
 3. Use the `examplefeature` package as a reference
 4. Once your features are complete, **delete the `examplefeature` package entirely**
