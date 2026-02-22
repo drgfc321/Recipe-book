@@ -14,7 +14,7 @@ import java.util.Map;
 @ApplicationScoped
 public class MacroCalculationService {
 
-    private static final Map<Unit, Double> UNIT_TO_GRAMS = Map.of(
+    public static final Map<Unit, Double> UNIT_TO_GRAMS = Map.of(
             Unit.GRAMS, 1.0,
             Unit.KILOGRAMS, 1000.0,
             Unit.MILLILITERS, 1.0,
@@ -24,6 +24,10 @@ public class MacroCalculationService {
             Unit.CUPS, 240.0,
             Unit.PIECES, 100.0
     );
+
+    public static double toGrams(double quantity, Unit unit) {
+        return quantity * UNIT_TO_GRAMS.getOrDefault(unit, 1.0);
+    }
 
     public RecipeResponse toResponse(Recipe recipe) {
         RecipeResponse response = new RecipeResponse();
