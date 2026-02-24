@@ -1,5 +1,6 @@
 package com.recipebook.views;
 
+import com.recipebook.ingredient.IngredientListView;
 import com.recipebook.recipe.RecipeListView;
 import com.recipebook.service.AuthService;
 import com.vaadin.flow.component.UI;
@@ -71,6 +72,7 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
 
         nav.addItem(new SideNavItem("Dashboard", DashboardView.class, VaadinIcon.DASHBOARD.create()));
         nav.addItem(new SideNavItem("Recipes", RecipeListView.class, VaadinIcon.BOOK.create()));
+        nav.addItem(new SideNavItem("Ingredients", IngredientListView.class, VaadinIcon.STOCK.create()));
 
         VerticalLayout drawerContent = new VerticalLayout(nav);
         drawerContent.setSizeFull();
