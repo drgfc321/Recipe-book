@@ -1,13 +1,11 @@
 package com.recipebook.service;
 
 import com.recipebook.dto.AuthResponse;
-import com.recipebook.dto.LoginRequest;
-import com.recipebook.dto.RegisterRequest;
 import com.recipebook.dto.UserInfo;
 import com.vaadin.flow.server.VaadinSession;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -20,16 +18,32 @@ public class AuthService {
     }
 
     public AuthResponse login(String email, String password) {
-        LoginRequest request = new LoginRequest(email, password);
-        AuthResponse response = apiClient.postPublic("/api/auth/login", request, AuthResponse.class);
+        String query = """
+                mutation($email: String!, $password: String!) {
+                    login(email: $email, password: $password) {
+                        token userId username email role
+                    }
+                }
+                """;
+        AuthResponse response = apiClient.mutatePublic(query,
+                Map.of("email", email, "password", password),
+                AuthResponse.class, "login");
         storeToken(response.token());
         storeUserInfo(response);
         return response;
     }
 
     public AuthResponse register(String email, String username, String password, String language) {
-        RegisterRequest request = new RegisterRequest(email, username, password, language);
-        AuthResponse response = apiClient.postPublic("/api/auth/register", request, AuthResponse.class);
+        String query = """
+                mutation($email: String!, $username: String!, $password: String!, $language: String!) {
+                    register(email: $email, username: $username, password: $password, language: $language) {
+                        token userId username email role
+                    }
+                }
+                """;
+        AuthResponse response = apiClient.mutatePublic(query,
+                Map.of("email", email, "username", username, "password", password, "language", language),
+                AuthResponse.class, "register");
         storeToken(response.token());
         storeUserInfo(response);
         return response;
@@ -71,8 +85,13 @@ public class AuthService {
 
     public UserInfo fetchCurrentUser() {
         try {
-            return apiClient.get("/api/auth/me", UserInfo.class);
-        } catch (WebClientResponseException.Unauthorized e) {
+            String query = """
+                    query {
+                        me { id username email role }
+                    }
+                    """;
+            return apiClient.query(query, null, UserInfo.class, "me");
+        } catch (RuntimeException e) {
             logout();
             return null;
         }

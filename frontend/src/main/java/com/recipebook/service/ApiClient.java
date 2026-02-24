@@ -6,9 +6,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class ApiClient {
 
     private final WebClient webClient;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public ApiClient(@Value("${api.backend.url}") String backendUrl) {
         this.webClient = WebClient.builder()
@@ -33,88 +35,52 @@ public class ApiClient {
         return Optional.empty();
     }
 
-    // GET request
-    public <T> T get(String path, Class<T> responseType) {
-        WebClient.RequestHeadersSpec<?> spec = webClient.get().uri(path);
-        Optional<String> token = getToken();
-        if (token.isPresent()) {
-            spec = spec.header(HttpHeaders.AUTHORIZATION, "Bearer " + token.get());
-        }
-        return spec.retrieve()
-                .bodyToMono(responseType)
-                .block();
-    }
+    private <T> T execute(String query, Map<String, Object> variables, Class<T> responseType,
+                          String dataField, boolean withAuth) {
+        Map<String, Object> body = Map.of("query", query, "variables", variables != null ? variables : Map.of());
 
-    // GET list
-    public <T> List<T> getList(String path, Class<T> elementType) {
-        WebClient.RequestHeadersSpec<?> spec = webClient.get().uri(path);
-        Optional<String> token = getToken();
-        if (token.isPresent()) {
-            spec = spec.header(HttpHeaders.AUTHORIZATION, "Bearer " + token.get());
+        WebClient.RequestBodySpec spec = webClient.post().uri("/graphql");
+        if (withAuth) {
+            getToken().ifPresent(token ->
+                    spec.header(HttpHeaders.AUTHORIZATION, "Bearer " + token));
         }
-        return spec.retrieve()
-                .bodyToFlux(elementType)
-                .collectList()
-                .block();
-    }
 
-    // POST request
-    public <T, R> R post(String path, T body, Class<R> responseType) {
-        WebClient.RequestBodySpec bodySpec = webClient.post().uri(path);
-        Optional<String> token = getToken();
-        if (token.isPresent()) {
-            bodySpec = bodySpec.header(HttpHeaders.AUTHORIZATION, "Bearer " + token.get());
-        }
-        return bodySpec.bodyValue(body)
+        String json = spec.bodyValue(body)
                 .retrieve()
-                .bodyToMono(responseType)
+                .bodyToMono(String.class)
                 .block();
-    }
 
-    // POST without auth (for login/register)
-    public <T, R> R postPublic(String path, T body, Class<R> responseType) {
-        return webClient.post()
-                .uri(path)
-                .bodyValue(body)
-                .retrieve()
-                .bodyToMono(responseType)
-                .block();
-    }
-
-    // PUT request
-    public <T, R> R put(String path, T body, Class<R> responseType) {
-        WebClient.RequestBodySpec bodySpec = webClient.put().uri(path);
-        Optional<String> token = getToken();
-        if (token.isPresent()) {
-            bodySpec = bodySpec.header(HttpHeaders.AUTHORIZATION, "Bearer " + token.get());
-        }
-        return bodySpec.bodyValue(body)
-                .retrieve()
-                .bodyToMono(responseType)
-                .block();
-    }
-
-    // DELETE request
-    public void delete(String path) {
-        WebClient.RequestHeadersSpec<?> spec = webClient.delete().uri(path);
-        Optional<String> token = getToken();
-        if (token.isPresent()) {
-            spec = spec.header(HttpHeaders.AUTHORIZATION, "Bearer " + token.get());
-        }
-        spec.retrieve()
-                .toBodilessEntity()
-                .block();
-    }
-
-    // Check if request will fail with 401
-    public boolean isAuthenticated() {
         try {
-            get("/api/auth/me", Map.class);
-            return true;
-        } catch (WebClientResponseException.Unauthorized e) {
-            return false;
-        } catch (Exception e) {
-            return false;
+            JsonNode root = objectMapper.readTree(json);
+
+            if (root.has("errors") && root.get("errors").isArray() && !root.get("errors").isEmpty()) {
+                String message = root.get("errors").get(0).path("message").asText("GraphQL error");
+                throw new RuntimeException(message);
+            }
+
+            JsonNode dataNode = root.path("data").path(dataField);
+            if (dataNode.isMissingNode() || dataNode.isNull()) {
+                return null;
+            }
+            return objectMapper.treeToValue(dataNode, responseType);
+        } catch (JacksonException e) {
+            throw new RuntimeException("Failed to parse GraphQL response", e);
         }
+    }
+
+    public <T> T query(String query, Map<String, Object> variables, Class<T> responseType, String dataField) {
+        return execute(query, variables, responseType, dataField, true);
+    }
+
+    public <T> T queryPublic(String query, Map<String, Object> variables, Class<T> responseType, String dataField) {
+        return execute(query, variables, responseType, dataField, false);
+    }
+
+    public <T> T mutate(String query, Map<String, Object> variables, Class<T> responseType, String dataField) {
+        return execute(query, variables, responseType, dataField, true);
+    }
+
+    public <T> T mutatePublic(String query, Map<String, Object> variables, Class<T> responseType, String dataField) {
+        return execute(query, variables, responseType, dataField, false);
     }
 }
