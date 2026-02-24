@@ -1,7 +1,7 @@
 {
-  "name": "dnd-api-tests",
+  "name": "recipebook-tests",
   "version": "1.0.0",
-  "description": "Playwright API and UI tests for D&D Campaign Manager",
+  "description": "Playwright API and UI tests for Recipe Book",
   "scripts": {
     "test": "npx playwright test",
     "test:headed": "npx playwright test --headed",

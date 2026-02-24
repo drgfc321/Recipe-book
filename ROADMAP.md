@@ -67,7 +67,7 @@ A recipe management and meal planning application where users can:
 
 ## Implementation Steps
 
-1. **Cleanup** — Delete D&D code, rename packages to `com.recipebook`, update configs
+1. **Cleanup** — Rename packages to `com.recipebook`, update configs
 2. **Backend Entities** — Enums, Ingredient (with macros), Recipe, RecipeIngredient, MealPlan, ShoppingListItem, PantryItem + data seeder
 3. **Recipe & Ingredient API** — REST endpoints + macro calculation
 4. **Meal Plan + Shopping List + Pantry + Recommendations API**
