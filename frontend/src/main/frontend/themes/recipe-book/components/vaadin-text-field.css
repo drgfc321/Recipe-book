@@ -1,0 +1,29 @@
+/* Text field — injected into shadow DOM */
+
+[part="input-field"] {
+    background: #1c2130;
+    border: 1px solid rgba(216,220,228,0.1);
+    border-bottom: 2px solid rgba(216,220,228,0.12);
+    border-radius: 5px;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+:host(:hover) [part="input-field"] {
+    background: #1f2538;
+    border-color: rgba(216,220,228,0.16);
+}
+
+:host([focused]) [part="input-field"] {
+    background: #1f2538;
+    border-color: rgba(192,128,80,0.3);
+    border-bottom-color: #c08050;
+    box-shadow: 0 2px 8px rgba(192,128,80,0.1);
+}
+
+[part="label"] {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #b0b8c8;
+}

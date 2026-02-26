@@ -73,6 +73,14 @@ public class RecipeService {
         this.apiClient = apiClient;
     }
 
+    public String getBackendUrl() {
+        return apiClient.getBackendUrl();
+    }
+
+    public ApiClient getApiClient() {
+        return apiClient;
+    }
+
     public List<RecipeResponse> getRecipes(String category, String difficulty, String search) {
         Map<String, Object> vars = new HashMap<>();
         if (category != null && !category.isBlank()) vars.put("category", category);
