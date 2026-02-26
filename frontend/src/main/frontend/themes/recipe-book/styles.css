@@ -517,3 +517,64 @@ html {
 .recipe-picker-card:hover {
     background: rgba(216,220,228,0.06);
 }
+
+/* ===== Pantry ===== */
+
+.pantry-expiring-banner {
+    display: flex;
+    align-items: center;
+    background: rgba(192,144,60,0.12);
+    border: 1px solid rgba(192,144,60,0.3);
+    border-radius: var(--lumo-border-radius-m);
+    padding: var(--lumo-space-s) var(--lumo-space-m);
+    color: var(--recipe-warning-color);
+}
+
+/* ===== Shopping List ===== */
+
+.shopping-progress-bar {
+    --lumo-primary-color: var(--lumo-success-color);
+}
+
+.shopping-item {
+    font-weight: 500;
+}
+
+.shopping-item-purchased {
+    text-decoration: line-through;
+    color: var(--lumo-secondary-text-color);
+}
+
+.shopping-category-header {
+    margin: var(--lumo-space-m) 0 var(--lumo-space-xs) 0;
+    font-size: var(--lumo-font-size-s);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--lumo-secondary-text-color);
+    border-bottom: 1px solid rgba(216,220,228,0.08);
+    padding-bottom: var(--lumo-space-xs);
+}
+
+.shopping-item-row {
+    transition: background 0.15s;
+}
+
+.shopping-item-row:hover {
+    background: rgba(216,220,228,0.04);
+}
+
+/* ===== Recommendations ===== */
+
+.recommendation-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.recommendation-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}
+
+.match-badge {
+    font-weight: 600;
+}

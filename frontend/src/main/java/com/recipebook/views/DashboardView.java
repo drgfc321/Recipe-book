@@ -1,6 +1,8 @@
 package com.recipebook.views;
 
 import com.recipebook.ingredient.IngredientService;
+import com.recipebook.pantry.PantryItemResponse;
+import com.recipebook.pantry.PantryService;
 import com.recipebook.recipe.MacroInfo;
 import com.recipebook.recipe.RecipeResponse;
 import com.recipebook.recipe.RecipeService;
@@ -30,11 +32,14 @@ public class DashboardView extends VerticalLayout {
     private final AuthService authService;
     private final RecipeService recipeService;
     private final IngredientService ingredientService;
+    private final PantryService pantryService;
 
-    public DashboardView(AuthService authService, RecipeService recipeService, IngredientService ingredientService) {
+    public DashboardView(AuthService authService, RecipeService recipeService,
+                         IngredientService ingredientService, PantryService pantryService) {
         this.authService = authService;
         this.recipeService = recipeService;
         this.ingredientService = ingredientService;
+        this.pantryService = pantryService;
 
         setPadding(true);
         setSpacing(true);
@@ -78,6 +83,8 @@ public class DashboardView extends VerticalLayout {
         long recipeCount = 0;
         long ingredientCount = 0;
         long categoryCount = 0;
+        long pantryCount = 0;
+        long expiringCount = 0;
 
         try {
             List<RecipeResponse> recipes = recipeService.getRecipes(null, null, null);
@@ -95,6 +102,17 @@ public class DashboardView extends VerticalLayout {
         } catch (Exception ignored) {
         }
 
+        try {
+            List<PantryItemResponse> pantryItems = pantryService.getPantryItems();
+            pantryCount = pantryItems.size();
+        } catch (Exception ignored) {
+        }
+
+        try {
+            expiringCount = pantryService.getExpiringItems(3).size();
+        } catch (Exception ignored) {
+        }
+
         HorizontalLayout statsRow = new HorizontalLayout();
         statsRow.setWidthFull();
         statsRow.setSpacing(true);
@@ -103,6 +121,10 @@ public class DashboardView extends VerticalLayout {
         statsRow.add(createStatCard(VaadinIcon.BOOK, String.valueOf(recipeCount), "Total Recipes", "var(--lumo-primary-color)"));
         statsRow.add(createStatCard(VaadinIcon.CART, String.valueOf(ingredientCount), "Total Ingredients", "var(--lumo-success-color)"));
         statsRow.add(createStatCard(VaadinIcon.TAGS, String.valueOf(categoryCount), "Categories Used", "var(--recipe-warning-color)"));
+        statsRow.add(createStatCard(VaadinIcon.STORAGE, String.valueOf(pantryCount), "Pantry Items", "var(--lumo-success-color)"));
+        if (expiringCount > 0) {
+            statsRow.add(createStatCard(VaadinIcon.WARNING, String.valueOf(expiringCount), "Expiring Soon", "var(--lumo-error-color)"));
+        }
 
         return statsRow;
     }
@@ -281,7 +303,19 @@ public class DashboardView extends VerticalLayout {
                 e -> UI.getCurrent().navigate("ingredients"));
         browseIngredients.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
 
-        HorizontalLayout buttons = new HorizontalLayout(newRecipe, browseIngredients);
+        Button mealPlanner = new Button("Meal Planner", VaadinIcon.CALENDAR.create(),
+                e -> UI.getCurrent().navigate("meal-plan"));
+        mealPlanner.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+
+        Button pantry = new Button("Pantry", VaadinIcon.STORAGE.create(),
+                e -> UI.getCurrent().navigate("pantry"));
+        pantry.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+
+        Button shoppingList = new Button("Shopping List", VaadinIcon.CART.create(),
+                e -> UI.getCurrent().navigate("shopping-list"));
+        shoppingList.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+
+        HorizontalLayout buttons = new HorizontalLayout(newRecipe, browseIngredients, mealPlanner, pantry, shoppingList);
         buttons.setSpacing(true);
 
         VerticalLayout section = new VerticalLayout(title, buttons);
