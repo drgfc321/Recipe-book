@@ -8,6 +8,7 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
@@ -84,12 +85,54 @@ public class IngredientListView extends VerticalLayout {
     }
 
     private void configureGrid() {
-        grid.addColumn(IngredientResponse::name).setHeader("Name").setSortable(true).setFlexGrow(2);
-        grid.addColumn(IngredientResponse::category).setHeader("Category").setSortable(true);
-        grid.addColumn(r -> "%.0f".formatted(r.caloriesPer100g())).setHeader("Calories/100g").setSortable(true);
-        grid.addColumn(r -> "%.1f g".formatted(r.proteinPer100g())).setHeader("Protein/100g").setSortable(true);
-        grid.addColumn(r -> "%.1f g".formatted(r.carbsPer100g())).setHeader("Carbs/100g").setSortable(true);
-        grid.addColumn(r -> "%.1f g".formatted(r.fatPer100g())).setHeader("Fat/100g").setSortable(true);
+        // Name column — bold
+        grid.addComponentColumn(ingredient -> {
+            Span name = new Span(ingredient.name());
+            name.getStyle().set("font-weight", "600");
+            return name;
+        }).setHeader("Name").setSortable(true).setFlexGrow(2);
+
+        // Category column — colored badge
+        grid.addComponentColumn(ingredient -> {
+            Span badge = new Span(ingredient.category());
+            badge.getElement().getThemeList().add("badge small");
+            badge.getStyle()
+                    .set("background-color", getCategoryColor(ingredient.category()))
+                    .set("color", "white");
+            return badge;
+        }).setHeader("Category").setSortable(true);
+
+        // Calories column — badge
+        grid.addComponentColumn(ingredient -> {
+            Span badge = new Span("%.0f kcal".formatted(ingredient.caloriesPer100g()));
+            badge.getElement().getThemeList().add("badge small");
+            badge.addClassNames("macro-badge", "calories");
+            return badge;
+        }).setHeader("Calories/100g").setSortable(true);
+
+        // Protein column — badge
+        grid.addComponentColumn(ingredient -> {
+            Span badge = new Span("%.1f g".formatted(ingredient.proteinPer100g()));
+            badge.getElement().getThemeList().add("badge small");
+            badge.addClassNames("macro-badge", "protein");
+            return badge;
+        }).setHeader("Protein/100g").setSortable(true);
+
+        // Carbs column — badge
+        grid.addComponentColumn(ingredient -> {
+            Span badge = new Span("%.1f g".formatted(ingredient.carbsPer100g()));
+            badge.getElement().getThemeList().add("badge small");
+            badge.addClassNames("macro-badge", "carbs");
+            return badge;
+        }).setHeader("Carbs/100g").setSortable(true);
+
+        // Fat column — badge
+        grid.addComponentColumn(ingredient -> {
+            Span badge = new Span("%.1f g".formatted(ingredient.fatPer100g()));
+            badge.getElement().getThemeList().add("badge small");
+            badge.addClassNames("macro-badge", "fat");
+            return badge;
+        }).setHeader("Fat/100g").setSortable(true);
 
         if (authService.isLoggedIn()) {
             grid.addComponentColumn(ingredient -> {
@@ -104,6 +147,21 @@ public class IngredientListView extends VerticalLayout {
                 openEditDialog(e.getItem());
             }
         });
+    }
+
+    private String getCategoryColor(String category) {
+        if (category == null) return "var(--lumo-contrast-50pct)";
+        return switch (category) {
+            case "MEAT" -> "var(--lumo-error-color)";
+            case "VEGETABLES" -> "var(--lumo-success-color)";
+            case "FRUITS" -> "#7eb05a";
+            case "DAIRY" -> "var(--lumo-contrast-60pct)";
+            case "GRAINS" -> "var(--recipe-warning-color)";
+            case "SPICES" -> "var(--lumo-primary-color)";
+            case "OILS" -> "#a08040";
+            case "BEVERAGES" -> "#5080b0";
+            default -> "var(--lumo-contrast-50pct)";
+        };
     }
 
     private void refreshGrid() {

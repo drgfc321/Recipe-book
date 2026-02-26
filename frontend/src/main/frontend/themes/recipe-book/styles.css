@@ -105,7 +105,7 @@ html {
 .macro-badge {
     color: white;
     border-radius: var(--lumo-border-radius-m);
-    padding: 4px 12px;
+    padding: 6px 12px 8px;
     font-size: var(--lumo-font-size-s);
     display: inline-flex;
     flex-direction: column;
@@ -124,6 +124,11 @@ html {
     font-weight: 600;
     display: block;
     line-height: 1.2;
+}
+
+/* Kill Lumo badge ::before overlay so custom backgrounds show correctly */
+.macro-badge::before {
+    position: absolute;
 }
 
 /* Macro colors */
@@ -266,4 +271,51 @@ html {
 .ingredient-row:hover {
     border-color: rgba(216,220,228,0.15);
     background: rgba(216,220,228,0.06);
+}
+
+/* ===== Recipe List Cards ===== */
+
+.recipe-list-card {
+    background: #232838;
+    border-radius: var(--lumo-border-radius-l);
+    box-shadow: var(--lumo-box-shadow-m);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+}
+
+.recipe-list-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}
+
+.recipe-list-card-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: var(--lumo-border-radius-l) var(--lumo-border-radius-l) 0 0;
+    margin: calc(var(--lumo-space-m) * -1) calc(var(--lumo-space-m) * -1) 0 calc(var(--lumo-space-m) * -1);
+    display: block;
+}
+
+.recipe-list-card-img-placeholder {
+    width: calc(100% + var(--lumo-space-m) * 2);
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--lumo-contrast-5pct);
+    border-radius: var(--lumo-border-radius-l) var(--lumo-border-radius-l) 0 0;
+    margin: calc(var(--lumo-space-m) * -1) calc(var(--lumo-space-m) * -1) 0 calc(var(--lumo-space-m) * -1);
+}
+
+/* ===== Dashboard Stat Cards ===== */
+
+.dashboard-stat-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dashboard-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
 }
