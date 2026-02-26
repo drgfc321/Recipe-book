@@ -1,0 +1,45 @@
+/* Dialog overlay — injected into shadow DOM */
+
+[part="overlay"] {
+    background: #252b3a;
+    border: 1px solid rgba(192,128,80,0.2);
+    border-radius: 6px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 40px rgba(192,128,80,0.04);
+}
+
+[part="header"] {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid rgba(192,128,80,0.15);
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+}
+
+[part="footer"] {
+    border-top: 1px solid rgba(192,128,80,0.12);
+    background: rgba(0,0,0,0.1);
+    padding: 14px 24px;
+}
+
+[part="content"] {
+    scrollbar-color: rgba(192,128,80,0.25) transparent;
+    scrollbar-width: thin;
+    padding: 16px 24px 20px;
+}
+
+[part="content"]::-webkit-scrollbar {
+    width: 5px;
+}
+
+[part="content"]::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+[part="content"]::-webkit-scrollbar-thumb {
+    background: rgba(192,128,80,0.25);
+    border-radius: 3px;
+}
+
+[part="content"]::-webkit-scrollbar-thumb:hover {
+    background: rgba(192,128,80,0.4);
+}

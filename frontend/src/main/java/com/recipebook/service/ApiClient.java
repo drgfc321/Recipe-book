@@ -18,12 +18,22 @@ public class ApiClient {
 
     private final WebClient webClient;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final String backendUrl;
 
     public ApiClient(@Value("${api.backend.url}") String backendUrl) {
+        this.backendUrl = backendUrl;
         this.webClient = WebClient.builder()
                 .baseUrl(backendUrl)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
+    }
+
+    public String getBackendUrl() {
+        return backendUrl;
+    }
+
+    public WebClient getWebClient() {
+        return webClient;
     }
 
     private Optional<String> getToken() {

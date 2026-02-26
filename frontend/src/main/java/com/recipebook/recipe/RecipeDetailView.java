@@ -113,6 +113,23 @@ public class RecipeDetailView extends VerticalLayout implements HasUrlParameter<
 
         card.add(name, headerRow, infoRow);
 
+        // --- Recipe Image ---
+        if (recipe.imageUrl() != null && !recipe.imageUrl().isBlank()) {
+            String imgSrc;
+            if (recipe.imageUrl().startsWith("http://") || recipe.imageUrl().startsWith("https://")) {
+                imgSrc = recipe.imageUrl();
+            } else {
+                imgSrc = recipeService.getBackendUrl() + recipe.imageUrl();
+            }
+            Image recipeImage = new Image(imgSrc, recipe.name());
+            recipeImage.setWidthFull();
+            recipeImage.setMaxHeight("300px");
+            recipeImage.getStyle()
+                    .set("object-fit", "cover")
+                    .set("border-radius", "var(--lumo-border-radius-l)");
+            card.add(recipeImage);
+        }
+
         // --- Description ---
         if (recipe.description() != null && !recipe.description().isBlank()) {
             Paragraph desc = new Paragraph(recipe.description());
@@ -213,7 +230,7 @@ public class RecipeDetailView extends VerticalLayout implements HasUrlParameter<
         if (difficulty == null) return "var(--lumo-primary-color)";
         return switch (difficulty) {
             case "EASY" -> "var(--lumo-success-color)";
-            case "MEDIUM" -> "hsl(40, 80%, 45%)";
+            case "MEDIUM" -> "var(--recipe-warning-color)";
             case "HARD" -> "var(--lumo-error-color)";
             default -> "var(--lumo-contrast-50pct)";
         };
