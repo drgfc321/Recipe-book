@@ -30,6 +30,9 @@ html {
   --lumo-tint-50pct: rgba(216,220,228,0.5);
   --lumo-box-shadow-m: 0 2px 8px rgba(0,0,0,0.4);
   --recipe-warning-color: #c0903c;
+  --macro-protein: #c08050;
+  --macro-carbs: #5a9e7e;
+  --macro-fat: #c0903c;
   background-color: #1a1f2b;
   color: #d8dce4;
 }
@@ -318,4 +321,199 @@ html {
 .dashboard-stat-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}
+
+/* ===== Meal Plan Calendar ===== */
+
+.meal-plan-grid {
+    display: grid;
+    grid-template-columns: 100px repeat(7, 1fr);
+    gap: 4px;
+    width: 100%;
+    min-width: 800px;
+}
+
+.meal-plan-corner {
+    /* empty top-left cell */
+}
+
+.meal-plan-day-header {
+    text-align: center;
+    padding: 8px 4px 10px;
+    color: var(--lumo-secondary-text-color);
+    border-bottom: 2px solid rgba(216,220,228,0.08);
+}
+
+.meal-plan-day-header.today {
+    color: var(--lumo-primary-color);
+    border-bottom-color: var(--lumo-primary-color);
+}
+
+/* Slot labels */
+.meal-plan-slot-label {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: var(--lumo-font-size-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-left: 3px solid;
+}
+
+.meal-plan-slot-label.breakfast { border-color: #c0903c; color: #c0903c; }
+.meal-plan-slot-label.lunch     { border-color: #5a9e7e; color: #5a9e7e; }
+.meal-plan-slot-label.dinner    { border-color: #c08050; color: #c08050; }
+.meal-plan-slot-label.snack     { border-color: #8890a0; color: #8890a0; }
+
+/* Meal cells — shared */
+.meal-cell {
+    min-height: 72px;
+    border-radius: 6px;
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+/* Filled cell */
+.meal-cell-filled {
+    background: #232838;
+    border: 1px solid rgba(216,220,228,0.08);
+    padding: 8px 10px;
+    cursor: default;
+}
+
+.meal-cell-filled:hover {
+    border-color: rgba(216,220,228,0.18);
+}
+
+/* Slot accent borders */
+.meal-cell-filled.slot-breakfast { border-left: 3px solid #c0903c; }
+.meal-cell-filled.slot-lunch     { border-left: 3px solid #5a9e7e; }
+.meal-cell-filled.slot-dinner    { border-left: 3px solid #c08050; }
+.meal-cell-filled.slot-snack     { border-left: 3px solid #8890a0; }
+
+/* Slot hover glows */
+.meal-cell-filled.slot-breakfast:hover { box-shadow: 0 0 12px rgba(192,144,60,0.12); }
+.meal-cell-filled.slot-lunch:hover     { box-shadow: 0 0 12px rgba(90,158,126,0.12); }
+.meal-cell-filled.slot-dinner:hover    { box-shadow: 0 0 12px rgba(192,128,80,0.12); }
+.meal-cell-filled.slot-snack:hover     { box-shadow: 0 0 12px rgba(136,144,160,0.12); }
+
+.meal-recipe-name {
+    font-weight: 600;
+    font-size: var(--lumo-font-size-s);
+    color: var(--lumo-body-text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    padding-right: 20px;
+}
+
+.meal-calorie-badge {
+    font-size: var(--lumo-font-size-xs);
+    color: var(--lumo-secondary-text-color);
+    margin-top: 4px;
+    display: block;
+}
+
+/* Remove button — appears on hover */
+.meal-remove-btn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    min-width: 24px;
+    min-height: 24px;
+    padding: 0;
+}
+
+.meal-cell-filled:hover .meal-remove-btn {
+    opacity: 1;
+}
+
+/* Empty cell */
+.meal-cell-empty {
+    border: 1px dashed rgba(216,220,228,0.10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.meal-cell-empty:hover {
+    border-style: solid;
+    border-color: rgba(216,220,228,0.20);
+    background: rgba(216,220,228,0.03);
+}
+
+/* Daily macro summary row */
+.meal-plan-macro-label {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: var(--lumo-font-size-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--lumo-secondary-text-color);
+}
+
+.meal-plan-macro-cell {
+    padding: 8px 6px;
+    text-align: center;
+    background: rgba(216,220,228,0.03);
+    border-radius: 6px;
+}
+
+.macro-detail-row {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+}
+
+.macro-pill {
+    font-size: var(--lumo-font-size-xxs);
+    font-weight: 600;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--pill-color) 18%, transparent);
+    color: var(--pill-color);
+    white-space: nowrap;
+}
+
+/* Weekly summary bar */
+.meal-plan-weekly-summary {
+    background: #232838;
+    border-radius: 8px;
+    padding: 12px 20px;
+    border: 1px solid rgba(216,220,228,0.08);
+    flex-wrap: wrap;
+    gap: var(--lumo-space-l);
+}
+
+/* Week navigation */
+.meal-plan-week-nav {
+    gap: 8px;
+}
+
+.week-nav-btn {
+    min-width: 36px;
+    height: 36px;
+}
+
+/* Recipe picker dialog */
+.recipe-picker-card {
+    padding: 10px 14px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(216,220,228,0.06);
+    transition: background 0.15s;
+}
+
+.recipe-picker-card:hover {
+    background: rgba(216,220,228,0.06);
 }
