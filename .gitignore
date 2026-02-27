@@ -67,3 +67,6 @@ surefire-reports/
 # Temporary files
 tmp/
 temp/
+
+# Documentation
+ARCHITECTURE.md
