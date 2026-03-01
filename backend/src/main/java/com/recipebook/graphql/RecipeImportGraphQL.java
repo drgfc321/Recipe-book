@@ -1,6 +1,7 @@
 package com.recipebook.graphql;
 
 import com.recipebook.entity.User;
+import com.recipebook.service.PdfImageExtractorService;
 import com.recipebook.service.RecipeImportService;
 import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
@@ -20,6 +21,9 @@ public class RecipeImportGraphQL {
 
     @Inject
     RecipeImportService importService;
+
+    @Inject
+    PdfImageExtractorService pdfImageExtractorService;
 
     @Mutation("importRecipesFromFile")
     @Description("Import recipes from a JSON file (authenticated)")
@@ -43,6 +47,41 @@ public class RecipeImportGraphQL {
 
         RecipeImportService.ImportResult result = importService.importFromJson(path, owner);
         return new ImportResultDTO(result.imported(), result.failed(), result.errors());
+    }
+
+    @Mutation("extractPdfImages")
+    @Description("Extract images from a PDF cookbook and match them to recipes")
+    @Authenticated
+    public String extractPdfImages(@Name("filePath") @DefaultValue("carte.pdf") String filePath) throws GraphQLException {
+        Path path = Paths.get(filePath);
+        if (!path.isAbsolute()) {
+            path = Paths.get(System.getProperty("user.dir")).resolve(path);
+        }
+
+        if (!path.toFile().exists()) {
+            throw new GraphQLException("File not found: " + path);
+        }
+
+        try {
+            PdfImageExtractorService.ExtractionResult result = pdfImageExtractorService.extractAndMatch(path);
+
+            StringBuilder report = new StringBuilder();
+            report.append("Images extracted: ").append(result.imagesExtracted()).append("\n");
+            report.append("Recipes matched: ").append(result.recipesMatched()).append("\n");
+            report.append("\n--- Matches ---\n");
+            for (String detail : result.details()) {
+                report.append(detail).append("\n");
+            }
+            if (!result.unmatchedRecipes().isEmpty()) {
+                report.append("\n--- Unmatched recipes ---\n");
+                for (String name : result.unmatchedRecipes()) {
+                    report.append("  - ").append(name).append("\n");
+                }
+            }
+            return report.toString();
+        } catch (Exception e) {
+            throw new GraphQLException("Extraction failed: " + e.getMessage());
+        }
     }
 
     public static class ImportResultDTO {

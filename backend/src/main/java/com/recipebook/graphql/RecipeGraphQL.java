@@ -34,7 +34,8 @@ public class RecipeGraphQL {
     @Description("List recipes with optional filters")
     public List<RecipeResponse> getRecipes(@Name("category") RecipeCategory category,
                                            @Name("difficulty") Difficulty difficulty,
-                                           @Name("search") String search) {
+                                           @Name("search") String search,
+                                           @Name("ingredientIds") List<Long> ingredientIds) {
         StringBuilder query = new StringBuilder("1=1");
         Map<String, Object> params = new HashMap<>();
 
@@ -49,6 +50,15 @@ public class RecipeGraphQL {
         if (search != null && !search.isBlank()) {
             query.append(" and lower(name) like :search");
             params.put("search", "%" + search.toLowerCase() + "%");
+        }
+
+        if (ingredientIds != null && !ingredientIds.isEmpty()) {
+            query.append(" and id in (select ri.recipe.id from RecipeIngredient ri"
+                + " where ri.ingredient.id in (:ingredientIds)"
+                + " group by ri.recipe.id"
+                + " having count(distinct ri.ingredient.id) = :ingredientCount)");
+            params.put("ingredientIds", ingredientIds);
+            params.put("ingredientCount", (long) ingredientIds.size());
         }
 
         query.append(" order by createdAt desc");

@@ -7,6 +7,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.combobox.MultiSelectComboBox;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -21,7 +22,9 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Route(value = "recipes", layout = MainLayout.class)
 @PageTitle("Recipes | Recipe Book")
@@ -33,6 +36,20 @@ public class RecipeListView extends VerticalLayout {
     private final ComboBox<String> categoryFilter = new ComboBox<>("Category");
     private final ComboBox<String> difficultyFilter = new ComboBox<>("Difficulty");
     private final TextField searchField = new TextField("Search");
+    private final MultiSelectComboBox<IngredientChoice> ingredientFilter = new MultiSelectComboBox<>("Ingredients");
+    private boolean suppressIngredientListener;
+
+    private record IngredientChoice(Long id, String name) {
+        @Override
+        public boolean equals(Object o) {
+            return o instanceof IngredientChoice ic && Objects.equals(id, ic.id);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(id);
+        }
+    }
 
     public RecipeListView(RecipeService recipeService, AuthService authService) {
         this.recipeService = recipeService;
@@ -73,21 +90,47 @@ public class RecipeListView extends VerticalLayout {
         categoryFilter.setItems("BREAKFAST", "LUNCH", "DINNER", "DESSERT", "SNACK", "OTHER");
         categoryFilter.setPlaceholder("All");
         categoryFilter.setClearButtonVisible(true);
-        categoryFilter.addValueChangeListener(e -> refreshCards());
+        categoryFilter.addValueChangeListener(e -> {
+            suppressIngredientListener = true;
+            ingredientFilter.clear();
+            suppressIngredientListener = false;
+            refreshCards();
+        });
 
         difficultyFilter.setItems("EASY", "MEDIUM", "HARD");
         difficultyFilter.setPlaceholder("All");
         difficultyFilter.setClearButtonVisible(true);
-        difficultyFilter.addValueChangeListener(e -> refreshCards());
+        difficultyFilter.addValueChangeListener(e -> {
+            suppressIngredientListener = true;
+            ingredientFilter.clear();
+            suppressIngredientListener = false;
+            refreshCards();
+        });
 
         searchField.setPlaceholder("Search recipes...");
         searchField.setPrefixComponent(VaadinIcon.SEARCH.create());
         searchField.setClearButtonVisible(true);
         searchField.setValueChangeMode(ValueChangeMode.LAZY);
-        searchField.addValueChangeListener(e -> refreshCards());
+        searchField.addValueChangeListener(e -> {
+            suppressIngredientListener = true;
+            ingredientFilter.clear();
+            suppressIngredientListener = false;
+            refreshCards();
+        });
 
-        HorizontalLayout filters = new HorizontalLayout(categoryFilter, difficultyFilter, searchField);
+        ingredientFilter.setItemLabelGenerator(IngredientChoice::name);
+        ingredientFilter.setClearButtonVisible(true);
+        ingredientFilter.setPlaceholder("Filter by ingredients...");
+        ingredientFilter.setWidthFull();
+        ingredientFilter.setMaxWidth("400px");
+        ingredientFilter.setAutoExpand(MultiSelectComboBox.AutoExpandMode.BOTH);
+        ingredientFilter.addValueChangeListener(e -> {
+            if (!suppressIngredientListener) refreshCards();
+        });
+
+        HorizontalLayout filters = new HorizontalLayout(categoryFilter, difficultyFilter, searchField, ingredientFilter);
         filters.setAlignItems(FlexComponent.Alignment.BASELINE);
+        filters.setWidthFull();
         return filters;
     }
 
@@ -212,10 +255,15 @@ public class RecipeListView extends VerticalLayout {
 
     private void refreshCards() {
         try {
+            Set<IngredientChoice> selected = ingredientFilter.getValue();
+            List<Long> ingredientIds = selected.isEmpty() ? null
+                    : selected.stream().map(IngredientChoice::id).toList();
+
             List<RecipeResponse> recipes = recipeService.getRecipes(
                     categoryFilter.getValue(),
                     difficultyFilter.getValue(),
-                    searchField.getValue()
+                    searchField.getValue(),
+                    ingredientIds
             );
             cardContainer.removeAll();
             for (RecipeResponse recipe : recipes) {
@@ -226,10 +274,32 @@ public class RecipeListView extends VerticalLayout {
                 empty.getStyle().set("color", "var(--lumo-secondary-text-color)").set("padding", "var(--lumo-space-l)");
                 cardContainer.add(empty);
             }
+            updateAvailableIngredients(recipes);
         } catch (Exception e) {
             Notification.show("Failed to load recipes: " + e.getMessage(), 3000, Notification.Position.MIDDLE)
                     .addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
+    }
+
+    private void updateAvailableIngredients(List<RecipeResponse> recipes) {
+        Set<IngredientChoice> selected = ingredientFilter.getValue();
+
+        Set<IngredientChoice> available = recipes.stream()
+                .filter(r -> r.ingredients() != null)
+                .flatMap(r -> r.ingredients().stream())
+                .map(ri -> new IngredientChoice(ri.ingredientId(), ri.ingredientName()))
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        // Merge: keep selected items + add available ones
+        List<IngredientChoice> items = Stream.concat(selected.stream(), available.stream())
+                .distinct()
+                .sorted(Comparator.comparing(IngredientChoice::name, String.CASE_INSENSITIVE_ORDER))
+                .toList();
+
+        suppressIngredientListener = true;
+        ingredientFilter.setItems(items);
+        ingredientFilter.setValue(selected);
+        suppressIngredientListener = false;
     }
 
     private void openCreateDialog() {
