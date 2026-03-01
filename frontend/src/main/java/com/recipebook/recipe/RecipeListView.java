@@ -40,7 +40,7 @@ public class RecipeListView extends VerticalLayout {
 
         setPadding(true);
         setSpacing(true);
-        setSizeFull();
+        setWidthFull();
 
         add(createToolbar());
         add(createFilters());
@@ -95,7 +95,6 @@ public class RecipeListView extends VerticalLayout {
         cardContainer.setFlexWrap(FlexLayout.FlexWrap.WRAP);
         cardContainer.getStyle()
                 .set("gap", "var(--lumo-space-m)")
-                .set("overflow-y", "auto")
                 .set("align-content", "flex-start");
         cardContainer.setWidthFull();
     }
