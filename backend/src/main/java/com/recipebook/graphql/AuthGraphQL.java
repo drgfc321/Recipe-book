@@ -2,6 +2,7 @@ package com.recipebook.graphql;
 
 import com.recipebook.dto.AuthResponse;
 import com.recipebook.entity.User;
+import com.recipebook.service.NutritionTargetService;
 import com.recipebook.service.PasswordService;
 import com.recipebook.service.TokenService;
 import io.quarkus.security.Authenticated;
@@ -21,6 +22,9 @@ public class AuthGraphQL {
 
     @Inject
     TokenService tokenService;
+
+    @Inject
+    NutritionTargetService nutritionTargetService;
 
     @Inject
     JsonWebToken jwt;
@@ -47,6 +51,8 @@ public class AuthGraphQL {
         user.language = language != null ? language : "en";
         user.createdAt = LocalDateTime.now();
         user.persist();
+
+        nutritionTargetService.createDefaultTarget(user);
 
         String token = tokenService.generateToken(user);
         return new AuthResponse(token, user.id, user.username, user.email, user.role);

@@ -578,3 +578,15 @@ html {
 .match-badge {
     font-weight: 600;
 }
+
+/* Toggle button — inactive state (visible on dark bg) */
+vaadin-button.toggle-inactive {
+    --vaadin-button-background: rgba(216,220,228,0.12);
+    --vaadin-button-text-color: #d8dce4;
+    --vaadin-button-border: 1px solid rgba(216,220,228,0.25);
+}
+
+vaadin-button.toggle-inactive:hover {
+    --vaadin-button-background: rgba(216,220,228,0.18);
+    --vaadin-button-border: 1px solid rgba(216,220,228,0.4);
+}

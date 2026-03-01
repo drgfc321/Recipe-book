@@ -1,5 +1,6 @@
 package com.recipebook.views;
 
+import com.recipebook.foodlog.FoodLogView;
 import com.recipebook.ingredient.IngredientListView;
 import com.recipebook.mealplan.MealPlanView;
 import com.recipebook.pantry.PantryView;
@@ -78,6 +79,7 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
         nav.addItem(new SideNavItem("Recipes", RecipeListView.class, VaadinIcon.BOOK.create()));
         nav.addItem(new SideNavItem("Ingredients", IngredientListView.class, VaadinIcon.STOCK.create()));
         nav.addItem(new SideNavItem("Meal Planner", MealPlanView.class, VaadinIcon.CALENDAR.create()));
+        nav.addItem(new SideNavItem("Food Log", FoodLogView.class, VaadinIcon.NOTEBOOK.create()));
         nav.addItem(new SideNavItem("Pantry", PantryView.class, VaadinIcon.STORAGE.create()));
         nav.addItem(new SideNavItem("Shopping List", ShoppingListView.class, VaadinIcon.CART.create()));
         nav.addItem(new SideNavItem("Recommendations", RecommendationView.class, VaadinIcon.MAGIC.create()));

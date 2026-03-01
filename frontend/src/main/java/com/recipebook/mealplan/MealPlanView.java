@@ -1,5 +1,6 @@
 package com.recipebook.mealplan;
 
+import com.recipebook.foodlog.FoodLogService;
 import com.recipebook.recipe.MacroInfo;
 import com.recipebook.recipe.RecipeResponse;
 import com.recipebook.ui.MacroBar;
@@ -32,6 +33,7 @@ import java.util.List;
 public class MealPlanView extends VerticalLayout {
 
     private final MealPlanService mealPlanService;
+    private final FoodLogService foodLogService;
     private LocalDate weekStart;
     private WeeklyMealPlanResponse weekData;
 
@@ -43,8 +45,9 @@ public class MealPlanView extends VerticalLayout {
     private static final String[] SLOT_LABELS = {"Breakfast", "Lunch", "Dinner", "Snack"};
     private static final String[] SLOT_CSS = {"breakfast", "lunch", "dinner", "snack"};
 
-    public MealPlanView(MealPlanService mealPlanService) {
+    public MealPlanView(MealPlanService mealPlanService, FoodLogService foodLogService) {
         this.mealPlanService = mealPlanService;
+        this.foodLogService = foodLogService;
 
         LocalDate today = LocalDate.now();
         weekStart = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
@@ -218,12 +221,26 @@ public class MealPlanView extends VerticalLayout {
         Span calories = new Span("%.0f kcal".formatted(cals));
         calories.addClassName("meal-calorie-badge");
 
+        Button logBtn = new Button(VaadinIcon.CHECK.create());
+        logBtn.addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY, ButtonVariant.LUMO_SUCCESS);
+        logBtn.getElement().setAttribute("title", "Log as eaten");
+        logBtn.addClickListener(e -> {
+            try {
+                foodLogService.logFood(date, mealSlot, meal.recipe().id(), 1.0, null);
+                Notification.show(meal.recipe().name() + " logged", 2000, Notification.Position.BOTTOM_START)
+                        .addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+            } catch (Exception ex) {
+                Notification.show("Failed: " + ex.getMessage(), 3000, Notification.Position.MIDDLE)
+                        .addThemeVariants(NotificationVariant.LUMO_ERROR);
+            }
+        });
+
         Button removeBtn = new Button(VaadinIcon.CLOSE_SMALL.create());
         removeBtn.addClassName("meal-remove-btn");
         removeBtn.addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY, ButtonVariant.LUMO_ERROR);
         removeBtn.addClickListener(e -> removeMeal(date, mealSlot));
 
-        cell.add(name, calories, removeBtn);
+        cell.add(name, calories, logBtn, removeBtn);
         return cell;
     }
 
