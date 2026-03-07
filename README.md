@@ -77,8 +77,11 @@ A full-stack recipe management and meal planning application with macronutrient 
 
 ```
 recipe-book/
-├── docker-compose.yml          # PostgreSQL + Adminer
+├── docker-compose.yml          # PostgreSQL + Adminer (development)
+├── docker-compose.prod.yml     # Full stack with nginx (production)
 ├── .env.example                # Environment variable template
+├── nginx/                      # Nginx reverse proxy config + certs
+├── scripts/                    # Utility scripts (cert generation)
 ├── backend/                    # Quarkus GraphQL API
 │   └── src/main/java/com/recipebook/
 │       ├── entity/             # JPA entities (Recipe, Ingredient, MealPlan, etc.)
@@ -94,19 +97,57 @@ recipe-book/
 └── tests/                      # Playwright E2E tests
 ```
 
+## Production Deployment (Docker + HTTPS)
+
+The production stack runs all services behind an nginx reverse proxy with TLS termination. Only ports 80 and 443 are exposed.
+
+1. **Generate self-signed certificates**
+   ```powershell
+   powershell -File scripts/generate-certs.ps1
+   ```
+   Or from Git Bash:
+   ```bash
+   ./scripts/generate-certs.sh
+   ```
+
+2. **Configure environment**
+   ```bash
+   cp .env.example .env
+   # Edit .env — set POSTGRES_PASSWORD, ADMIN_PASSWORD, etc.
+   ```
+
+3. **Build and start**
+   ```bash
+   docker compose -f docker-compose.prod.yml up --build -d
+   ```
+
+4. **Access** at [https://localhost](https://localhost) (accept the self-signed certificate warning)
+
+| Service  | URL                          |
+|----------|------------------------------|
+| App      | https://localhost             |
+| GraphQL  | https://localhost/graphql     |
+| GraphQL UI | https://localhost/q/graphql-ui |
+
 ## Docker Commands
 
 ```bash
-# Start containers
-docker-compose up -d
+# Development — start database only
+docker compose up -d
 
-# Stop containers
-docker-compose down
+# Development — stop
+docker compose down
+
+# Production — start full stack
+docker compose -f docker-compose.prod.yml up --build -d
+
+# Production — stop
+docker compose -f docker-compose.prod.yml down
 
 # View logs
-docker-compose logs -f
+docker compose logs -f
 
 # Reset database (delete all data)
-docker-compose down -v
-docker-compose up -d
+docker compose down -v
+docker compose up -d
 ```

@@ -71,5 +71,8 @@ temp/
 # Documentation
 ARCHITECTURE.md
 
-# Security - RSA keys
+# Security - RSA keys and TLS certificates
 *.pem
+*.crt
+*.key
+nginx/certs/
