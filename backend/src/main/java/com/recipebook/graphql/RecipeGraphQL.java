@@ -40,37 +40,37 @@ public class RecipeGraphQL {
         Map<String, Object> params = new HashMap<>();
 
         if (category != null) {
-            query.append(" and category = :category");
+            query.append(" and r.category = :category");
             params.put("category", category);
         }
         if (difficulty != null) {
-            query.append(" and difficulty = :difficulty");
+            query.append(" and r.difficulty = :difficulty");
             params.put("difficulty", difficulty);
         }
         if (search != null && !search.isBlank()) {
-            query.append(" and lower(name) like :search");
+            query.append(" and lower(r.name) like :search");
             params.put("search", "%" + search.toLowerCase() + "%");
         }
 
         if (ingredientIds != null && !ingredientIds.isEmpty()) {
-            query.append(" and id in (select ri.recipe.id from RecipeIngredient ri"
-                + " where ri.ingredient.id in (:ingredientIds)"
-                + " group by ri.recipe.id"
-                + " having count(distinct ri.ingredient.id) = :ingredientCount)");
+            query.append(" and r.id in (select ri2.recipe.id from RecipeIngredient ri2"
+                + " where ri2.ingredient.id in (:ingredientIds)"
+                + " group by ri2.recipe.id"
+                + " having count(distinct ri2.ingredient.id) = :ingredientCount)");
             params.put("ingredientIds", ingredientIds);
             params.put("ingredientCount", (long) ingredientIds.size());
         }
 
-        query.append(" order by createdAt desc");
+        query.append(" order by r.createdAt desc");
 
-        List<Recipe> recipes = Recipe.find(query.toString(), params).list();
+        List<Recipe> recipes = Recipe.listWithDetails(query.toString(), params);
         return recipes.stream().map(macroService::toResponse).collect(Collectors.toList());
     }
 
     @Query("recipe")
     @Description("Get a single recipe by ID")
     public RecipeResponse getRecipe(@Name("id") Long id) throws GraphQLException {
-        Recipe recipe = Recipe.findById(id);
+        Recipe recipe = Recipe.findByIdWithDetails(id);
         if (recipe == null) {
             throw new GraphQLException("Recipe not found");
         }

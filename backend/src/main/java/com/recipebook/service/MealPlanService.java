@@ -27,16 +27,16 @@ public class MealPlanService {
     MacroCalculationService macroService;
 
     public List<MealPlanResponse> getMealPlansByDateRange(Long userId, LocalDate startDate, LocalDate endDate) {
-        List<MealPlan> plans = MealPlan.list(
-                "user.id = ?1 and date >= ?2 and date <= ?3 order by date, mealSlot",
+        List<MealPlan> plans = MealPlan.listWithRecipeDetails(
+                "mp.user.id = ?1 and mp.date >= ?2 and mp.date <= ?3",
                 userId, startDate, endDate);
         return plans.stream().map(this::toResponse).collect(Collectors.toList());
     }
 
     public WeeklyMealPlanResponse getWeeklyMealPlan(Long userId, LocalDate weekStart) {
         LocalDate weekEnd = weekStart.plusDays(6);
-        List<MealPlan> plans = MealPlan.list(
-                "user.id = ?1 and date >= ?2 and date <= ?3 order by date, mealSlot",
+        List<MealPlan> plans = MealPlan.listWithRecipeDetails(
+                "mp.user.id = ?1 and mp.date >= ?2 and mp.date <= ?3",
                 userId, weekStart, weekEnd);
 
         Map<LocalDate, List<MealPlan>> byDate = plans.stream()
@@ -82,7 +82,8 @@ public class MealPlanService {
     }
 
     public MacroInfo getDailyMacroSummary(Long userId, LocalDate date) {
-        List<MealPlan> plans = MealPlan.list("user.id = ?1 and date = ?2", userId, date);
+        List<MealPlan> plans = MealPlan.listWithRecipeDetails(
+                "mp.user.id = ?1 and mp.date = ?2", userId, date);
         double cal = 0, pro = 0, carbs = 0, fat = 0;
         for (MealPlan plan : plans) {
             RecipeResponse recipe = macroService.toResponse(plan.recipe);

@@ -18,15 +18,16 @@ import java.util.stream.Collectors;
 public class PantryService {
 
     public List<PantryItemResponse> getPantryItems(Long userId) {
-        List<PantryItem> items = PantryItem.list("user.id", userId);
+        List<PantryItem> items = PantryItem.find(
+                "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.user.id = ?1", userId).list();
         return items.stream().map(this::toResponse).collect(Collectors.toList());
     }
 
     public List<PantryItemResponse> getExpiringItems(Long userId, int withinDays) {
         LocalDate threshold = LocalDate.now().plusDays(withinDays);
-        List<PantryItem> items = PantryItem.list(
-                "user.id = ?1 and expirationDate is not null and expirationDate <= ?2",
-                userId, threshold);
+        List<PantryItem> items = PantryItem.find(
+                "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.user.id = ?1 AND pi.expirationDate IS NOT NULL AND pi.expirationDate <= ?2",
+                userId, threshold).list();
         return items.stream().map(this::toResponse).collect(Collectors.toList());
     }
 
@@ -62,12 +63,11 @@ public class PantryService {
     }
 
     public PantryItemResponse updatePantryItem(Long userId, Long itemId, PantryItemUpdateInput input) throws GraphQLException {
-        PantryItem item = PantryItem.findById(itemId);
+        PantryItem item = PantryItem.find(
+                "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.id = ?1 AND pi.user.id = ?2",
+                itemId, userId).firstResult();
         if (item == null) {
             throw new GraphQLException("Pantry item not found");
-        }
-        if (!item.user.id.equals(userId)) {
-            throw new GraphQLException("You can only modify your own pantry items");
         }
         if (input.quantity != null) {
             item.quantity = input.quantity;
@@ -82,12 +82,9 @@ public class PantryService {
     }
 
     public boolean removePantryItem(Long userId, Long itemId) throws GraphQLException {
-        PantryItem item = PantryItem.findById(itemId);
+        PantryItem item = PantryItem.find("id = ?1 and user.id = ?2", itemId, userId).firstResult();
         if (item == null) {
             throw new GraphQLException("Pantry item not found");
-        }
-        if (!item.user.id.equals(userId)) {
-            throw new GraphQLException("You can only modify your own pantry items");
         }
         item.delete();
         return true;

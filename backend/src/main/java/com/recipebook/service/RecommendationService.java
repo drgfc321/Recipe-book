@@ -26,7 +26,8 @@ public class RecommendationService {
 
     public List<RecipeRecommendationResponse> getRecommendations(Long userId, RecommendationFilterInput filter) {
         // Get pantry as map of ingredientId -> grams
-        List<PantryItem> pantryItems = PantryItem.list("user.id", userId);
+        List<PantryItem> pantryItems = PantryItem.find(
+                "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.user.id = ?1", userId).list();
         Map<Long, Double> pantry = new HashMap<>();
         for (PantryItem pi : pantryItems) {
             pantry.put(pi.ingredient.id, MacroCalculationService.toGrams(pi.quantity, pi.unit));
@@ -37,16 +38,16 @@ public class RecommendationService {
         Map<String, Object> params = new HashMap<>();
         if (filter != null) {
             if (filter.category != null) {
-                query.append(" and category = :category");
+                query.append(" and r.category = :category");
                 params.put("category", filter.category);
             }
             if (filter.difficulty != null) {
-                query.append(" and difficulty = :difficulty");
+                query.append(" and r.difficulty = :difficulty");
                 params.put("difficulty", filter.difficulty);
             }
         }
 
-        List<Recipe> recipes = Recipe.find(query.toString(), params).list();
+        List<Recipe> recipes = Recipe.listWithDetails(query.toString(), params);
 
         List<RecipeRecommendationResponse> recommendations = new ArrayList<>();
         for (Recipe recipe : recipes) {
@@ -62,12 +63,13 @@ public class RecommendationService {
     }
 
     public List<MissingIngredientResponse> getMissingIngredients(Long userId, Long recipeId) {
-        Recipe recipe = Recipe.findById(recipeId);
+        Recipe recipe = Recipe.findByIdWithDetails(recipeId);
         if (recipe == null) {
             return List.of();
         }
 
-        List<PantryItem> pantryItems = PantryItem.list("user.id", userId);
+        List<PantryItem> pantryItems = PantryItem.find(
+                "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.user.id = ?1", userId).list();
         Map<Long, Double> pantry = new HashMap<>();
         for (PantryItem pi : pantryItems) {
             pantry.put(pi.ingredient.id, MacroCalculationService.toGrams(pi.quantity, pi.unit));

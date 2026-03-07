@@ -115,7 +115,7 @@ Schema management and query performance.
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #8  Fix N+1 query problems                                    ~ 2-3h    │
+│  #8  Fix N+1 query problems                         DONE (2026-03-07)    │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  Problem:  @ManyToOne without fetch strategy causes N+1 selects.          │
 │            Loading 50 recipes triggers 50+ extra queries for authors,     │

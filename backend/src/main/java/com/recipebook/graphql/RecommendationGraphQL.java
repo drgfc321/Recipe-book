@@ -45,7 +45,7 @@ public class RecommendationGraphQL {
     public boolean addMissingToShoppingList(@Name("recipeId") Long recipeId, @Name("weekStart") LocalDate weekStart) throws GraphQLException {
         Long userId = Long.parseLong(jwt.getSubject());
 
-        Recipe recipe = Recipe.findById(recipeId);
+        Recipe recipe = Recipe.findByIdWithDetails(recipeId);
         if (recipe == null) {
             throw new GraphQLException("Recipe not found");
         }
@@ -53,7 +53,8 @@ public class RecommendationGraphQL {
         User user = User.findById(userId);
 
         // Get pantry
-        List<PantryItem> pantryItems = PantryItem.list("user.id", userId);
+        List<PantryItem> pantryItems = PantryItem.find(
+                "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.user.id = ?1", userId).list();
         Map<Long, Double> pantry = new HashMap<>();
         for (PantryItem pi : pantryItems) {
             pantry.put(pi.ingredient.id, MacroCalculationService.toGrams(pi.quantity, pi.unit));

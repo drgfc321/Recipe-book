@@ -32,9 +32,16 @@ public class FoodLogService {
     NutritionTargetService nutritionTargetService;
 
     public DailyFoodLogResponse getDailyFoodLog(Long userId, LocalDate date) {
-        List<FoodLog> logs = FoodLog.list(
-                "user.id = ?1 and date = ?2 order by mealSlot, loggedAt",
-                userId, date);
+        List<FoodLog> logs = FoodLog.find(
+                "FROM FoodLog fl " +
+                "LEFT JOIN FETCH fl.recipe r " +
+                "LEFT JOIN FETCH r.owner " +
+                "LEFT JOIN FETCH r.ingredients ri " +
+                "LEFT JOIN FETCH ri.ingredient " +
+                "LEFT JOIN FETCH fl.ingredient " +
+                "WHERE fl.user.id = ?1 AND fl.date = ?2 " +
+                "ORDER BY fl.mealSlot, fl.loggedAt",
+                userId, date).list();
         List<FoodLogResponse> entries = logs.stream().map(this::toResponse).collect(Collectors.toList());
 
         double actualCal = 0, actualPro = 0, actualCarbs = 0, actualFat = 0;
@@ -49,8 +56,8 @@ public class FoodLogService {
 
         UserNutritionTargetResponse targets = nutritionTargetService.getTarget(userId);
 
-        List<MealPlan> plans = MealPlan.list(
-                "user.id = ?1 and date = ?2 order by mealSlot", userId, date);
+        List<MealPlan> plans = MealPlan.listWithRecipeDetails(
+                "mp.user.id = ?1 and mp.date = ?2", userId, date);
 
         List<PlannedMealStatus> plannedMeals = new ArrayList<>();
         for (MealPlan plan : plans) {
@@ -133,8 +140,15 @@ public class FoodLogService {
     }
 
     public FoodLogResponse updateFoodLog(Long userId, Long id, double servings) throws GraphQLException {
-        FoodLog log = FoodLog.findById(id);
-        if (log == null || !log.user.id.equals(userId)) {
+        FoodLog log = FoodLog.find(
+                "FROM FoodLog fl " +
+                "LEFT JOIN FETCH fl.recipe r " +
+                "LEFT JOIN FETCH r.owner " +
+                "LEFT JOIN FETCH r.ingredients ri " +
+                "LEFT JOIN FETCH ri.ingredient " +
+                "LEFT JOIN FETCH fl.ingredient " +
+                "WHERE fl.id = ?1 AND fl.user.id = ?2", id, userId).firstResult();
+        if (log == null) {
             throw new GraphQLException("Food log entry not found");
         }
         log.servings = servings;
@@ -142,8 +156,8 @@ public class FoodLogService {
     }
 
     public boolean removeFoodLog(Long userId, Long id) throws GraphQLException {
-        FoodLog log = FoodLog.findById(id);
-        if (log == null || !log.user.id.equals(userId)) {
+        FoodLog log = FoodLog.find("id = ?1 and user.id = ?2", id, userId).firstResult();
+        if (log == null) {
             throw new GraphQLException("Food log entry not found");
         }
         log.delete();

@@ -23,16 +23,17 @@ import java.util.stream.Collectors;
 public class ShoppingListService {
 
     public ShoppingListResponse getShoppingList(Long userId, LocalDate weekStart) {
-        List<ShoppingListItem> items = ShoppingListItem.list(
-                "user.id = ?1 and weekStartDate = ?2", userId, weekStart);
+        List<ShoppingListItem> items = ShoppingListItem.find(
+                "FROM ShoppingListItem si LEFT JOIN FETCH si.ingredient WHERE si.user.id = ?1 AND si.weekStartDate = ?2",
+                userId, weekStart).list();
         return buildResponse(weekStart, items);
     }
 
     public ShoppingListResponse generateShoppingList(Long userId, LocalDate weekStart) throws GraphQLException {
         LocalDate weekEnd = weekStart.plusDays(6);
 
-        List<MealPlan> plans = MealPlan.list(
-                "user.id = ?1 and date >= ?2 and date <= ?3", userId, weekStart, weekEnd);
+        List<MealPlan> plans = MealPlan.listWithRecipeDetails(
+                "mp.user.id = ?1 and mp.date >= ?2 and mp.date <= ?3", userId, weekStart, weekEnd);
 
         if (plans.isEmpty()) {
             throw new GraphQLException("No meal plans found for this week");
@@ -50,7 +51,8 @@ public class ShoppingListService {
         }
 
         // Get pantry quantities
-        List<PantryItem> pantryItems = PantryItem.list("user.id", userId);
+        List<PantryItem> pantryItems = PantryItem.find(
+                "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.user.id = ?1", userId).list();
         Map<Long, Double> pantry = new HashMap<>();
         for (PantryItem pi : pantryItems) {
             double grams = MacroCalculationService.toGrams(pi.quantity, pi.unit);
@@ -83,8 +85,9 @@ public class ShoppingListService {
             }
         }
 
-        List<ShoppingListItem> items = ShoppingListItem.list(
-                "user.id = ?1 and weekStartDate = ?2", userId, weekStart);
+        List<ShoppingListItem> items = ShoppingListItem.find(
+                "FROM ShoppingListItem si LEFT JOIN FETCH si.ingredient WHERE si.user.id = ?1 AND si.weekStartDate = ?2",
+                userId, weekStart).list();
         return buildResponse(weekStart, items);
     }
 
@@ -108,24 +111,20 @@ public class ShoppingListService {
     }
 
     public ShoppingListItemResponse toggleShoppingListItem(Long userId, Long itemId) throws GraphQLException {
-        ShoppingListItem item = ShoppingListItem.findById(itemId);
+        ShoppingListItem item = ShoppingListItem.find(
+                "FROM ShoppingListItem si LEFT JOIN FETCH si.ingredient WHERE si.id = ?1 AND si.user.id = ?2",
+                itemId, userId).firstResult();
         if (item == null) {
             throw new GraphQLException("Shopping list item not found");
-        }
-        if (!item.user.id.equals(userId)) {
-            throw new GraphQLException("You can only modify your own shopping list");
         }
         item.purchased = !item.purchased;
         return toItemResponse(item);
     }
 
     public boolean removeShoppingListItem(Long userId, Long itemId) throws GraphQLException {
-        ShoppingListItem item = ShoppingListItem.findById(itemId);
+        ShoppingListItem item = ShoppingListItem.find("id = ?1 and user.id = ?2", itemId, userId).firstResult();
         if (item == null) {
             throw new GraphQLException("Shopping list item not found");
-        }
-        if (!item.user.id.equals(userId)) {
-            throw new GraphQLException("You can only modify your own shopping list");
         }
         item.delete();
         return true;
