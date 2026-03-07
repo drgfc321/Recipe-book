@@ -88,7 +88,7 @@ Schema management and query performance.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #6  Flyway for DB migrations                                   ~ 2-3h    │
+│  #6  Flyway for DB migrations                        DONE (2026-03-07)  │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  Problem:  hibernate.generation=update is dangerous in production.        │
 │            Renaming a column = drop old + create new = data loss.         │
@@ -101,7 +101,7 @@ Schema management and query performance.
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #7  Add indexes on frequently queried columns                  ~ 30 min  │
+│  #7  Add indexes on frequently queried columns       DONE (2026-03-07)  │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  Problem:  Queries filter by user_id + date on several tables but         │
 │            no indexes exist. Full table scans as data grows.              │
