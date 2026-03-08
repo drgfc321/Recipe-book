@@ -16,8 +16,14 @@ public class User extends PanacheEntity {
     @Column(nullable = false, unique = true)
     public String username;
 
-    @Column(name = "password_hash", nullable = false)
+    @Column(name = "password_hash")
     public String passwordHash;
+
+    @Column(name = "auth_provider")
+    public String authProvider = "LOCAL";
+
+    @Column(name = "provider_id")
+    public String providerId;
 
     @Column(nullable = false)
     public String role = "USER";

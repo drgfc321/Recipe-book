@@ -1,6 +1,7 @@
 package com.recipebook.service;
 
 import com.recipebook.dto.AuthResponse;
+import com.recipebook.dto.OAuthConfig;
 import com.recipebook.dto.UserInfo;
 import com.vaadin.flow.server.VaadinSession;
 import org.slf4j.Logger;
@@ -26,7 +27,7 @@ public class AuthService {
         String query = """
                 mutation($email: String!, $password: String!) {
                     login(email: $email, password: $password) {
-                        token userId username email role avatarUrl
+                        token userId username email role avatarUrl authProvider
                     }
                 }
                 """;
@@ -44,7 +45,7 @@ public class AuthService {
         String query = """
                 mutation($email: String!, $username: String!, $password: String!, $language: String!) {
                     register(email: $email, username: $username, password: $password, language: $language) {
-                        token userId username email role avatarUrl
+                        token userId username email role avatarUrl authProvider
                     }
                 }
                 """;
@@ -96,7 +97,7 @@ public class AuthService {
         try {
             String query = """
                     query {
-                        me { id username email role avatarUrl }
+                        me { id username email role avatarUrl authProvider }
                     }
                     """;
             return apiClient.query(query, null, UserInfo.class, "me");
@@ -133,7 +134,7 @@ public class AuthService {
         String query = """
                 mutation($token: String!, $newPassword: String!) {
                     resetPassword(token: $token, newPassword: $newPassword) {
-                        token userId username email role avatarUrl
+                        token userId username email role avatarUrl authProvider
                     }
                 }
                 """;
@@ -151,7 +152,7 @@ public class AuthService {
         String query = """
                 mutation($currentPassword: String!, $newPassword: String!) {
                     changePassword(currentPassword: $currentPassword, newPassword: $newPassword) {
-                        token userId username email role avatarUrl
+                        token userId username email role avatarUrl authProvider
                     }
                 }
                 """;
@@ -169,7 +170,7 @@ public class AuthService {
         String query = """
                 mutation($username: String!, $email: String!, $avatarUrl: String) {
                     updateProfile(username: $username, email: $email, avatarUrl: $avatarUrl) {
-                        token userId username email role avatarUrl
+                        token userId username email role avatarUrl authProvider
                     }
                 }
                 """;
@@ -184,6 +185,33 @@ public class AuthService {
         return response;
     }
 
+    public void loginWithOAuthToken(String token) {
+        LOG.info("OAuth token login");
+        storeToken(token);
+        UserInfo user = fetchCurrentUser();
+        if (user != null) {
+            VaadinSession session = VaadinSession.getCurrent();
+            if (session != null) {
+                session.setAttribute("user_info", user);
+            }
+            LOG.info("OAuth login successful for user: {}", user.username());
+        }
+    }
+
+    public OAuthConfig getOAuthConfig() {
+        try {
+            return apiClient.getWebClient()
+                    .get()
+                    .uri(apiClient.getBackendUrl() + "/api/auth/oauth-config")
+                    .retrieve()
+                    .bodyToMono(OAuthConfig.class)
+                    .block();
+        } catch (Exception e) {
+            LOG.warn("Failed to fetch OAuth config: {}", e.getMessage());
+            return new OAuthConfig(false, false);
+        }
+    }
+
     private void storeUserInfo(AuthResponse response) {
         VaadinSession session = VaadinSession.getCurrent();
         if (session != null) {
@@ -192,7 +220,8 @@ public class AuthService {
                     response.username(),
                     response.email(),
                     response.role(),
-                    response.avatarUrl()
+                    response.avatarUrl(),
+                    response.authProvider()
             );
             session.setAttribute("user_info", userInfo);
         }

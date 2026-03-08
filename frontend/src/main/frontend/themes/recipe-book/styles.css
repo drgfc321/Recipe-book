@@ -592,3 +592,55 @@ vaadin-button.toggle-inactive:hover {
     --vaadin-button-background: rgba(216,220,228,0.18);
     --vaadin-button-border: 1px solid rgba(216,220,228,0.4);
 }
+
+/* ── OAuth ── */
+.oauth-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: var(--lumo-space-m) 0;
+    color: var(--lumo-secondary-text-color);
+    font-size: var(--lumo-font-size-s);
+}
+.oauth-divider::before,
+.oauth-divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid var(--lumo-contrast-20pct);
+}
+.oauth-divider::before { margin-right: var(--lumo-space-s); }
+.oauth-divider::after  { margin-left:  var(--lumo-space-s); }
+
+.oauth-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--lumo-space-s) var(--lumo-space-m);
+    border-radius: var(--lumo-border-radius-m);
+    border: 1px solid var(--lumo-contrast-20pct);
+    text-decoration: none;
+    font-size: var(--lumo-font-size-m);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    box-sizing: border-box;
+}
+.oauth-btn:hover {
+    border-color: var(--lumo-contrast-30pct);
+}
+
+.oauth-btn-google {
+    background: #ffffff;
+    color: #3c4043;
+}
+.oauth-btn-google:hover {
+    background: #f1f3f4;
+}
+
+.oauth-btn-github {
+    background: #24292e;
+    color: #ffffff;
+}
+.oauth-btn-github:hover {
+    background: #2f363d;
+}

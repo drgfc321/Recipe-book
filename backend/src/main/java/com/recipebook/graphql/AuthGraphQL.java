@@ -80,7 +80,7 @@ public class AuthGraphQL {
 
         String token = tokenService.generateToken(user);
         LOG.infof("User registered successfully: %s (id=%d)", user.username, user.id);
-        return new AuthResponse(token, user.id, user.username, user.email, user.role, user.avatarUrl);
+        return new AuthResponse(token, user.id, user.username, user.email, user.role, user.avatarUrl, user.authProvider);
     }
 
     @Mutation("login")
@@ -94,6 +94,11 @@ public class AuthGraphQL {
             throw new ValidationException("Invalid email or password");
         }
 
+        if (!"LOCAL".equals(user.authProvider)) {
+            LOG.warnf("Login failed: user %s uses %s authentication", email, user.authProvider);
+            throw new ValidationException("This account uses " + user.authProvider + " login. Please use the " + user.authProvider + " button.");
+        }
+
         if (!passwordService.verifyPassword(password, user.passwordHash)) {
             LOG.warnf("Login failed: wrong password for user: %s", email);
             throw new ValidationException("Invalid email or password");
@@ -103,7 +108,7 @@ public class AuthGraphQL {
 
         String token = tokenService.generateToken(user);
         LOG.infof("User logged in: %s (id=%d)", user.username, user.id);
-        return new AuthResponse(token, user.id, user.username, user.email, user.role, user.avatarUrl);
+        return new AuthResponse(token, user.id, user.username, user.email, user.role, user.avatarUrl, user.authProvider);
     }
 
     @Query("me")
@@ -162,7 +167,7 @@ public class AuthGraphQL {
 
         String token = tokenService.generateToken(user);
         LOG.infof("Profile updated for user: %s (id=%d)", user.username, user.id);
-        return new AuthResponse(token, user.id, user.username, user.email, user.role, user.avatarUrl);
+        return new AuthResponse(token, user.id, user.username, user.email, user.role, user.avatarUrl, user.authProvider);
     }
 
     @Mutation("changePassword")
@@ -177,6 +182,11 @@ public class AuthGraphQL {
             throw new NotFoundException("User not found");
         }
 
+        if (!"LOCAL".equals(user.authProvider)) {
+            LOG.warnf("Password change rejected: user %d uses %s authentication", userId, user.authProvider);
+            throw new ValidationException("Password change is not available for " + user.authProvider + " accounts");
+        }
+
         if (!passwordService.verifyPassword(currentPassword, user.passwordHash)) {
             LOG.warnf("Password change failed: wrong current password for userId=%d", userId);
             throw new ValidationException("Current password is incorrect");
@@ -189,7 +199,7 @@ public class AuthGraphQL {
 
         String token = tokenService.generateToken(user);
         LOG.infof("Password changed for user: %s (id=%d)", user.username, user.id);
-        return new AuthResponse(token, user.id, user.username, user.email, user.role, user.avatarUrl);
+        return new AuthResponse(token, user.id, user.username, user.email, user.role, user.avatarUrl, user.authProvider);
     }
 
     @Mutation("deleteUser")
@@ -213,6 +223,11 @@ public class AuthGraphQL {
         User user = User.find("email", email).firstResult();
         if (user == null) {
             LOG.infof("Password reset requested for unknown email: %s", email);
+            return true;
+        }
+
+        if (!"LOCAL".equals(user.authProvider)) {
+            LOG.infof("Password reset skipped: user %s uses %s authentication", email, user.authProvider);
             return true;
         }
 
@@ -262,7 +277,7 @@ public class AuthGraphQL {
 
         String jwtToken = tokenService.generateToken(user);
         LOG.infof("Password reset successful for user: %s (id=%d)", user.username, user.id);
-        return new AuthResponse(jwtToken, user.id, user.username, user.email, user.role, user.avatarUrl);
+        return new AuthResponse(jwtToken, user.id, user.username, user.email, user.role, user.avatarUrl, user.authProvider);
     }
 
     private String sha256(String input) {

@@ -124,11 +124,16 @@ public class ProfileView extends VerticalLayout {
         saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         saveButton.setWidthFull();
 
-        // Change password button
+        // Change password button (hidden for OAuth users)
         Button changePasswordButton = new Button("Change Password", VaadinIcon.KEY.create(),
                 e -> new ChangePasswordDialog(authService).open());
         changePasswordButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         changePasswordButton.setWidthFull();
+
+        boolean isLocalUser = authService.getCurrentUser()
+                .map(u -> "LOCAL".equals(u.authProvider()))
+                .orElse(true);
+        changePasswordButton.setVisible(isLocalUser);
 
         // Card layout
         VerticalLayout card = new VerticalLayout(title, avatarSection, usernameField, emailField, saveButton, changePasswordButton);

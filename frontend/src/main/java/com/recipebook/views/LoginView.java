@@ -1,36 +1,46 @@
 package com.recipebook.views;
 
+import com.recipebook.service.ApiClient;
 import com.recipebook.service.AuthService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.Map;
+
 @Route("login")
 @PageTitle("Login | Recipe Book")
-public class LoginView extends VerticalLayout {
+public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
     private static final Logger LOG = LoggerFactory.getLogger(LoginView.class);
 
     private final AuthService authService;
+    private final ApiClient apiClient;
     private final EmailField emailField;
     private final PasswordField passwordField;
 
-    public LoginView(AuthService authService) {
+    public LoginView(AuthService authService, ApiClient apiClient) {
         this.authService = authService;
+        this.apiClient = apiClient;
 
         setSizeFull();
         setAlignItems(FlexComponent.Alignment.CENTER);
@@ -75,11 +85,41 @@ public class LoginView extends VerticalLayout {
         formLayout.setPadding(false);
         formLayout.setSpacing(true);
 
+        // OAuth buttons (always shown; backend returns 404 if provider not configured)
+        Div divider = new Div();
+        divider.addClassName("oauth-divider");
+        Span dividerText = new Span(getTranslation("oauth.or", "or continue with"));
+        divider.add(dividerText);
+        formLayout.add(divider);
+
+        Anchor googleBtn = new Anchor(apiClient.getBackendUrl() + "/api/auth/google",
+                getTranslation("oauth.google", "Sign in with Google"));
+        googleBtn.addClassNames("oauth-btn", "oauth-btn-google");
+        googleBtn.setWidthFull();
+        formLayout.add(googleBtn);
+
+        Anchor githubBtn = new Anchor(apiClient.getBackendUrl() + "/api/auth/github",
+                getTranslation("oauth.github", "Sign in with GitHub"));
+        githubBtn.addClassNames("oauth-btn", "oauth-btn-github");
+        githubBtn.setWidthFull();
+        formLayout.add(githubBtn);
+
         card.add(formLayout);
         add(card);
 
         // Handle Enter key
         passwordField.addKeyPressListener(com.vaadin.flow.component.Key.ENTER, e -> login());
+    }
+
+    @Override
+    public void beforeEnter(BeforeEnterEvent event) {
+        Map<String, List<String>> params = event.getLocation().getQueryParameters().getParameters();
+        List<String> errorParams = params.get("error");
+        if (errorParams != null && !errorParams.isEmpty()) {
+            Notification.show(getTranslation("oauth.error", "Login with external provider failed. Please try again."),
+                            5000, Notification.Position.MIDDLE)
+                    .addThemeVariants(NotificationVariant.LUMO_ERROR);
+        }
     }
 
     private void login() {
