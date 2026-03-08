@@ -10,6 +10,8 @@ import com.recipebook.entity.MealSlot;
 import com.recipebook.entity.Recipe;
 import com.recipebook.entity.User;
 import com.recipebook.graphql.MealPlanInput;
+import io.quarkus.cache.CacheInvalidateAll;
+import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.eclipse.microprofile.graphql.GraphQLException;
@@ -33,6 +35,7 @@ public class MealPlanService {
         return plans.stream().map(this::toResponse).collect(Collectors.toList());
     }
 
+    @CacheResult(cacheName = "weekly-mealplan")
     public WeeklyMealPlanResponse getWeeklyMealPlan(Long userId, LocalDate weekStart) {
         LocalDate weekEnd = weekStart.plusDays(6);
         List<MealPlan> plans = MealPlan.listWithRecipeDetails(
@@ -97,6 +100,7 @@ public class MealPlanService {
         return new MacroInfo(cal, pro, carbs, fat);
     }
 
+    @CacheInvalidateAll(cacheName = "weekly-mealplan")
     public MealPlanResponse assignMealPlan(Long userId, MealPlanInput input) throws GraphQLException {
         Recipe recipe = Recipe.findById(input.recipeId);
         if (recipe == null) {
@@ -122,6 +126,7 @@ public class MealPlanService {
         return toResponse(plan);
     }
 
+    @CacheInvalidateAll(cacheName = "weekly-mealplan")
     public boolean removeMealPlan(Long userId, LocalDate date, MealSlot mealSlot) throws GraphQLException {
         MealPlan plan = MealPlan.find("user.id = ?1 and date = ?2 and mealSlot = ?3",
                 userId, date, mealSlot).firstResult();

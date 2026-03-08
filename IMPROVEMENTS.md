@@ -340,7 +340,7 @@ Zero visibility into what the app is doing in production.
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #26  Access logging                                            ~ 5 min   │
+│  #26  Access logging                             DONE (2026-03-08)        │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  Problem:  No record of HTTP requests. Can't audit who accessed what.     │
 │  Fix:      Add quarkus.http.access-log.enabled=true.                     │
@@ -353,7 +353,7 @@ Zero visibility into what the app is doing in production.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #27  Cache frequent queries                                    ~ 1h      │
+│  #27  Cache frequent queries              DONE (2026-03-08)     ~ 1h      │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  Problem:  Every page load hits the database, even for data that          │
 │            rarely changes (ingredients list, recommendations).            │

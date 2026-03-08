@@ -2,6 +2,8 @@ package com.recipebook.graphql;
 
 import com.recipebook.entity.Ingredient;
 import com.recipebook.entity.IngredientCategory;
+import io.quarkus.cache.CacheInvalidateAll;
+import io.quarkus.cache.CacheResult;
 import io.quarkus.security.Authenticated;
 import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.graphql.*;
@@ -15,6 +17,7 @@ public class IngredientGraphQL {
 
     @Query("ingredients")
     @Description("List ingredients with optional filters")
+    @CacheResult(cacheName = "ingredients-cache")
     public List<Ingredient> getIngredients(@Name("search") String search,
                                            @Name("category") IngredientCategory category) {
         StringBuilder query = new StringBuilder("1=1");
@@ -46,6 +49,7 @@ public class IngredientGraphQL {
     @Description("Create a new ingredient (authenticated)")
     @Authenticated
     @Transactional
+    @CacheInvalidateAll(cacheName = "ingredients-cache")
     public Ingredient createIngredient(@Name("input") IngredientInput input) throws GraphQLException {
         if (Ingredient.find("lower(name)", input.name.toLowerCase()).firstResult() != null) {
             throw new GraphQLException("Ingredient with this name already exists");
@@ -67,6 +71,7 @@ public class IngredientGraphQL {
     @Description("Update an ingredient (authenticated)")
     @Authenticated
     @Transactional
+    @CacheInvalidateAll(cacheName = "ingredients-cache")
     public Ingredient updateIngredient(@Name("id") Long id, @Name("input") IngredientInput input) throws GraphQLException {
         Ingredient ingredient = Ingredient.findById(id);
         if (ingredient == null) {
@@ -92,6 +97,7 @@ public class IngredientGraphQL {
     @Description("Delete an ingredient (authenticated)")
     @Authenticated
     @Transactional
+    @CacheInvalidateAll(cacheName = "ingredients-cache")
     public boolean deleteIngredient(@Name("id") Long id) throws GraphQLException {
         Ingredient ingredient = Ingredient.findById(id);
         if (ingredient == null) {
