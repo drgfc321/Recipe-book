@@ -26,5 +26,9 @@ RUN --mount=type=cache,target=/root/.m2 \
     ./mvnw clean package -DskipTests -Dvaadin.proKey=${PRO_KEY} -Dvaadin.offlineKey=${OFFLINE_KEY}'
 
 FROM eclipse-temurin:21-jre-alpine
+RUN apk add --no-cache curl
 COPY --from=build /app/target/*.jar app.jar
+HEALTHCHECK --interval=10s --timeout=5s --retries=5 \
+  CMD curl -f http://localhost:8081/ || exit 1
+
 ENTRYPOINT ["java", "-jar", "/app.jar", "--spring.profiles.active=prod"]

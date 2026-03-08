@@ -168,7 +168,7 @@ Currently at **zero tests**. This is the biggest gap for long-term maintainabili
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #12  Delete legacy Playwright test specs                       ~ 15 min  │
+│  #12  Delete legacy Playwright test specs          DONE (2026-03-08)     │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  Problem:  8 of 14 Playwright spec files test "D&D Campaign Manager"     │
 │            — a completely different project. They clutter the repo        │
@@ -179,7 +179,7 @@ Currently at **zero tests**. This is the biggest gap for long-term maintainabili
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #13  Fresh Playwright E2E tests                                ~ 4-6h    │
+│  #13  Fresh Playwright E2E tests                    DONE (2026-03-08)     │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  Problem:  After cleanup (#12), no E2E tests remain.                      │
 │  Fix:      Write new specs covering critical user flows:                  │
@@ -187,7 +187,7 @@ Currently at **zero tests**. This is the biggest gap for long-term maintainabili
 │            • Create and view a recipe                                     │
 │            • Create meal plan for a week                                  │
 │            • Generate shopping list from meal plan                        │
-│  Files:    frontend/src/test/playwright/ (new spec files)                │
+│  Files:    e2e/ (package.json, playwright.config.ts, helpers/, specs/)   │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -283,7 +283,7 @@ No automation exists. Every build and deploy is manual.
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #21  Health checks on app services                             ~ 30 min  │
+│  #21  Health checks on app services              DONE (2026-03-08)        │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  Problem:  Docker has no way to know if app is actually healthy.          │
 │            Container can be "running" but app crashed internally.         │
@@ -300,7 +300,7 @@ Zero visibility into what the app is doing in production.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #22  Quarkus health checks                                     ~ 15 min  │
+│  #22  Quarkus health checks                      DONE (2026-03-08)        │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  Problem:  No health endpoints. Can't tell if app is ready to serve.      │
 │  Fix:      Add quarkus-smallrye-health extension.                         │
