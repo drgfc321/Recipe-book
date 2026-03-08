@@ -339,6 +339,7 @@ Zero visibility into what the app is doing in production.
 │  Files:    application.properties, pom.xml                               │
 └─────────────────────────────────────────────────────────────────────────────┘
 
+
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │  #26  Access logging                             DONE (2026-03-08)        │
 ├─────────────────────────────────────────────────────────────────────────────┤
@@ -418,17 +419,18 @@ Zero visibility into what the app is doing in production.
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #33  Centralized GraphQL error handler                         ~ 1h      │
+│  #33  Centralized GraphQL error handler            DONE (2026-03-08)      │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  Problem:  GraphQL errors return raw Java exceptions to the client.       │
 │            No structured error codes or user-friendly messages.           │
-│  Fix:      Implement @GraphQLExceptionHandler that maps custom            │
-│            exceptions to structured responses with error codes.           │
-│  Files:    New handler class, GraphQL resource classes                    │
+│  Fix:      Added @ErrorCode annotations on custom exception hierarchy:    │
+│            INTERNAL_ERROR, NOT_FOUND, VALIDATION_ERROR,                   │
+│            AUTHORIZATION_ERROR. Responses now include extensions.code.    │
+│  Files:    Exception classes (4), GraphQL test classes (3)                │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #34  Clean up legacy technical debt                            ~ 30 min  │
+│  #34  Clean up legacy technical debt              DONE (2026-03-08)       │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  Problem:  Leftovers from a previous D&D Campaign Manager project:       │
 │            • i18n keys in messages.properties (campaigns, characters,     │
