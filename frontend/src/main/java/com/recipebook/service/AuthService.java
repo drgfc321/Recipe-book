@@ -26,7 +26,7 @@ public class AuthService {
         String query = """
                 mutation($email: String!, $password: String!) {
                     login(email: $email, password: $password) {
-                        token userId username email role
+                        token userId username email role avatarUrl
                     }
                 }
                 """;
@@ -44,7 +44,7 @@ public class AuthService {
         String query = """
                 mutation($email: String!, $username: String!, $password: String!, $language: String!) {
                     register(email: $email, username: $username, password: $password, language: $language) {
-                        token userId username email role
+                        token userId username email role avatarUrl
                     }
                 }
                 """;
@@ -96,7 +96,7 @@ public class AuthService {
         try {
             String query = """
                     query {
-                        me { id username email role }
+                        me { id username email role avatarUrl }
                     }
                     """;
             return apiClient.query(query, null, UserInfo.class, "me");
@@ -114,6 +114,76 @@ public class AuthService {
         }
     }
 
+    public boolean requestPasswordReset(String email) {
+        LOG.debug("Password reset request for email: {}", email);
+        String query = """
+                mutation($email: String!) {
+                    requestPasswordReset(email: $email)
+                }
+                """;
+        Boolean result = apiClient.mutatePublic(query,
+                Map.of("email", email),
+                Boolean.class, "requestPasswordReset");
+        LOG.info("Password reset requested for email: {}", email);
+        return result != null && result;
+    }
+
+    public AuthResponse resetPassword(String token, String newPassword) {
+        LOG.debug("Password reset with token");
+        String query = """
+                mutation($token: String!, $newPassword: String!) {
+                    resetPassword(token: $token, newPassword: $newPassword) {
+                        token userId username email role avatarUrl
+                    }
+                }
+                """;
+        AuthResponse response = apiClient.mutatePublic(query,
+                Map.of("token", token, "newPassword", newPassword),
+                AuthResponse.class, "resetPassword");
+        storeToken(response.token());
+        storeUserInfo(response);
+        LOG.info("Password reset successful for user: {}", response.username());
+        return response;
+    }
+
+    public AuthResponse changePassword(String currentPassword, String newPassword) {
+        LOG.debug("Password change attempt");
+        String query = """
+                mutation($currentPassword: String!, $newPassword: String!) {
+                    changePassword(currentPassword: $currentPassword, newPassword: $newPassword) {
+                        token userId username email role avatarUrl
+                    }
+                }
+                """;
+        AuthResponse response = apiClient.mutate(query,
+                Map.of("currentPassword", currentPassword, "newPassword", newPassword),
+                AuthResponse.class, "changePassword");
+        storeToken(response.token());
+        storeUserInfo(response);
+        LOG.info("Password changed successfully for user: {}", response.username());
+        return response;
+    }
+
+    public AuthResponse updateProfile(String username, String email, String avatarUrl) {
+        LOG.debug("Updating profile for user: {}", username);
+        String query = """
+                mutation($username: String!, $email: String!, $avatarUrl: String) {
+                    updateProfile(username: $username, email: $email, avatarUrl: $avatarUrl) {
+                        token userId username email role avatarUrl
+                    }
+                }
+                """;
+        Map<String, Object> variables = new java.util.HashMap<>();
+        variables.put("username", username);
+        variables.put("email", email);
+        variables.put("avatarUrl", avatarUrl);
+        AuthResponse response = apiClient.mutate(query, variables, AuthResponse.class, "updateProfile");
+        storeToken(response.token());
+        storeUserInfo(response);
+        LOG.info("Profile updated for user: {}", response.username());
+        return response;
+    }
+
     private void storeUserInfo(AuthResponse response) {
         VaadinSession session = VaadinSession.getCurrent();
         if (session != null) {
@@ -121,7 +191,8 @@ public class AuthService {
                     response.userId(),
                     response.username(),
                     response.email(),
-                    response.role()
+                    response.role(),
+                    response.avatarUrl()
             );
             session.setAttribute("user_info", userInfo);
         }

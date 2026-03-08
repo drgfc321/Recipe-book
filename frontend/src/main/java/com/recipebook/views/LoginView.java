@@ -61,12 +61,17 @@ public class LoginView extends VerticalLayout {
         loginButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         loginButton.setWidthFull();
 
+        RouterLink forgotPasswordLink = new RouterLink("Forgot password?", ForgotPasswordView.class);
+        Paragraph forgotText = new Paragraph();
+        forgotText.add(forgotPasswordLink);
+        forgotText.getStyle().set("text-align", "center");
+
         RouterLink registerLink = new RouterLink("Don't have an account? Register", RegisterView.class);
         Paragraph registerText = new Paragraph();
         registerText.add(registerLink);
         registerText.getStyle().set("text-align", "center");
 
-        VerticalLayout formLayout = new VerticalLayout(title, emailField, passwordField, loginButton, registerText);
+        VerticalLayout formLayout = new VerticalLayout(title, emailField, passwordField, loginButton, forgotText, registerText);
         formLayout.setPadding(false);
         formLayout.setSpacing(true);
 

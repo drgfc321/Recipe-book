@@ -30,4 +30,13 @@ public class User extends PanacheEntity {
 
     @Column(name = "last_login")
     public LocalDateTime lastLogin;
+
+    @Column(name = "avatar_url")
+    public String avatarUrl;
+
+    @Column(name = "password_reset_token")
+    public String passwordResetToken;
+
+    @Column(name = "password_reset_expiry")
+    public LocalDateTime passwordResetExpiry;
 }
