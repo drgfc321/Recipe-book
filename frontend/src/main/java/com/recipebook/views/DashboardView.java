@@ -114,10 +114,17 @@ public class DashboardView extends VerticalLayout {
         H3 title = new H3("Today's Nutrition");
         title.getStyle().set("margin", "0");
 
+        Button calcBtn = new Button("Calculate Your Targets", VaadinIcon.CALC.create(),
+                e -> UI.getCurrent().navigate("bmr-wizard"));
+        calcBtn.addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
+
         Button viewLogBtn = new Button("View Food Log", e -> UI.getCurrent().navigate("food-log"));
         viewLogBtn.addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
 
-        titleRow.add(title, viewLogBtn);
+        HorizontalLayout btnRow = new HorizontalLayout(calcBtn, viewLogBtn);
+        btnRow.setSpacing(true);
+
+        titleRow.add(title, btnRow);
         card.add(titleRow);
 
         try {

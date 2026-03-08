@@ -1,0 +1,6 @@
+ALTER TABLE users ADD COLUMN weight_kg FLOAT(53);
+ALTER TABLE users ADD COLUMN height_cm FLOAT(53);
+ALTER TABLE users ADD COLUMN birth_date DATE;
+ALTER TABLE users ADD COLUMN gender VARCHAR(10);
+ALTER TABLE users ADD COLUMN activity_level VARCHAR(20);
+ALTER TABLE users ADD COLUMN fitness_goal VARCHAR(20);

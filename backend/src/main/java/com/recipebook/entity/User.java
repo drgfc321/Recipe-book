@@ -4,6 +4,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -45,4 +46,22 @@ public class User extends PanacheEntity {
 
     @Column(name = "password_reset_expiry")
     public LocalDateTime passwordResetExpiry;
+
+    @Column(name = "weight_kg")
+    public Double weightKg;
+
+    @Column(name = "height_cm")
+    public Double heightCm;
+
+    @Column(name = "birth_date")
+    public LocalDate birthDate;
+
+    @Column(name = "gender")
+    public String gender;
+
+    @Column(name = "activity_level")
+    public String activityLevel;
+
+    @Column(name = "fitness_goal")
+    public String fitnessGoal;
 }

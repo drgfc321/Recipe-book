@@ -96,6 +96,7 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
         nav.addItem(new SideNavItem("Pantry", PantryView.class, VaadinIcon.STORAGE.create()));
         nav.addItem(new SideNavItem("Shopping List", ShoppingListView.class, VaadinIcon.CART.create()));
         nav.addItem(new SideNavItem("Recommendations", RecommendationView.class, VaadinIcon.MAGIC.create()));
+        nav.addItem(new SideNavItem("BMR Calculator", BMRWizardView.class, VaadinIcon.CALC.create()));
         nav.addItem(new SideNavItem("Profile", ProfileView.class, VaadinIcon.USER.create()));
 
         VerticalLayout drawerContent = new VerticalLayout(nav);
