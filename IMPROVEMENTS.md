@@ -358,9 +358,9 @@ Zero visibility into what the app is doing in production.
 │  Problem:  Every page load hits the database, even for data that          │
 │            rarely changes (ingredients list, recommendations).            │
 │  Fix:      Add @CacheResult (Quarkus cache) on:                          │
-│            • listIngredients — ingredient list is near-static             │
-│            • recipeRecommendations — expensive computation                │
-│            • getWeeklyMealPlan — same plan queried multiple times/day     │
+│            • listIngredients — ingredient list is near-static    DONE    │
+│            • recipeRecommendations — expensive computation       DONE    │
+│            • getWeeklyMealPlan — same plan queried multiple/day  DONE    │
 │  Files:    Corresponding service classes, pom.xml (quarkus-cache)        │
 └─────────────────────────────────────────────────────────────────────────────┘
 

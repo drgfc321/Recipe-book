@@ -8,6 +8,7 @@ import com.recipebook.entity.Recipe;
 import com.recipebook.entity.RecipeIngredient;
 import com.recipebook.entity.Unit;
 import com.recipebook.graphql.RecommendationFilterInput;
+import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -24,6 +25,7 @@ public class RecommendationService {
     @Inject
     MacroCalculationService macroService;
 
+    @CacheResult(cacheName = "recommendations-cache")
     public List<RecipeRecommendationResponse> getRecommendations(Long userId, RecommendationFilterInput filter) {
         // Get pantry as map of ingredientId -> grams
         List<PantryItem> pantryItems = PantryItem.find(
@@ -79,7 +81,8 @@ public class RecommendationService {
         return rec.missingIngredients;
     }
 
-    private RecipeRecommendationResponse analyzeRecipe(Recipe recipe, Map<Long, Double> pantry) {
+    // package-private for testing
+    RecipeRecommendationResponse analyzeRecipe(Recipe recipe, Map<Long, Double> pantry) {
         RecipeRecommendationResponse rec = new RecipeRecommendationResponse();
         rec.recipe = macroService.toResponse(recipe);
         rec.totalIngredients = recipe.ingredients.size();

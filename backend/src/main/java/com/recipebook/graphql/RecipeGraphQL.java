@@ -8,6 +8,7 @@ import com.recipebook.entity.Difficulty;
 import com.recipebook.entity.RecipeIngredient;
 import com.recipebook.entity.User;
 import com.recipebook.service.MacroCalculationService;
+import io.quarkus.cache.CacheInvalidateAll;
 import io.quarkus.security.Authenticated;
 import io.smallrye.graphql.api.ErrorCode;
 import jakarta.inject.Inject;
@@ -81,6 +82,7 @@ public class RecipeGraphQL {
     @Description("Create a new recipe (authenticated)")
     @Authenticated
     @Transactional
+    @CacheInvalidateAll(cacheName = "recommendations-cache")
     public RecipeResponse createRecipe(@Name("input") RecipeInput input) throws GraphQLException {
         Long userId = Long.parseLong(jwt.getSubject());
         User owner = User.findById(userId);
@@ -123,6 +125,7 @@ public class RecipeGraphQL {
     @Description("Update a recipe (owner only)")
     @Authenticated
     @Transactional
+    @CacheInvalidateAll(cacheName = "recommendations-cache")
     public RecipeResponse updateRecipe(@Name("id") Long id, @Name("input") RecipeInput input) throws GraphQLException {
         Recipe recipe = Recipe.findById(id);
         if (recipe == null) {
@@ -170,6 +173,7 @@ public class RecipeGraphQL {
     @Description("Delete a recipe (owner only)")
     @Authenticated
     @Transactional
+    @CacheInvalidateAll(cacheName = "recommendations-cache")
     public boolean deleteRecipe(@Name("id") Long id) throws GraphQLException {
         Recipe recipe = Recipe.findById(id);
         if (recipe == null) {

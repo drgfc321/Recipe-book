@@ -7,6 +7,7 @@ import com.recipebook.entity.Unit;
 import com.recipebook.entity.User;
 import com.recipebook.graphql.PantryItemInput;
 import com.recipebook.graphql.PantryItemUpdateInput;
+import io.quarkus.cache.CacheInvalidateAll;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.graphql.GraphQLException;
 
@@ -31,6 +32,7 @@ public class PantryService {
         return items.stream().map(this::toResponse).collect(Collectors.toList());
     }
 
+    @CacheInvalidateAll(cacheName = "recommendations-cache")
     public PantryItemResponse addPantryItem(Long userId, PantryItemInput input) throws GraphQLException {
         User user = User.findById(userId);
         Ingredient ingredient = Ingredient.findById(input.ingredientId);
@@ -62,6 +64,7 @@ public class PantryService {
         return toResponse(item);
     }
 
+    @CacheInvalidateAll(cacheName = "recommendations-cache")
     public PantryItemResponse updatePantryItem(Long userId, Long itemId, PantryItemUpdateInput input) throws GraphQLException {
         PantryItem item = PantryItem.find(
                 "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.id = ?1 AND pi.user.id = ?2",
@@ -81,6 +84,7 @@ public class PantryService {
         return toResponse(item);
     }
 
+    @CacheInvalidateAll(cacheName = "recommendations-cache")
     public boolean removePantryItem(Long userId, Long itemId) throws GraphQLException {
         PantryItem item = PantryItem.find("id = ?1 and user.id = ?2", itemId, userId).firstResult();
         if (item == null) {
