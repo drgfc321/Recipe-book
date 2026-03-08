@@ -12,6 +12,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.multipart.FileUpload;
 import org.jboss.resteasy.reactive.RestForm;
 
@@ -23,6 +24,8 @@ import java.util.UUID;
 
 @Path("/api/images")
 public class ImageResource {
+
+    private static final Logger LOG = Logger.getLogger(ImageResource.class);
 
     private static final Set<String> ALLOWED_TYPES = Set.of("image/jpeg", "image/png", "image/webp");
     private static final long MAX_SIZE = 5 * 1024 * 1024; // 5MB
@@ -38,7 +41,9 @@ public class ImageResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public Response upload(@RestForm("file") FileUpload file) throws IOException {
+        LOG.debugf("Image upload request received");
         if (file == null || file.filePath() == null) {
+            LOG.warn("Upload rejected: no file provided");
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(Map.of("error", "No file provided"))
                     .build();
@@ -46,12 +51,14 @@ public class ImageResource {
 
         String contentType = file.contentType();
         if (contentType == null || !ALLOWED_TYPES.contains(contentType)) {
+            LOG.warnf("Upload rejected: invalid content type '%s'", contentType);
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(Map.of("error", "Only JPEG, PNG, and WebP images are allowed"))
                     .build();
         }
 
         if (file.size() > MAX_SIZE) {
+            LOG.warnf("Upload rejected: file too large (%d bytes)", file.size());
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(Map.of("error", "File size must be 5MB or less"))
                     .build();
@@ -71,14 +78,17 @@ public class ImageResource {
         Files.copy(file.filePath(), target);
 
         String imageUrl = "/api/images/" + filename;
+        LOG.infof("Image uploaded successfully: %s (%d bytes)", filename, file.size());
         return Response.ok(Map.of("imageUrl", imageUrl)).build();
     }
 
     @GET
     @Path("/{filename}")
     public Response serve(@PathParam("filename") String filename) throws IOException {
+        LOG.debugf("Serving image: %s", filename);
         // Sanitize filename to prevent path traversal
         if (filename.contains("..") || filename.contains("/") || filename.contains("\\")) {
+            LOG.warnf("Image serve rejected: path traversal attempt with filename '%s'", filename);
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 

@@ -16,6 +16,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.graphql.*;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.jboss.logging.Logger;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -24,6 +25,8 @@ import java.util.Map;
 
 @GraphQLApi
 public class RecommendationGraphQL {
+
+    private static final Logger LOG = Logger.getLogger(RecommendationGraphQL.class);
 
     @Inject
     JsonWebToken jwt;
@@ -36,6 +39,7 @@ public class RecommendationGraphQL {
     @Authenticated
     public List<RecipeRecommendationResponse> getRecipeRecommendations(@Name("filter") RecommendationFilterInput filter) {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.debugf("getRecipeRecommendations userId=%d", userId);
         return recommendationService.getRecommendations(userId, filter);
     }
 
@@ -80,6 +84,7 @@ public class RecommendationGraphQL {
             }
         }
 
+        LOG.infof("Added missing ingredients to shopping list: recipeId=%d, weekStart=%s, userId=%d", recipeId, weekStart, userId);
         return true;
     }
 }

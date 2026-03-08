@@ -15,6 +15,7 @@ import io.quarkus.cache.CacheInvalidateAll;
 import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.jboss.logging.Logger;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class MealPlanService {
+
+    private static final Logger LOG = Logger.getLogger(MealPlanService.class);
 
     @Inject
     MacroCalculationService macroService;
@@ -37,6 +40,7 @@ public class MealPlanService {
 
     @CacheResult(cacheName = "weekly-mealplan")
     public WeeklyMealPlanResponse getWeeklyMealPlan(Long userId, LocalDate weekStart) {
+        LOG.debugf("Building weekly meal plan for userId=%d, weekStart=%s", userId, weekStart);
         LocalDate weekEnd = weekStart.plusDays(6);
         List<MealPlan> plans = MealPlan.listWithRecipeDetails(
                 "mp.user.id = ?1 and mp.date >= ?2 and mp.date <= ?3",
@@ -113,6 +117,7 @@ public class MealPlanService {
                 userId, input.date, input.mealSlot).firstResult();
 
         if (existing != null) {
+            LOG.debugf("Replacing existing meal plan: date=%s, slot=%s", input.date, input.mealSlot);
             existing.recipe = recipe;
             return toResponse(existing);
         }
@@ -134,6 +139,7 @@ public class MealPlanService {
             throw new NotFoundException("Meal plan entry not found");
         }
         plan.delete();
+        LOG.debugf("Removed meal plan: userId=%d, date=%s, slot=%s", userId, date, mealSlot);
         return true;
     }
 

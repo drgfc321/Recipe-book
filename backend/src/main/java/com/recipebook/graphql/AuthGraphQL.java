@@ -12,12 +12,15 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.graphql.*;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.jboss.logging.Logger;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @GraphQLApi
 public class AuthGraphQL {
+
+    private static final Logger LOG = Logger.getLogger(AuthGraphQL.class);
 
     @Inject
     PasswordService passwordService;
@@ -39,9 +42,11 @@ public class AuthGraphQL {
                                  @Name("password") String password,
                                  @Name("language") String language) {
         if (User.find("email", email).firstResult() != null) {
+            LOG.warnf("Register failed: email already registered: %s", email);
             throw new ValidationException("Email already registered");
         }
         if (User.find("username", username).firstResult() != null) {
+            LOG.warnf("Register failed: username already taken: %s", username);
             throw new ValidationException("Username already taken");
         }
 
@@ -57,6 +62,7 @@ public class AuthGraphQL {
         nutritionTargetService.createDefaultTarget(user);
 
         String token = tokenService.generateToken(user);
+        LOG.infof("User registered successfully: %s (id=%d)", user.username, user.id);
         return new AuthResponse(token, user.id, user.username, user.email, user.role);
     }
 
@@ -67,16 +73,19 @@ public class AuthGraphQL {
                               @Name("password") String password) {
         User user = User.find("email", email).firstResult();
         if (user == null) {
+            LOG.warnf("Login failed: unknown email: %s", email);
             throw new ValidationException("Invalid email or password");
         }
 
         if (!passwordService.verifyPassword(password, user.passwordHash)) {
+            LOG.warnf("Login failed: wrong password for user: %s", email);
             throw new ValidationException("Invalid email or password");
         }
 
         user.lastLogin = LocalDateTime.now();
 
         String token = tokenService.generateToken(user);
+        LOG.infof("User logged in: %s (id=%d)", user.username, user.id);
         return new AuthResponse(token, user.id, user.username, user.email, user.role);
     }
 
@@ -85,6 +94,7 @@ public class AuthGraphQL {
     @Authenticated
     public User me() {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.debugf("Query me for userId=%d", userId);
         User user = User.findById(userId);
         if (user == null) {
             throw new NotFoundException("User not found");
@@ -96,6 +106,7 @@ public class AuthGraphQL {
     @Description("List all users (admin)")
     @Authenticated
     public List<User> users() {
+        LOG.debug("Query all users");
         return User.listAll();
     }
 
@@ -109,6 +120,7 @@ public class AuthGraphQL {
             throw new NotFoundException("User not found");
         }
         user.delete();
+        LOG.infof("User deleted: id=%d", id);
         return true;
     }
 }

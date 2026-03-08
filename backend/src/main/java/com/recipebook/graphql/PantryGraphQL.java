@@ -7,11 +7,14 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.graphql.*;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.jboss.logging.Logger;
 
 import java.util.List;
 
 @GraphQLApi
 public class PantryGraphQL {
+
+    private static final Logger LOG = Logger.getLogger(PantryGraphQL.class);
 
     @Inject
     JsonWebToken jwt;
@@ -24,6 +27,7 @@ public class PantryGraphQL {
     @Authenticated
     public List<PantryItemResponse> getPantryItems() {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.debugf("getPantryItems userId=%d", userId);
         return pantryService.getPantryItems(userId);
     }
 
@@ -32,6 +36,7 @@ public class PantryGraphQL {
     @Authenticated
     public List<PantryItemResponse> getExpiringPantryItems(@Name("withinDays") @DefaultValue("3") int withinDays) {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.debugf("getExpiringPantryItems userId=%s, withinDays=%d", (Object) userId, withinDays);
         return pantryService.getExpiringItems(userId, withinDays);
     }
 
@@ -41,6 +46,7 @@ public class PantryGraphQL {
     @Transactional
     public PantryItemResponse addPantryItem(@Name("input") PantryItemInput input) {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.infof("addPantryItem userId=%d, ingredientId=%d", userId, input.ingredientId);
         return pantryService.addPantryItem(userId, input);
     }
 
@@ -50,6 +56,7 @@ public class PantryGraphQL {
     @Transactional
     public PantryItemResponse updatePantryItem(@Name("id") Long id, @Name("input") PantryItemUpdateInput input) {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.infof("updatePantryItem userId=%d, itemId=%d", userId, id);
         return pantryService.updatePantryItem(userId, id, input);
     }
 
@@ -59,6 +66,7 @@ public class PantryGraphQL {
     @Transactional
     public boolean removePantryItem(@Name("id") Long id) {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.infof("removePantryItem userId=%d, itemId=%d", userId, id);
         return pantryService.removePantryItem(userId, id);
     }
 }

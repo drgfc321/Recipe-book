@@ -86,6 +86,7 @@ public class ApiClient {
             }
             return objectMapper.treeToValue(dataNode, responseType);
         } catch (JacksonException e) {
+            LOG.error("Failed to parse GraphQL response: {}", e.getMessage());
             throw new RuntimeException("Failed to parse GraphQL response: " + e.getMessage(), e);
         }
     }

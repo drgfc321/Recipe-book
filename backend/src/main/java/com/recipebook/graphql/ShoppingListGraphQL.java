@@ -8,11 +8,14 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.graphql.*;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.jboss.logging.Logger;
 
 import java.time.LocalDate;
 
 @GraphQLApi
 public class ShoppingListGraphQL {
+
+    private static final Logger LOG = Logger.getLogger(ShoppingListGraphQL.class);
 
     @Inject
     JsonWebToken jwt;
@@ -25,6 +28,7 @@ public class ShoppingListGraphQL {
     @Authenticated
     public ShoppingListResponse getShoppingList(@Name("weekStart") LocalDate weekStart) {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.debugf("getShoppingList userId=%d, weekStart=%s", userId, weekStart);
         return shoppingListService.getShoppingList(userId, weekStart);
     }
 
@@ -34,6 +38,7 @@ public class ShoppingListGraphQL {
     @Transactional
     public ShoppingListResponse generateShoppingList(@Name("weekStart") LocalDate weekStart) {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.infof("generateShoppingList userId=%d, weekStart=%s", userId, weekStart);
         return shoppingListService.generateShoppingList(userId, weekStart);
     }
 
@@ -43,6 +48,7 @@ public class ShoppingListGraphQL {
     @Transactional
     public ShoppingListItemResponse addShoppingListItem(@Name("input") ShoppingListItemInput input) {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.infof("addShoppingListItem userId=%d, ingredientId=%d", userId, input.ingredientId);
         return shoppingListService.addShoppingListItem(userId, input);
     }
 
@@ -70,6 +76,7 @@ public class ShoppingListGraphQL {
     @Transactional
     public boolean clearShoppingList(@Name("weekStart") LocalDate weekStart) {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.infof("clearShoppingList userId=%d, weekStart=%s", userId, weekStart);
         return shoppingListService.clearShoppingList(userId, weekStart);
     }
 }

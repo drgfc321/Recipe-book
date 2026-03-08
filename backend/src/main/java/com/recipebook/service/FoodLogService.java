@@ -16,6 +16,7 @@ import com.recipebook.exception.ValidationException;
 import com.recipebook.graphql.FoodLogInput;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.jboss.logging.Logger;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,6 +27,8 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class FoodLogService {
 
+    private static final Logger LOG = Logger.getLogger(FoodLogService.class);
+
     @Inject
     MacroCalculationService macroService;
 
@@ -33,6 +36,7 @@ public class FoodLogService {
     NutritionTargetService nutritionTargetService;
 
     public DailyFoodLogResponse getDailyFoodLog(Long userId, LocalDate date) {
+        LOG.debugf("getDailyFoodLog userId=%d, date=%s", userId, date);
         List<FoodLog> logs = FoodLog.find(
                 "FROM FoodLog fl " +
                 "LEFT JOIN FETCH fl.recipe r " +
@@ -137,6 +141,7 @@ public class FoodLogService {
         }
 
         log.persist();
+        LOG.debugf("Food logged: id=%d, userId=%d, date=%s, slot=%s", log.id, userId, input.date, input.mealSlot);
         return toResponse(log);
     }
 
@@ -153,6 +158,7 @@ public class FoodLogService {
             throw new NotFoundException("Food log entry not found");
         }
         log.servings = servings;
+        LOG.debugf("Food log updated: id=%s, newServings=%.1f", (Object) id, servings);
         return toResponse(log);
     }
 
@@ -162,6 +168,7 @@ public class FoodLogService {
             throw new NotFoundException("Food log entry not found");
         }
         log.delete();
+        LOG.debugf("Food log removed: id=%d, userId=%d", id, userId);
         return true;
     }
 

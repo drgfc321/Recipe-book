@@ -16,6 +16,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.graphql.*;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.jboss.logging.Logger;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -25,6 +26,8 @@ import java.util.stream.Collectors;
 
 @GraphQLApi
 public class RecipeGraphQL {
+
+    private static final Logger LOG = Logger.getLogger(RecipeGraphQL.class);
 
     @Inject
     JsonWebToken jwt;
@@ -66,12 +69,14 @@ public class RecipeGraphQL {
         query.append(" order by r.createdAt desc");
 
         List<Recipe> recipes = Recipe.listWithDetails(query.toString(), params);
+        LOG.debugf("getRecipes returned %d results", recipes.size());
         return recipes.stream().map(macroService::toResponse).collect(Collectors.toList());
     }
 
     @Query("recipe")
     @Description("Get a single recipe by ID")
     public RecipeResponse getRecipe(@Name("id") Long id) {
+        LOG.debugf("getRecipe id=%d", id);
         Recipe recipe = Recipe.findByIdWithDetails(id);
         if (recipe == null) {
             throw new NotFoundException("Recipe not found");
@@ -119,6 +124,7 @@ public class RecipeGraphQL {
             }
         }
 
+        LOG.infof("Recipe created: '%s' (id=%d) by userId=%d", recipe.name, recipe.id, userId);
         return macroService.toResponse(recipe);
     }
 
@@ -135,6 +141,7 @@ public class RecipeGraphQL {
 
         Long userId = Long.parseLong(jwt.getSubject());
         if (!recipe.owner.id.equals(userId)) {
+            LOG.warnf("Update recipe denied: userId=%d tried to edit recipe id=%d owned by userId=%d", userId, id, recipe.owner.id);
             throw new AuthorizationException("You can only edit your own recipes");
         }
 
@@ -167,6 +174,7 @@ public class RecipeGraphQL {
             }
         }
 
+        LOG.infof("Recipe updated: '%s' (id=%d) by userId=%d", recipe.name, id, userId);
         return macroService.toResponse(recipe);
     }
 
@@ -183,10 +191,12 @@ public class RecipeGraphQL {
 
         Long userId = Long.parseLong(jwt.getSubject());
         if (!recipe.owner.id.equals(userId)) {
+            LOG.warnf("Delete recipe denied: userId=%d tried to delete recipe id=%d owned by userId=%d", userId, id, recipe.owner.id);
             throw new AuthorizationException("You can only delete your own recipes");
         }
 
         recipe.delete();
+        LOG.infof("Recipe deleted: id=%d by userId=%d", id, userId);
         return true;
     }
 }

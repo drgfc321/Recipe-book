@@ -12,6 +12,7 @@ import com.recipebook.entity.User;
 import com.recipebook.exception.NotFoundException;
 import com.recipebook.graphql.ShoppingListItemInput;
 import jakarta.enterprise.context.ApplicationScoped;
+import org.jboss.logging.Logger;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -22,6 +23,8 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class ShoppingListService {
 
+    private static final Logger LOG = Logger.getLogger(ShoppingListService.class);
+
     public ShoppingListResponse getShoppingList(Long userId, LocalDate weekStart) {
         List<ShoppingListItem> items = ShoppingListItem.find(
                 "FROM ShoppingListItem si LEFT JOIN FETCH si.ingredient WHERE si.user.id = ?1 AND si.weekStartDate = ?2",
@@ -30,6 +33,7 @@ public class ShoppingListService {
     }
 
     public ShoppingListResponse generateShoppingList(Long userId, LocalDate weekStart) {
+        LOG.debugf("Generating shopping list for userId=%d, weekStart=%s", userId, weekStart);
         LocalDate weekEnd = weekStart.plusDays(6);
 
         List<MealPlan> plans = MealPlan.listWithRecipeDetails(
@@ -60,6 +64,7 @@ public class ShoppingListService {
         }
 
         // Clear existing items for this week
+        LOG.debugf("Clearing existing shopping list items for userId=%d, weekStart=%s", userId, weekStart);
         ShoppingListItem.delete("user.id = ?1 and weekStartDate = ?2", userId, weekStart);
 
         User user = User.findById(userId);
@@ -88,6 +93,7 @@ public class ShoppingListService {
         List<ShoppingListItem> items = ShoppingListItem.find(
                 "FROM ShoppingListItem si LEFT JOIN FETCH si.ingredient WHERE si.user.id = ?1 AND si.weekStartDate = ?2",
                 userId, weekStart).list();
+        LOG.debugf("Generated shopping list with %d items", items.size());
         return buildResponse(weekStart, items);
     }
 

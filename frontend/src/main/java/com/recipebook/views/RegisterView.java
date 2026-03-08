@@ -18,10 +18,14 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Route("register")
 @PageTitle("Register | Recipe Book")
 public class RegisterView extends VerticalLayout {
+
+    private static final Logger LOG = LoggerFactory.getLogger(RegisterView.class);
 
     private final AuthService authService;
     private final EmailField emailField;
@@ -132,6 +136,7 @@ public class RegisterView extends VerticalLayout {
                     .addThemeVariants(NotificationVariant.LUMO_SUCCESS);
             UI.getCurrent().navigate(DashboardView.class);
         } catch (Exception e) {
+            LOG.warn("Registration failed for email '{}': {}", email, e.getMessage());
             String message = e.getMessage();
             if (message != null && message.contains("409")) {
                 message = "Email or username already exists";

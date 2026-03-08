@@ -10,6 +10,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.graphql.*;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.jboss.logging.Logger;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,6 +18,8 @@ import java.util.List;
 
 @GraphQLApi
 public class RecipeImportGraphQL {
+
+    private static final Logger LOG = Logger.getLogger(RecipeImportGraphQL.class);
 
     @Inject
     JsonWebToken jwt;
@@ -47,7 +50,9 @@ public class RecipeImportGraphQL {
             throw new NotFoundException("File not found: " + path);
         }
 
+        LOG.infof("Starting recipe import from file: %s, userId=%d", path, userId);
         RecipeImportService.ImportResult result = importService.importFromJson(path, owner);
+        LOG.infof("Recipe import complete: %d imported, %d failed", result.imported(), result.failed());
         return new ImportResultDTO(result.imported(), result.failed(), result.errors());
     }
 
@@ -82,6 +87,7 @@ public class RecipeImportGraphQL {
             }
             return report.toString();
         } catch (Exception e) {
+            LOG.errorf(e, "PDF image extraction failed for file: %s", path);
             throw new RecipeBookException("Extraction failed: " + e.getMessage());
         }
     }

@@ -25,6 +25,8 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,6 +35,8 @@ import java.util.stream.Collectors;
 @Route(value = "", layout = MainLayout.class)
 @PageTitle("Dashboard | Recipe Book")
 public class DashboardView extends VerticalLayout {
+
+    private static final Logger LOG = LoggerFactory.getLogger(DashboardView.class);
 
     private final AuthService authService;
     private final RecipeService recipeService;
@@ -132,6 +136,7 @@ public class DashboardView extends VerticalLayout {
             card.add(createDashboardProgressBar("Carbs", actual.carbs(), tCarbs, "g", "var(--macro-carbs, #ff9800)"));
             card.add(createDashboardProgressBar("Fat", actual.fat(), tFat, "g", "var(--macro-fat, #2196f3)"));
         } catch (Exception e) {
+            LOG.warn("Failed to load nutrition data for dashboard: {}", e.getMessage());
             Span error = new Span("Could not load nutrition data");
             error.getStyle().set("color", "var(--lumo-secondary-text-color)");
             card.add(error);
@@ -202,23 +207,27 @@ public class DashboardView extends VerticalLayout {
                     .filter(c -> c != null && !c.isBlank())
                     .distinct()
                     .count();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            LOG.warn("Failed to load recipes for dashboard stats: {}", e.getMessage());
         }
 
         try {
             ingredientCount = ingredientService.getIngredients(null, null).size();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            LOG.warn("Failed to load ingredients for dashboard stats: {}", e.getMessage());
         }
 
         try {
             List<PantryItemResponse> pantryItems = pantryService.getPantryItems();
             pantryCount = pantryItems.size();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            LOG.warn("Failed to load pantry items for dashboard stats: {}", e.getMessage());
         }
 
         try {
             expiringCount = pantryService.getExpiringItems(3).size();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            LOG.warn("Failed to load expiring items for dashboard stats: {}", e.getMessage());
         }
 
         HorizontalLayout statsRow = new HorizontalLayout();
@@ -281,6 +290,7 @@ public class DashboardView extends VerticalLayout {
         try {
             recipes = recipeService.getRecipes(null, null, null);
         } catch (Exception e) {
+            LOG.warn("Failed to load recent recipes for dashboard: {}", e.getMessage());
             Span error = new Span("Could not load recipes");
             error.getStyle().set("color", "var(--lumo-secondary-text-color)");
             section.add(error);
@@ -322,8 +332,7 @@ public class DashboardView extends VerticalLayout {
 
         // Image or placeholder
         if (recipe.imageUrl() != null && !recipe.imageUrl().isBlank()) {
-            String imgSrc = recipe.imageUrl().startsWith("http") ? recipe.imageUrl()
-                    : recipeService.getBackendUrl() + recipe.imageUrl();
+            String imgSrc = recipe.imageUrl();
             Image img = new Image(imgSrc, recipe.name());
             img.setWidthFull();
             img.setHeight("160px");

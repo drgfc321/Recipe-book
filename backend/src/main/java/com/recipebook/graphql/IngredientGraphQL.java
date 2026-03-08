@@ -9,6 +9,7 @@ import io.quarkus.cache.CacheResult;
 import io.quarkus.security.Authenticated;
 import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.graphql.*;
+import org.jboss.logging.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,8 @@ import java.util.Map;
 
 @GraphQLApi
 public class IngredientGraphQL {
+
+    private static final Logger LOG = Logger.getLogger(IngredientGraphQL.class);
 
     @Query("ingredients")
     @Description("List ingredients with optional filters")
@@ -34,13 +37,16 @@ public class IngredientGraphQL {
             params.put("category", category);
         }
 
-        return Ingredient.find(query.toString(), params).list();
+        List<Ingredient> result = Ingredient.find(query.toString(), params).list();
+        LOG.debugf("getIngredients returned %d results", result.size());
+        return result;
     }
 
     @Query("ingredient")
     @Description("Get a single ingredient by ID")
     @CacheResult(cacheName = "ingredients-cache")
     public Ingredient getIngredient(@Name("id") Long id) {
+        LOG.debugf("getIngredient id=%d", id);
         Ingredient ingredient = Ingredient.findById(id);
         if (ingredient == null) {
             throw new NotFoundException("Ingredient not found");
@@ -55,6 +61,7 @@ public class IngredientGraphQL {
     @CacheInvalidateAll(cacheName = "ingredients-cache")
     public Ingredient createIngredient(@Name("input") IngredientInput input) {
         if (Ingredient.find("lower(name)", input.name.toLowerCase()).firstResult() != null) {
+            LOG.warnf("Create ingredient failed: duplicate name '%s'", input.name);
             throw new ValidationException("Ingredient with this name already exists");
         }
 
@@ -67,6 +74,7 @@ public class IngredientGraphQL {
         ingredient.fatPer100g = input.fatPer100g;
         ingredient.persist();
 
+        LOG.infof("Ingredient created: '%s' (id=%d)", ingredient.name, ingredient.id);
         return ingredient;
     }
 
@@ -83,6 +91,7 @@ public class IngredientGraphQL {
 
         Ingredient existing = Ingredient.find("lower(name)", input.name.toLowerCase()).firstResult();
         if (existing != null && !existing.id.equals(id)) {
+            LOG.warnf("Update ingredient failed: duplicate name '%s' for id=%d", input.name, id);
             throw new ValidationException("Ingredient with this name already exists");
         }
 
@@ -93,6 +102,7 @@ public class IngredientGraphQL {
         ingredient.carbsPer100g = input.carbsPer100g;
         ingredient.fatPer100g = input.fatPer100g;
 
+        LOG.infof("Ingredient updated: '%s' (id=%d)", ingredient.name, id);
         return ingredient;
     }
 
@@ -107,6 +117,7 @@ public class IngredientGraphQL {
             throw new NotFoundException("Ingredient not found");
         }
         ingredient.delete();
+        LOG.infof("Ingredient deleted: id=%d", id);
         return true;
     }
 }

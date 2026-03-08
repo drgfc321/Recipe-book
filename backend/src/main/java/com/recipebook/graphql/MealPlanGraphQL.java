@@ -10,12 +10,15 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.graphql.*;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.jboss.logging.Logger;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @GraphQLApi
 public class MealPlanGraphQL {
+
+    private static final Logger LOG = Logger.getLogger(MealPlanGraphQL.class);
 
     @Inject
     JsonWebToken jwt;
@@ -29,6 +32,7 @@ public class MealPlanGraphQL {
     public List<MealPlanResponse> getMealPlansByDateRange(@Name("startDate") LocalDate startDate,
                                                           @Name("endDate") LocalDate endDate) {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.debugf("getMealPlansByDateRange userId=%d, %s to %s", userId, startDate, endDate);
         return mealPlanService.getMealPlansByDateRange(userId, startDate, endDate);
     }
 
@@ -37,6 +41,7 @@ public class MealPlanGraphQL {
     @Authenticated
     public WeeklyMealPlanResponse getWeeklyMealPlan(@Name("weekStart") LocalDate weekStart) {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.debugf("getWeeklyMealPlan userId=%d, weekStart=%s", userId, weekStart);
         return mealPlanService.getWeeklyMealPlan(userId, weekStart);
     }
 
@@ -45,6 +50,7 @@ public class MealPlanGraphQL {
     @Authenticated
     public MacroInfo getDailyMacroSummary(@Name("date") LocalDate date) {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.debugf("getDailyMacroSummary userId=%d, date=%s", userId, date);
         return mealPlanService.getDailyMacroSummary(userId, date);
     }
 
@@ -54,6 +60,7 @@ public class MealPlanGraphQL {
     @Transactional
     public MealPlanResponse assignMealPlan(@Name("input") MealPlanInput input) {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.infof("Assigning meal plan: userId=%d, date=%s, slot=%s, recipeId=%d", userId, input.date, input.mealSlot, input.recipeId);
         return mealPlanService.assignMealPlan(userId, input);
     }
 
@@ -63,6 +70,7 @@ public class MealPlanGraphQL {
     @Transactional
     public boolean removeMealPlan(@Name("date") LocalDate date, @Name("mealSlot") MealSlot mealSlot) {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.infof("Removing meal plan: userId=%d, date=%s, slot=%s", userId, date, mealSlot);
         return mealPlanService.removeMealPlan(userId, date, mealSlot);
     }
 }

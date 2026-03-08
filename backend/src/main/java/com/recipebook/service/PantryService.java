@@ -10,6 +10,7 @@ import com.recipebook.graphql.PantryItemUpdateInput;
 import com.recipebook.exception.NotFoundException;
 import io.quarkus.cache.CacheInvalidateAll;
 import jakarta.enterprise.context.ApplicationScoped;
+import org.jboss.logging.Logger;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,6 +19,8 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class PantryService {
 
+    private static final Logger LOG = Logger.getLogger(PantryService.class);
+
     public List<PantryItemResponse> getPantryItems(Long userId) {
         List<PantryItem> items = PantryItem.find(
                 "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.user.id = ?1", userId).list();
@@ -25,6 +28,7 @@ public class PantryService {
     }
 
     public List<PantryItemResponse> getExpiringItems(Long userId, int withinDays) {
+        LOG.debugf("getExpiringItems userId=%s, withinDays=%d", (Object) userId, withinDays);
         LocalDate threshold = LocalDate.now().plusDays(withinDays);
         List<PantryItem> items = PantryItem.find(
                 "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.user.id = ?1 AND pi.expirationDate IS NOT NULL AND pi.expirationDate <= ?2",
@@ -34,6 +38,7 @@ public class PantryService {
 
     @CacheInvalidateAll(cacheName = "recommendations-cache")
     public PantryItemResponse addPantryItem(Long userId, PantryItemInput input) {
+        LOG.debugf("addPantryItem userId=%d, ingredientId=%d", userId, input.ingredientId);
         User user = User.findById(userId);
         Ingredient ingredient = Ingredient.findById(input.ingredientId);
         if (ingredient == null) {
@@ -44,6 +49,7 @@ public class PantryService {
         if (existing != null) {
             double existingGrams = MacroCalculationService.toGrams(existing.quantity, existing.unit);
             double newGrams = MacroCalculationService.toGrams(input.quantity, input.unit);
+            LOG.debugf("Merging pantry quantities: existing=%.1fg + new=%.1fg for ingredient '%s'", existingGrams, newGrams, ingredient.name);
             existing.quantity = existingGrams + newGrams;
             existing.unit = Unit.GRAMS;
             if (input.expirationDate != null) {

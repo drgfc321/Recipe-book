@@ -16,10 +16,14 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Route("login")
 @PageTitle("Login | Recipe Book")
 public class LoginView extends VerticalLayout {
+
+    private static final Logger LOG = LoggerFactory.getLogger(LoginView.class);
 
     private final AuthService authService;
     private final EmailField emailField;
@@ -87,6 +91,7 @@ public class LoginView extends VerticalLayout {
             authService.login(email, password);
             UI.getCurrent().navigate(DashboardView.class);
         } catch (Exception e) {
+            LOG.warn("Login failed for email '{}': {}", email, e.getMessage());
             String message = e.getMessage();
             if (message != null && message.contains("401")) {
                 message = "Invalid email or password";

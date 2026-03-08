@@ -11,6 +11,7 @@ import com.recipebook.graphql.RecommendationFilterInput;
 import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.jboss.logging.Logger;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -22,6 +23,8 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class RecommendationService {
 
+    private static final Logger LOG = Logger.getLogger(RecommendationService.class);
+
     @Inject
     MacroCalculationService macroService;
 
@@ -30,6 +33,7 @@ public class RecommendationService {
         // Get pantry as map of ingredientId -> grams
         List<PantryItem> pantryItems = PantryItem.find(
                 "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.user.id = ?1", userId).list();
+        LOG.debugf("Loaded %d pantry items for userId=%d", pantryItems.size(), userId);
         Map<Long, Double> pantry = new HashMap<>();
         for (PantryItem pi : pantryItems) {
             pantry.put(pi.ingredient.id, MacroCalculationService.toGrams(pi.quantity, pi.unit));
@@ -50,6 +54,7 @@ public class RecommendationService {
         }
 
         List<Recipe> recipes = Recipe.listWithDetails(query.toString(), params);
+        LOG.debugf("Evaluating %d recipes for recommendations", recipes.size());
 
         List<RecipeRecommendationResponse> recommendations = new ArrayList<>();
         for (Recipe recipe : recipes) {
@@ -61,6 +66,7 @@ public class RecommendationService {
         }
 
         recommendations.sort(Comparator.comparingDouble((RecipeRecommendationResponse r) -> r.matchPercent).reversed());
+        LOG.debugf("Returning %d recommendations", recommendations.size());
         return recommendations;
     }
 
