@@ -3,6 +3,8 @@ package com.recipebook.graphql;
 import com.recipebook.entity.User;
 import com.recipebook.service.PdfImageExtractorService;
 import com.recipebook.service.RecipeImportService;
+import com.recipebook.exception.NotFoundException;
+import com.recipebook.exception.RecipeBookException;
 import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -28,11 +30,11 @@ public class RecipeImportGraphQL {
     @Mutation("importRecipesFromFile")
     @Description("Import recipes from a JSON file (authenticated)")
     @Authenticated
-    public ImportResultDTO importRecipes(@Name("filePath") @DefaultValue("recipes_import.json") String filePath) throws GraphQLException {
+    public ImportResultDTO importRecipes(@Name("filePath") @DefaultValue("recipes_import.json") String filePath) {
         Long userId = Long.parseLong(jwt.getSubject());
         User owner = User.findById(userId);
         if (owner == null) {
-            throw new GraphQLException("User not found");
+            throw new NotFoundException("User not found");
         }
 
         Path path = Paths.get(filePath);
@@ -42,7 +44,7 @@ public class RecipeImportGraphQL {
         }
 
         if (!path.toFile().exists()) {
-            throw new GraphQLException("File not found: " + path);
+            throw new NotFoundException("File not found: " + path);
         }
 
         RecipeImportService.ImportResult result = importService.importFromJson(path, owner);
@@ -52,14 +54,14 @@ public class RecipeImportGraphQL {
     @Mutation("extractPdfImages")
     @Description("Extract images from a PDF cookbook and match them to recipes")
     @Authenticated
-    public String extractPdfImages(@Name("filePath") @DefaultValue("carte.pdf") String filePath) throws GraphQLException {
+    public String extractPdfImages(@Name("filePath") @DefaultValue("carte.pdf") String filePath) {
         Path path = Paths.get(filePath);
         if (!path.isAbsolute()) {
             path = Paths.get(System.getProperty("user.dir")).resolve(path);
         }
 
         if (!path.toFile().exists()) {
-            throw new GraphQLException("File not found: " + path);
+            throw new NotFoundException("File not found: " + path);
         }
 
         try {
@@ -80,7 +82,7 @@ public class RecipeImportGraphQL {
             }
             return report.toString();
         } catch (Exception e) {
-            throw new GraphQLException("Extraction failed: " + e.getMessage());
+            throw new RecipeBookException("Extraction failed: " + e.getMessage());
         }
     }
 

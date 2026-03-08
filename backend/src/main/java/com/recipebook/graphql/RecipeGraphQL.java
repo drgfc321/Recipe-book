@@ -7,10 +7,11 @@ import com.recipebook.entity.RecipeCategory;
 import com.recipebook.entity.Difficulty;
 import com.recipebook.entity.RecipeIngredient;
 import com.recipebook.entity.User;
+import com.recipebook.exception.AuthorizationException;
+import com.recipebook.exception.NotFoundException;
 import com.recipebook.service.MacroCalculationService;
 import io.quarkus.cache.CacheInvalidateAll;
 import io.quarkus.security.Authenticated;
-import io.smallrye.graphql.api.ErrorCode;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.graphql.*;
@@ -70,10 +71,10 @@ public class RecipeGraphQL {
 
     @Query("recipe")
     @Description("Get a single recipe by ID")
-    public RecipeResponse getRecipe(@Name("id") Long id) throws GraphQLException {
+    public RecipeResponse getRecipe(@Name("id") Long id) {
         Recipe recipe = Recipe.findByIdWithDetails(id);
         if (recipe == null) {
-            throw new GraphQLException("Recipe not found");
+            throw new NotFoundException("Recipe not found");
         }
         return macroService.toResponse(recipe);
     }
@@ -83,7 +84,7 @@ public class RecipeGraphQL {
     @Authenticated
     @Transactional
     @CacheInvalidateAll(cacheName = "recommendations-cache")
-    public RecipeResponse createRecipe(@Name("input") RecipeInput input) throws GraphQLException {
+    public RecipeResponse createRecipe(@Name("input") RecipeInput input) {
         Long userId = Long.parseLong(jwt.getSubject());
         User owner = User.findById(userId);
 
@@ -106,7 +107,7 @@ public class RecipeGraphQL {
             for (RecipeIngredientInput ri : input.ingredients) {
                 Ingredient ingredient = Ingredient.findById(ri.ingredientId);
                 if (ingredient == null) {
-                    throw new GraphQLException("Ingredient not found: " + ri.ingredientId);
+                    throw new NotFoundException("Ingredient not found: " + ri.ingredientId);
                 }
                 RecipeIngredient recipeIngredient = new RecipeIngredient();
                 recipeIngredient.recipe = recipe;
@@ -126,15 +127,15 @@ public class RecipeGraphQL {
     @Authenticated
     @Transactional
     @CacheInvalidateAll(cacheName = "recommendations-cache")
-    public RecipeResponse updateRecipe(@Name("id") Long id, @Name("input") RecipeInput input) throws GraphQLException {
+    public RecipeResponse updateRecipe(@Name("id") Long id, @Name("input") RecipeInput input) {
         Recipe recipe = Recipe.findById(id);
         if (recipe == null) {
-            throw new GraphQLException("Recipe not found");
+            throw new NotFoundException("Recipe not found");
         }
 
         Long userId = Long.parseLong(jwt.getSubject());
         if (!recipe.owner.id.equals(userId)) {
-            throw new GraphQLException("You can only edit your own recipes");
+            throw new AuthorizationException("You can only edit your own recipes");
         }
 
         recipe.name = input.name;
@@ -154,7 +155,7 @@ public class RecipeGraphQL {
             for (RecipeIngredientInput ri : input.ingredients) {
                 Ingredient ingredient = Ingredient.findById(ri.ingredientId);
                 if (ingredient == null) {
-                    throw new GraphQLException("Ingredient not found: " + ri.ingredientId);
+                    throw new NotFoundException("Ingredient not found: " + ri.ingredientId);
                 }
                 RecipeIngredient recipeIngredient = new RecipeIngredient();
                 recipeIngredient.recipe = recipe;
@@ -174,15 +175,15 @@ public class RecipeGraphQL {
     @Authenticated
     @Transactional
     @CacheInvalidateAll(cacheName = "recommendations-cache")
-    public boolean deleteRecipe(@Name("id") Long id) throws GraphQLException {
+    public boolean deleteRecipe(@Name("id") Long id) {
         Recipe recipe = Recipe.findById(id);
         if (recipe == null) {
-            throw new GraphQLException("Recipe not found");
+            throw new NotFoundException("Recipe not found");
         }
 
         Long userId = Long.parseLong(jwt.getSubject());
         if (!recipe.owner.id.equals(userId)) {
-            throw new GraphQLException("You can only delete your own recipes");
+            throw new AuthorizationException("You can only delete your own recipes");
         }
 
         recipe.delete();

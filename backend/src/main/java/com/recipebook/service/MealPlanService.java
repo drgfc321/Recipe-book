@@ -10,11 +10,11 @@ import com.recipebook.entity.MealSlot;
 import com.recipebook.entity.Recipe;
 import com.recipebook.entity.User;
 import com.recipebook.graphql.MealPlanInput;
+import com.recipebook.exception.NotFoundException;
 import io.quarkus.cache.CacheInvalidateAll;
 import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.eclipse.microprofile.graphql.GraphQLException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -101,10 +101,10 @@ public class MealPlanService {
     }
 
     @CacheInvalidateAll(cacheName = "weekly-mealplan")
-    public MealPlanResponse assignMealPlan(Long userId, MealPlanInput input) throws GraphQLException {
+    public MealPlanResponse assignMealPlan(Long userId, MealPlanInput input) {
         Recipe recipe = Recipe.findById(input.recipeId);
         if (recipe == null) {
-            throw new GraphQLException("Recipe not found");
+            throw new NotFoundException("Recipe not found");
         }
 
         User user = User.findById(userId);
@@ -127,11 +127,11 @@ public class MealPlanService {
     }
 
     @CacheInvalidateAll(cacheName = "weekly-mealplan")
-    public boolean removeMealPlan(Long userId, LocalDate date, MealSlot mealSlot) throws GraphQLException {
+    public boolean removeMealPlan(Long userId, LocalDate date, MealSlot mealSlot) {
         MealPlan plan = MealPlan.find("user.id = ?1 and date = ?2 and mealSlot = ?3",
                 userId, date, mealSlot).firstResult();
         if (plan == null) {
-            throw new GraphQLException("Meal plan entry not found");
+            throw new NotFoundException("Meal plan entry not found");
         }
         plan.delete();
         return true;

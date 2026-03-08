@@ -32,7 +32,7 @@ public class ShoppingListGraphQL {
     @Description("Auto-generate shopping list from meal plan, subtracting pantry")
     @Authenticated
     @Transactional
-    public ShoppingListResponse generateShoppingList(@Name("weekStart") LocalDate weekStart) throws GraphQLException {
+    public ShoppingListResponse generateShoppingList(@Name("weekStart") LocalDate weekStart) {
         Long userId = Long.parseLong(jwt.getSubject());
         return shoppingListService.generateShoppingList(userId, weekStart);
     }
@@ -41,7 +41,7 @@ public class ShoppingListGraphQL {
     @Description("Manually add an item to the shopping list")
     @Authenticated
     @Transactional
-    public ShoppingListItemResponse addShoppingListItem(@Name("input") ShoppingListItemInput input) throws GraphQLException {
+    public ShoppingListItemResponse addShoppingListItem(@Name("input") ShoppingListItemInput input) {
         Long userId = Long.parseLong(jwt.getSubject());
         return shoppingListService.addShoppingListItem(userId, input);
     }
@@ -50,7 +50,7 @@ public class ShoppingListGraphQL {
     @Description("Toggle purchased status of a shopping list item")
     @Authenticated
     @Transactional
-    public ShoppingListItemResponse toggleShoppingListItem(@Name("id") Long id) throws GraphQLException {
+    public ShoppingListItemResponse toggleShoppingListItem(@Name("id") Long id) {
         Long userId = Long.parseLong(jwt.getSubject());
         return shoppingListService.toggleShoppingListItem(userId, id);
     }
@@ -59,7 +59,7 @@ public class ShoppingListGraphQL {
     @Description("Remove a shopping list item")
     @Authenticated
     @Transactional
-    public boolean removeShoppingListItem(@Name("id") Long id) throws GraphQLException {
+    public boolean removeShoppingListItem(@Name("id") Long id) {
         Long userId = Long.parseLong(jwt.getSubject());
         return shoppingListService.removeShoppingListItem(userId, id);
     }

@@ -52,7 +52,7 @@ public class MealPlanGraphQL {
     @Description("Assign a recipe to a meal slot (creates or replaces)")
     @Authenticated
     @Transactional
-    public MealPlanResponse assignMealPlan(@Name("input") MealPlanInput input) throws GraphQLException {
+    public MealPlanResponse assignMealPlan(@Name("input") MealPlanInput input) {
         Long userId = Long.parseLong(jwt.getSubject());
         return mealPlanService.assignMealPlan(userId, input);
     }
@@ -61,7 +61,7 @@ public class MealPlanGraphQL {
     @Description("Remove a meal plan entry")
     @Authenticated
     @Transactional
-    public boolean removeMealPlan(@Name("date") LocalDate date, @Name("mealSlot") MealSlot mealSlot) throws GraphQLException {
+    public boolean removeMealPlan(@Name("date") LocalDate date, @Name("mealSlot") MealSlot mealSlot) {
         Long userId = Long.parseLong(jwt.getSubject());
         return mealPlanService.removeMealPlan(userId, date, mealSlot);
     }

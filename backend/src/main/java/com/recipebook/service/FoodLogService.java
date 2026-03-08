@@ -11,10 +11,11 @@ import com.recipebook.entity.Ingredient;
 import com.recipebook.entity.MealPlan;
 import com.recipebook.entity.Recipe;
 import com.recipebook.entity.User;
+import com.recipebook.exception.NotFoundException;
+import com.recipebook.exception.ValidationException;
 import com.recipebook.graphql.FoodLogInput;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.eclipse.microprofile.graphql.GraphQLException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -83,14 +84,14 @@ public class FoodLogService {
         return response;
     }
 
-    public FoodLogResponse logFood(Long userId, FoodLogInput input) throws GraphQLException {
+    public FoodLogResponse logFood(Long userId, FoodLogInput input) {
         boolean hasRecipe = input.recipeId != null;
         boolean hasIngredient = input.ingredientId != null;
         boolean hasCustom = input.customName != null && !input.customName.trim().isEmpty();
 
         int sourceCount = (hasRecipe ? 1 : 0) + (hasIngredient ? 1 : 0) + (hasCustom ? 1 : 0);
         if (sourceCount != 1) {
-            throw new GraphQLException("Exactly one of recipeId, ingredientId, or customName must be provided");
+            throw new ValidationException("Exactly one of recipeId, ingredientId, or customName must be provided");
         }
 
         User user = User.findById(userId);
@@ -104,30 +105,30 @@ public class FoodLogService {
         if (hasRecipe) {
             Recipe recipe = Recipe.findById(input.recipeId);
             if (recipe == null) {
-                throw new GraphQLException("Recipe not found");
+                throw new NotFoundException("Recipe not found");
             }
             log.recipe = recipe;
         } else if (hasIngredient) {
             Ingredient ingredient = Ingredient.findById(input.ingredientId);
             if (ingredient == null) {
-                throw new GraphQLException("Ingredient not found");
+                throw new NotFoundException("Ingredient not found");
             }
             if (input.ingredientQuantity == null || input.ingredientQuantity <= 0) {
-                throw new GraphQLException("ingredientQuantity must be > 0");
+                throw new ValidationException("ingredientQuantity must be > 0");
             }
             log.ingredient = ingredient;
             log.ingredientQuantity = input.ingredientQuantity;
         } else {
             log.customName = input.customName.trim();
             if (input.customCalories == null || input.customCalories < 0) {
-                throw new GraphQLException("Custom calories must be provided and >= 0");
+                throw new ValidationException("Custom calories must be provided and >= 0");
             }
             log.customCalories = input.customCalories;
             log.customProtein = input.customProtein != null ? input.customProtein : 0.0;
             log.customCarbs = input.customCarbs != null ? input.customCarbs : 0.0;
             log.customFat = input.customFat != null ? input.customFat : 0.0;
             if (log.customProtein < 0 || log.customCarbs < 0 || log.customFat < 0) {
-                throw new GraphQLException("Macro values must be >= 0");
+                throw new ValidationException("Macro values must be >= 0");
             }
         }
 
@@ -139,7 +140,7 @@ public class FoodLogService {
         return toResponse(log);
     }
 
-    public FoodLogResponse updateFoodLog(Long userId, Long id, double servings) throws GraphQLException {
+    public FoodLogResponse updateFoodLog(Long userId, Long id, double servings)  {
         FoodLog log = FoodLog.find(
                 "FROM FoodLog fl " +
                 "LEFT JOIN FETCH fl.recipe r " +
@@ -149,16 +150,16 @@ public class FoodLogService {
                 "LEFT JOIN FETCH fl.ingredient " +
                 "WHERE fl.id = ?1 AND fl.user.id = ?2", id, userId).firstResult();
         if (log == null) {
-            throw new GraphQLException("Food log entry not found");
+            throw new NotFoundException("Food log entry not found");
         }
         log.servings = servings;
         return toResponse(log);
     }
 
-    public boolean removeFoodLog(Long userId, Long id) throws GraphQLException {
+    public boolean removeFoodLog(Long userId, Long id)  {
         FoodLog log = FoodLog.find("id = ?1 and user.id = ?2", id, userId).firstResult();
         if (log == null) {
-            throw new GraphQLException("Food log entry not found");
+            throw new NotFoundException("Food log entry not found");
         }
         log.delete();
         return true;

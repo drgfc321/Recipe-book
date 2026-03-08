@@ -5,6 +5,8 @@ import com.recipebook.entity.User;
 import com.recipebook.service.NutritionTargetService;
 import com.recipebook.service.PasswordService;
 import com.recipebook.service.TokenService;
+import com.recipebook.exception.NotFoundException;
+import com.recipebook.exception.ValidationException;
 import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -35,12 +37,12 @@ public class AuthGraphQL {
     public AuthResponse register(@Name("email") String email,
                                  @Name("username") String username,
                                  @Name("password") String password,
-                                 @Name("language") String language) throws GraphQLException {
+                                 @Name("language") String language) {
         if (User.find("email", email).firstResult() != null) {
-            throw new GraphQLException("Email already registered");
+            throw new ValidationException("Email already registered");
         }
         if (User.find("username", username).firstResult() != null) {
-            throw new GraphQLException("Username already taken");
+            throw new ValidationException("Username already taken");
         }
 
         User user = new User();
@@ -62,14 +64,14 @@ public class AuthGraphQL {
     @Description("Login with email and password")
     @Transactional
     public AuthResponse login(@Name("email") String email,
-                              @Name("password") String password) throws GraphQLException {
+                              @Name("password") String password) {
         User user = User.find("email", email).firstResult();
         if (user == null) {
-            throw new GraphQLException("Invalid email or password");
+            throw new ValidationException("Invalid email or password");
         }
 
         if (!passwordService.verifyPassword(password, user.passwordHash)) {
-            throw new GraphQLException("Invalid email or password");
+            throw new ValidationException("Invalid email or password");
         }
 
         user.lastLogin = LocalDateTime.now();
@@ -81,11 +83,11 @@ public class AuthGraphQL {
     @Query("me")
     @Description("Get the currently authenticated user")
     @Authenticated
-    public User me() throws GraphQLException {
+    public User me() {
         Long userId = Long.parseLong(jwt.getSubject());
         User user = User.findById(userId);
         if (user == null) {
-            throw new GraphQLException("User not found");
+            throw new NotFoundException("User not found");
         }
         return user;
     }
@@ -101,10 +103,10 @@ public class AuthGraphQL {
     @Description("Delete a user (admin)")
     @Authenticated
     @Transactional
-    public boolean deleteUser(@Name("id") Long id) throws GraphQLException {
+    public boolean deleteUser(@Name("id") Long id) {
         User user = User.findById(id);
         if (user == null) {
-            throw new GraphQLException("User not found");
+            throw new NotFoundException("User not found");
         }
         user.delete();
         return true;

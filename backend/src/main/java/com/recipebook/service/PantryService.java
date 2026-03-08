@@ -7,9 +7,9 @@ import com.recipebook.entity.Unit;
 import com.recipebook.entity.User;
 import com.recipebook.graphql.PantryItemInput;
 import com.recipebook.graphql.PantryItemUpdateInput;
+import com.recipebook.exception.NotFoundException;
 import io.quarkus.cache.CacheInvalidateAll;
 import jakarta.enterprise.context.ApplicationScoped;
-import org.eclipse.microprofile.graphql.GraphQLException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,11 +33,11 @@ public class PantryService {
     }
 
     @CacheInvalidateAll(cacheName = "recommendations-cache")
-    public PantryItemResponse addPantryItem(Long userId, PantryItemInput input) throws GraphQLException {
+    public PantryItemResponse addPantryItem(Long userId, PantryItemInput input) {
         User user = User.findById(userId);
         Ingredient ingredient = Ingredient.findById(input.ingredientId);
         if (ingredient == null) {
-            throw new GraphQLException("Ingredient not found");
+            throw new NotFoundException("Ingredient not found");
         }
 
         PantryItem existing = PantryItem.find("user.id = ?1 and ingredient.id = ?2", userId, input.ingredientId).firstResult();
@@ -65,12 +65,12 @@ public class PantryService {
     }
 
     @CacheInvalidateAll(cacheName = "recommendations-cache")
-    public PantryItemResponse updatePantryItem(Long userId, Long itemId, PantryItemUpdateInput input) throws GraphQLException {
+    public PantryItemResponse updatePantryItem(Long userId, Long itemId, PantryItemUpdateInput input) {
         PantryItem item = PantryItem.find(
                 "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.id = ?1 AND pi.user.id = ?2",
                 itemId, userId).firstResult();
         if (item == null) {
-            throw new GraphQLException("Pantry item not found");
+            throw new NotFoundException("Pantry item not found");
         }
         if (input.quantity != null) {
             item.quantity = input.quantity;
@@ -85,10 +85,10 @@ public class PantryService {
     }
 
     @CacheInvalidateAll(cacheName = "recommendations-cache")
-    public boolean removePantryItem(Long userId, Long itemId) throws GraphQLException {
+    public boolean removePantryItem(Long userId, Long itemId) {
         PantryItem item = PantryItem.find("id = ?1 and user.id = ?2", itemId, userId).firstResult();
         if (item == null) {
-            throw new GraphQLException("Pantry item not found");
+            throw new NotFoundException("Pantry item not found");
         }
         item.delete();
         return true;

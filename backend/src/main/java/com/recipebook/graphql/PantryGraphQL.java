@@ -39,7 +39,7 @@ public class PantryGraphQL {
     @Description("Add an item to the pantry (auto-merges if ingredient exists)")
     @Authenticated
     @Transactional
-    public PantryItemResponse addPantryItem(@Name("input") PantryItemInput input) throws GraphQLException {
+    public PantryItemResponse addPantryItem(@Name("input") PantryItemInput input) {
         Long userId = Long.parseLong(jwt.getSubject());
         return pantryService.addPantryItem(userId, input);
     }
@@ -48,7 +48,7 @@ public class PantryGraphQL {
     @Description("Update a pantry item")
     @Authenticated
     @Transactional
-    public PantryItemResponse updatePantryItem(@Name("id") Long id, @Name("input") PantryItemUpdateInput input) throws GraphQLException {
+    public PantryItemResponse updatePantryItem(@Name("id") Long id, @Name("input") PantryItemUpdateInput input) {
         Long userId = Long.parseLong(jwt.getSubject());
         return pantryService.updatePantryItem(userId, id, input);
     }
@@ -57,7 +57,7 @@ public class PantryGraphQL {
     @Description("Remove a pantry item")
     @Authenticated
     @Transactional
-    public boolean removePantryItem(@Name("id") Long id) throws GraphQLException {
+    public boolean removePantryItem(@Name("id") Long id) {
         Long userId = Long.parseLong(jwt.getSubject());
         return pantryService.removePantryItem(userId, id);
     }

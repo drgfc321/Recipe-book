@@ -9,9 +9,9 @@ import com.recipebook.entity.RecipeIngredient;
 import com.recipebook.entity.ShoppingListItem;
 import com.recipebook.entity.Unit;
 import com.recipebook.entity.User;
+import com.recipebook.exception.NotFoundException;
 import com.recipebook.graphql.ShoppingListItemInput;
 import jakarta.enterprise.context.ApplicationScoped;
-import org.eclipse.microprofile.graphql.GraphQLException;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -29,14 +29,14 @@ public class ShoppingListService {
         return buildResponse(weekStart, items);
     }
 
-    public ShoppingListResponse generateShoppingList(Long userId, LocalDate weekStart) throws GraphQLException {
+    public ShoppingListResponse generateShoppingList(Long userId, LocalDate weekStart) {
         LocalDate weekEnd = weekStart.plusDays(6);
 
         List<MealPlan> plans = MealPlan.listWithRecipeDetails(
                 "mp.user.id = ?1 and mp.date >= ?2 and mp.date <= ?3", userId, weekStart, weekEnd);
 
         if (plans.isEmpty()) {
-            throw new GraphQLException("No meal plans found for this week");
+            throw new NotFoundException("No meal plans found for this week");
         }
 
         // Aggregate all recipe ingredients -> Map<ingredientId, totalGrams>
@@ -91,10 +91,10 @@ public class ShoppingListService {
         return buildResponse(weekStart, items);
     }
 
-    public ShoppingListItemResponse addShoppingListItem(Long userId, ShoppingListItemInput input) throws GraphQLException {
+    public ShoppingListItemResponse addShoppingListItem(Long userId, ShoppingListItemInput input) {
         Ingredient ingredient = Ingredient.findById(input.ingredientId);
         if (ingredient == null) {
-            throw new GraphQLException("Ingredient not found");
+            throw new NotFoundException("Ingredient not found");
         }
 
         User user = User.findById(userId);
@@ -110,21 +110,21 @@ public class ShoppingListService {
         return toItemResponse(item);
     }
 
-    public ShoppingListItemResponse toggleShoppingListItem(Long userId, Long itemId) throws GraphQLException {
+    public ShoppingListItemResponse toggleShoppingListItem(Long userId, Long itemId) {
         ShoppingListItem item = ShoppingListItem.find(
                 "FROM ShoppingListItem si LEFT JOIN FETCH si.ingredient WHERE si.id = ?1 AND si.user.id = ?2",
                 itemId, userId).firstResult();
         if (item == null) {
-            throw new GraphQLException("Shopping list item not found");
+            throw new NotFoundException("Shopping list item not found");
         }
         item.purchased = !item.purchased;
         return toItemResponse(item);
     }
 
-    public boolean removeShoppingListItem(Long userId, Long itemId) throws GraphQLException {
+    public boolean removeShoppingListItem(Long userId, Long itemId) {
         ShoppingListItem item = ShoppingListItem.find("id = ?1 and user.id = ?2", itemId, userId).firstResult();
         if (item == null) {
-            throw new GraphQLException("Shopping list item not found");
+            throw new NotFoundException("Shopping list item not found");
         }
         item.delete();
         return true;
@@ -135,7 +135,8 @@ public class ShoppingListService {
         return true;
     }
 
-    private ShoppingListResponse buildResponse(LocalDate weekStart, List<ShoppingListItem> items) {
+    // package-private for testing
+    ShoppingListResponse buildResponse(LocalDate weekStart, List<ShoppingListItem> items) {
         ShoppingListResponse response = new ShoppingListResponse();
         response.weekStart = weekStart;
         response.items = items.stream().map(this::toItemResponse).collect(Collectors.toList());
@@ -145,7 +146,8 @@ public class ShoppingListService {
         return response;
     }
 
-    private ShoppingListItemResponse toItemResponse(ShoppingListItem item) {
+    // package-private for testing
+    ShoppingListItemResponse toItemResponse(ShoppingListItem item) {
         ShoppingListItemResponse response = new ShoppingListItemResponse();
         response.id = item.id;
         response.ingredientId = item.ingredient != null ? item.ingredient.id : null;

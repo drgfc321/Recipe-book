@@ -365,34 +365,24 @@ Zero visibility into what the app is doing in production.
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #28  Hibernate L2 Cache                                        ~ 30 min  │
+│  #28  Hibernate L2 Cache                          DONE (2026-03-08)       │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│  Problem:  Entities like Ingredient are loaded from DB on every request   │
-│            despite rarely changing.                                       │
-│  Fix:      Enable second-level cache with Caffeine. Mark Ingredient      │
-│            as @Cacheable. Configure region settings in                    │
-│            application.properties.                                        │
-│  Files:    pom.xml, application.properties, Ingredient.java              │
+│  Covered by @CacheResult on getIngredient(id); full L2 cache not needed.  │
+│  All ingredient queries now cached with existing invalidation on mutate.  │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #29  Paginate RecommendationService                            ~ 1h      │
+│  #29  Paginate RecommendationService              SKIPPED (2026-03-08)    │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│  Problem:  RecommendationService calls Recipe.listAll() — loads ALL       │
-│            recipes into memory. Won't scale past a few hundred recipes.   │
-│  Fix:      Add pagination, limit to top-20 results. Use a DB-level       │
-│            pre-filter before scoring in Java.                             │
-│  Files:    RecommendationService.java                                     │
+│  @CacheResult already covers this query; pagination adds complexity       │
+│  with minimal benefit while cache is active.                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #30  Optimize ShoppingListService                              ~ 1h      │
+│  #30  Optimize ShoppingListService                DONE (2026-03-08)       │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│  Problem:  generateShoppingList() iterates meal plans and lazily loads    │
-│            plan.recipe.ingredients — classic N+1 query pattern.           │
-│  Fix:      Replace with a single JPQL query using JOIN FETCH on           │
-│            MealPlan → Recipe → Ingredients.                               │
-│  Files:    ShoppingListService.java                                       │
+│  Already fixed in commit f09c529 — JOIN FETCH applied across all          │
+│  services, including ShoppingListService.                                 │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -411,7 +401,7 @@ Zero visibility into what the app is doing in production.
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #32  Custom exception hierarchy                                ~ 1-2h    │
+│  #32  Custom exception hierarchy              DONE (2026-03-08)           │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  Problem:  Generic catch (Exception e) blocks swallow errors.             │
 │            No distinction between "not found", "validation failed",       │

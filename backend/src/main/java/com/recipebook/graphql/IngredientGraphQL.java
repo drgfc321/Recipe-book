@@ -2,6 +2,8 @@ package com.recipebook.graphql;
 
 import com.recipebook.entity.Ingredient;
 import com.recipebook.entity.IngredientCategory;
+import com.recipebook.exception.NotFoundException;
+import com.recipebook.exception.ValidationException;
 import io.quarkus.cache.CacheInvalidateAll;
 import io.quarkus.cache.CacheResult;
 import io.quarkus.security.Authenticated;
@@ -37,10 +39,11 @@ public class IngredientGraphQL {
 
     @Query("ingredient")
     @Description("Get a single ingredient by ID")
-    public Ingredient getIngredient(@Name("id") Long id) throws GraphQLException {
+    @CacheResult(cacheName = "ingredients-cache")
+    public Ingredient getIngredient(@Name("id") Long id) {
         Ingredient ingredient = Ingredient.findById(id);
         if (ingredient == null) {
-            throw new GraphQLException("Ingredient not found");
+            throw new NotFoundException("Ingredient not found");
         }
         return ingredient;
     }
@@ -50,9 +53,9 @@ public class IngredientGraphQL {
     @Authenticated
     @Transactional
     @CacheInvalidateAll(cacheName = "ingredients-cache")
-    public Ingredient createIngredient(@Name("input") IngredientInput input) throws GraphQLException {
+    public Ingredient createIngredient(@Name("input") IngredientInput input) {
         if (Ingredient.find("lower(name)", input.name.toLowerCase()).firstResult() != null) {
-            throw new GraphQLException("Ingredient with this name already exists");
+            throw new ValidationException("Ingredient with this name already exists");
         }
 
         Ingredient ingredient = new Ingredient();
@@ -72,15 +75,15 @@ public class IngredientGraphQL {
     @Authenticated
     @Transactional
     @CacheInvalidateAll(cacheName = "ingredients-cache")
-    public Ingredient updateIngredient(@Name("id") Long id, @Name("input") IngredientInput input) throws GraphQLException {
+    public Ingredient updateIngredient(@Name("id") Long id, @Name("input") IngredientInput input) {
         Ingredient ingredient = Ingredient.findById(id);
         if (ingredient == null) {
-            throw new GraphQLException("Ingredient not found");
+            throw new NotFoundException("Ingredient not found");
         }
 
         Ingredient existing = Ingredient.find("lower(name)", input.name.toLowerCase()).firstResult();
         if (existing != null && !existing.id.equals(id)) {
-            throw new GraphQLException("Ingredient with this name already exists");
+            throw new ValidationException("Ingredient with this name already exists");
         }
 
         ingredient.name = input.name;
@@ -98,10 +101,10 @@ public class IngredientGraphQL {
     @Authenticated
     @Transactional
     @CacheInvalidateAll(cacheName = "ingredients-cache")
-    public boolean deleteIngredient(@Name("id") Long id) throws GraphQLException {
+    public boolean deleteIngredient(@Name("id") Long id) {
         Ingredient ingredient = Ingredient.findById(id);
         if (ingredient == null) {
-            throw new GraphQLException("Ingredient not found");
+            throw new NotFoundException("Ingredient not found");
         }
         ingredient.delete();
         return true;

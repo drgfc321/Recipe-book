@@ -10,6 +10,7 @@ import com.recipebook.entity.Unit;
 import com.recipebook.entity.User;
 import com.recipebook.service.MacroCalculationService;
 import com.recipebook.service.RecommendationService;
+import com.recipebook.exception.NotFoundException;
 import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -42,12 +43,12 @@ public class RecommendationGraphQL {
     @Description("Add missing ingredients for a recipe to the shopping list")
     @Authenticated
     @Transactional
-    public boolean addMissingToShoppingList(@Name("recipeId") Long recipeId, @Name("weekStart") LocalDate weekStart) throws GraphQLException {
+    public boolean addMissingToShoppingList(@Name("recipeId") Long recipeId, @Name("weekStart") LocalDate weekStart) {
         Long userId = Long.parseLong(jwt.getSubject());
 
         Recipe recipe = Recipe.findByIdWithDetails(recipeId);
         if (recipe == null) {
-            throw new GraphQLException("Recipe not found");
+            throw new NotFoundException("Recipe not found");
         }
 
         User user = User.findById(userId);

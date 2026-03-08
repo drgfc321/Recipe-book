@@ -33,7 +33,7 @@ public class FoodLogGraphQL {
     @Description("Log a food entry")
     @Authenticated
     @Transactional
-    public FoodLogResponse logFood(@Name("input") FoodLogInput input) throws GraphQLException {
+    public FoodLogResponse logFood(@Name("input") FoodLogInput input) {
         Long userId = Long.parseLong(jwt.getSubject());
         return foodLogService.logFood(userId, input);
     }
@@ -43,7 +43,7 @@ public class FoodLogGraphQL {
     @Authenticated
     @Transactional
     public FoodLogResponse updateFoodLog(@Name("id") BigInteger id,
-                                          @Name("servings") Float servings) throws GraphQLException {
+                                          @Name("servings") Float servings) {
         Long userId = Long.parseLong(jwt.getSubject());
         return foodLogService.updateFoodLog(userId, id.longValue(), servings.doubleValue());
     }
@@ -52,7 +52,7 @@ public class FoodLogGraphQL {
     @Description("Remove a food log entry")
     @Authenticated
     @Transactional
-    public boolean removeFoodLog(@Name("id") BigInteger id) throws GraphQLException {
+    public boolean removeFoodLog(@Name("id") BigInteger id) {
         Long userId = Long.parseLong(jwt.getSubject());
         return foodLogService.removeFoodLog(userId, id.longValue());
     }
