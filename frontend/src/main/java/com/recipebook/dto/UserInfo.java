@@ -6,5 +6,6 @@ public record UserInfo(
         Long id,
         String username,
         String email,
-        String role
+        String role,
+        String avatarUrl
 ) implements Serializable {}

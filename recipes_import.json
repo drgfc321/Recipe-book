@@ -1,0 +1,1218 @@
+[
+  {
+    "name": "Zucchini & Potato Tater Tots",
+    "category": "SNACK",
+    "difficulty": "MEDIUM",
+    "servings": 2,
+    "instructions": "1. Punem cartofii la fiert in apa care a dat in clocot timp de 6 minute. 2. Radem zucchiniul si il scurgem complet de apa si apoi radem si cartoful. 3. Punem cartoful ras si zucchiniul in bol si amestecam. 4. Formam din compozitie Tater tots si ii punem in tava de copt. Pulverizam deasupra ulei si punem putin parmezan deasupra. 5. Bagam la cuptor la 180 grade 30-35 minute si apoi servim. Pofta buna!",
+    "totalCalories": 382,
+    "protein": 14,
+    "carbs": 63,
+    "fat": 9,
+    "ingredients": [
+      {"name": "cartof", "quantity": 300, "unit": "GRAMS"},
+      {"name": "zucchini", "quantity": 400, "unit": "GRAMS"},
+      {"name": "ulei de masline", "quantity": 5, "unit": "MILLILITERS"},
+      {"name": "parmezan", "quantity": 20, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Spicy Healthy Doritos",
+    "category": "SNACK",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Taiem lipiile sub forma de triunghiuri si le punem intr-un bol. 2. Stropim cu 7ml ulei, luam condimentele enuntate si le punem deasupra, apoi amestecam foarte bine. 3. Punem in airfryer si pulverizam restul de ulei deasupra, tinem lipiile aproximativ 5 minute la airfryer, iar imediat dupa ce le scoatem, le punem pe o farfurie, radem parmezanul deasupra si putem sa servim. Pofta buna!",
+    "totalCalories": 382,
+    "protein": 14,
+    "carbs": 63,
+    "fat": 9,
+    "ingredients": [
+      {"name": "lipie din graham", "quantity": 3, "unit": "PIECES"},
+      {"name": "ulei de masline", "quantity": 10, "unit": "MILLILITERS"},
+      {"name": "parmezan", "quantity": 5, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Avocado & Feta Dip",
+    "category": "SNACK",
+    "difficulty": "EASY",
+    "servings": 1,
+    "instructions": "1. Taiem legumele cat mai marunt si le punem in bol. 2. Taiem branza feta cubulete mici si o punem in bol. 3. Adaugam uleiul de masline deasupra, adaugam sarea si piperul, si amestecam. 4. Punem lipia in tigaie ca sa o rumenim putin, si servim. Pofta buna!",
+    "totalCalories": 395,
+    "protein": 7,
+    "carbs": 21,
+    "fat": 33,
+    "ingredients": [
+      {"name": "avocado", "quantity": 100, "unit": "GRAMS"},
+      {"name": "rosie", "quantity": 100, "unit": "GRAMS"},
+      {"name": "ceapa alba", "quantity": 50, "unit": "GRAMS"},
+      {"name": "ardei", "quantity": 100, "unit": "GRAMS"},
+      {"name": "branza feta", "quantity": 40, "unit": "GRAMS"},
+      {"name": "ulei de masline", "quantity": 10, "unit": "MILLILITERS"},
+      {"name": "lipie din graham", "quantity": 1, "unit": "PIECES"}
+    ]
+  },
+  {
+    "name": "Low Calorie Pizza Rolls",
+    "category": "SNACK",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Amestecam iaurtul, condimentele si faina pana se formeaza un aluat. 2. Puneti putina faina pe masa, intindeti coca cat va permite suprafata, si ungeti aluatul cu sosul de rosii, puneti cascavalul deasupra, salamul light, si oregano si busuioc fresh. 3. Taiati pizza conform clipului, rulati, puneti in tava de copt, si bagati-o la cuptor la 180 grade timp de 15-20 minute. Optional pulverizati si putin ulei de masline pe fiecare roll. 4. Puteti sa serviti cu un sos format din 30g iaurt grecesc 25g maioneza light, usturoi granulat si 1 catel de usturoi.",
+    "totalCalories": 940,
+    "protein": 49,
+    "carbs": 143,
+    "fat": 20,
+    "ingredients": [
+      {"name": "faina", "quantity": 180, "unit": "GRAMS"},
+      {"name": "praf de copt", "quantity": 5, "unit": "GRAMS"},
+      {"name": "iaurt grecesc", "quantity": 200, "unit": "GRAMS"},
+      {"name": "sos barilla basilico", "quantity": 80, "unit": "GRAMS"},
+      {"name": "mozzarella light", "quantity": 70, "unit": "GRAMS"},
+      {"name": "ceapa alba", "quantity": 50, "unit": "GRAMS"},
+      {"name": "salam vegan", "quantity": 25, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Peanut Butter Corn Treats",
+    "category": "SNACK",
+    "difficulty": "EASY",
+    "servings": 1,
+    "instructions": "1. Maruntim cu mainile rondelele de porumb si le punem intr-un bol. 2. Preparam untul de arahide pudra cu laptele pe care il adaugam treptat. 3. Punem untul de arahide deasupra si amestecam. 4. Intindem totul pe o foaie de copt, punem intr-o farfurie si apoi bagam la congelator 30-45min. 5. Dupa ce l-am tinut la congelator, scoatem, punem 20g protein spread la microunde, turnam deasupra, si bagam iar la congelator timp de 15 minute. Apoi scoatem si putem sa servim. Pofta buna!",
+    "totalCalories": 360,
+    "protein": 25,
+    "carbs": 37,
+    "fat": 12,
+    "ingredients": [
+      {"name": "rondele de porumb", "quantity": 4, "unit": "PIECES"},
+      {"name": "lapte de soia", "quantity": 50, "unit": "MILLILITERS"},
+      {"name": "unt de arahide pudra", "quantity": 30, "unit": "GRAMS"},
+      {"name": "protein spread", "quantity": 20, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Whipped Cream Mochi",
+    "category": "SNACK",
+    "difficulty": "EASY",
+    "servings": 8,
+    "instructions": "1. Punem foaia de orez in apa aproximativ 30-60 secunde la inmuiat. 2. Punem foaia de orez intr-un bol mic. 3. Adaugam frisca light, fructele. Acoperim cu inca un strat de frisca si impachetam bine. Taiem portiunea extra de foaie de orez. Lasam la congelator pentru 20-30 de minute, si servim. Pofta buna!",
+    "totalCalories": 394,
+    "protein": 2,
+    "carbs": 68,
+    "fat": 13,
+    "ingredients": [
+      {"name": "foi de orez", "quantity": 8, "unit": "PIECES"},
+      {"name": "frisca light", "quantity": 60, "unit": "GRAMS"},
+      {"name": "capsuni", "quantity": 100, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Sweet Chilli Chicken",
+    "category": "SNACK",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Adaugam amidon, boia de ardei, sare si piper si amestecam. Adaugam puiul peste ingredientele uscate si amestecam. Gatim puiul la tigaie la foc mediu pana devine crocant si auriu. 2. Adaugam apoi in tigaie sos de soya, sweet chilli, ketchup, sos sriracha, mierea, usturoiul, ghimbirul si amestecam. 3. Adaugam puiul peste sos, amestecam din nou, si apoi putem servi cu orez sau cartofi. Pofta buna!",
+    "totalCalories": 391,
+    "protein": 47,
+    "carbs": 42,
+    "fat": 4,
+    "ingredients": [
+      {"name": "amidon de porumb", "quantity": 20, "unit": "GRAMS"},
+      {"name": "piept de pui", "quantity": 200, "unit": "GRAMS"},
+      {"name": "sos de soia", "quantity": 20, "unit": "MILLILITERS"},
+      {"name": "sos sweet chilli", "quantity": 30, "unit": "GRAMS"},
+      {"name": "sos sriracha", "quantity": 15, "unit": "GRAMS"},
+      {"name": "miere", "quantity": 10, "unit": "GRAMS"},
+      {"name": "ketchup", "quantity": 15, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 1, "unit": "PIECES"},
+      {"name": "ghimbir", "quantity": 3, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Low Calorie Loaded Nachos",
+    "category": "SNACK",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Taiem lipia din Graham sub forma de triunghiuri, o punem in Airfryer, o stropim cu putin ulei, si adaugam usturoi granulat, sare si boia de ardei afumata. Lasam lipia la rumenit la 180 grade timp de 5-10 minute. 2. In timp ce se face lipia punem pulpa de vita in tigaie si adaugam sos salsa, condimentele si amestecam bine. 3. Preparam salsa fresh, maruntind legumele si patrunjelul, adaugam totul intr-un bol, zeama de la lime deasupra, si amestecam bine. 4. Dupa ce s-a rumenit lipia, o punem in farfurie, adaugam carnea, salsa fresh, sour cream si servim. Pofta buna!",
+    "totalCalories": 441,
+    "protein": 33,
+    "carbs": 44,
+    "fat": 10,
+    "ingredients": [
+      {"name": "lipie din graham", "quantity": 75, "unit": "GRAMS"},
+      {"name": "pulpa de vita tocata", "quantity": 100, "unit": "GRAMS"},
+      {"name": "sos salsa", "quantity": 20, "unit": "GRAMS"},
+      {"name": "cascaval cheddar", "quantity": 10, "unit": "GRAMS"},
+      {"name": "maioneza light", "quantity": 20, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Chicken Burrito Bowl",
+    "category": "LUNCH",
+    "difficulty": "MEDIUM",
+    "servings": 1,
+    "instructions": "1. Taiem pieptul de pui cubulete si il amestecam cu condimentele enuntate. Il punem in tigaie la rumenit si adaugam in acelasi timp 50g orez la fiert. 2. In timp ce se face puiul si orezul, realizam sosul cu ingredientele enuntate. Bagam toate ingredientele la blender ca sa putem obtine o consistenta perfecta de sos. 3. Asamblam totul in farfurie, punem sosul deasupra si servim. Pofta buna!",
+    "totalCalories": 569,
+    "protein": 46,
+    "carbs": 65,
+    "fat": 14,
+    "ingredients": [
+      {"name": "piept de pui", "quantity": 130, "unit": "GRAMS"},
+      {"name": "iaurt grecesc", "quantity": 100, "unit": "GRAMS"},
+      {"name": "avocado", "quantity": 60, "unit": "GRAMS"},
+      {"name": "busuioc", "quantity": 5, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 1, "unit": "PIECES"},
+      {"name": "orez", "quantity": 50, "unit": "GRAMS"},
+      {"name": "salata iceberg", "quantity": 50, "unit": "GRAMS"},
+      {"name": "ardei", "quantity": 100, "unit": "GRAMS"},
+      {"name": "porumb", "quantity": 50, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Creamy Alfredo Chicken",
+    "category": "LUNCH",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Taiem puiul cubulete si il marinam cu ulei de masline, usturoi granulat, boia de ardei, busuioc, piper si sare. 2. Pentru sos amestecam crema de smantana vegetala, parmezan, usturoi granulat, busuioc fresh, la blender. 3. Gatim puiul la foc mediu 3 minute, apoi la foc mic. Adaugam sosul cremos, gatim cu capac deasupra pana ce se ingroase sosul, si apoi servim. Pofta buna!",
+    "totalCalories": 328,
+    "protein": 52,
+    "carbs": 2,
+    "fat": 12,
+    "ingredients": [
+      {"name": "piept de pui", "quantity": 200, "unit": "GRAMS"},
+      {"name": "crema de branza light", "quantity": 40, "unit": "GRAMS"},
+      {"name": "smantana de gatit vegetala", "quantity": 100, "unit": "MILLILITERS"},
+      {"name": "parmezan", "quantity": 15, "unit": "GRAMS"},
+      {"name": "rosii uscate", "quantity": 10, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Chopstix Chicken Fried Rice",
+    "category": "LUNCH",
+    "difficulty": "EASY",
+    "servings": 1,
+    "instructions": "1. Taiem puiul cubulete si il marinam cu usturoi granulat, ceapa granulata, piper, fulgi chilli si sos de soia. Dupa ce am rumenit puiul la tigaie. 2. Adaugam mix de legume mexican si ceapa verde in tigaie, dupa ce s-au calit. 3. Adaugam peste orez, pieptul de pui, putin ulei de masline si sos de soia. Amestecam si servim. Pofta buna!",
+    "totalCalories": 400,
+    "protein": 36,
+    "carbs": 48,
+    "fat": 6,
+    "ingredients": [
+      {"name": "piept de pui", "quantity": 120, "unit": "GRAMS"},
+      {"name": "sos de soia", "quantity": 15, "unit": "MILLILITERS"},
+      {"name": "ghimbir", "quantity": 4, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 1, "unit": "PIECES"},
+      {"name": "ceapa verde", "quantity": 2, "unit": "PIECES"},
+      {"name": "orez basmati", "quantity": 50, "unit": "GRAMS"},
+      {"name": "mix legume mexicane", "quantity": 150, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Creamy Red Pesto Chicken",
+    "category": "LUNCH",
+    "difficulty": "MEDIUM",
+    "servings": 2,
+    "instructions": "1. Condimentam pieptul de pui cu boia de ardei, oregano, si busuioc. 2. Punem cottage cheese la blender alaturi de pesto, piper si busuioc fresh. 3. Gatim puiul la tigaie. Apoi adaugam in tigaie ardei rosu, rosii cherry, baby spanac, usturoi si ghimbir fresh, sosul, si putina apa si sare. 4. Adaugam puiul in sos, punem putin busuioc fresh si servim impreuna cu orez sau cartofi. Pofta buna!",
+    "totalCalories": 375,
+    "protein": 62,
+    "carbs": 15,
+    "fat": 8,
+    "ingredients": [
+      {"name": "piept de pui", "quantity": 200, "unit": "GRAMS"},
+      {"name": "ardei rosu", "quantity": 80, "unit": "GRAMS"},
+      {"name": "baby spanac", "quantity": 50, "unit": "GRAMS"},
+      {"name": "pesto rosu", "quantity": 15, "unit": "GRAMS"},
+      {"name": "cottage cheese", "quantity": 125, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Red Pepper Alfredo Chicken Pasta",
+    "category": "LUNCH",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Punem pastele la fiert in apa cu sare. 2. Adaugam ardeii la air fryer sau cuptor pentru a-i coace. 3. Dupa ce i-am copt, punem ardeiul in blender, cottage cheese, piper, busuioc fresh si oregano, si amestecam bine. 4. Intr-o tigaie gatim la foc mic spre mediu puiul pe care l-am condimentat. Adaugam sosul deasupra, paste fierte si amestecam. Adaugam putin busuioc fresh optional si servim. Pofta buna!",
+    "totalCalories": 712,
+    "protein": 57,
+    "carbs": 96,
+    "fat": 10,
+    "ingredients": [
+      {"name": "paste integrale", "quantity": 100, "unit": "GRAMS"},
+      {"name": "piept de pui", "quantity": 200, "unit": "GRAMS"},
+      {"name": "pesto rosu", "quantity": 10, "unit": "GRAMS"},
+      {"name": "ardei rosu", "quantity": 350, "unit": "GRAMS"},
+      {"name": "cottage cheese light", "quantity": 150, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Aioli Double Burger",
+    "category": "LUNCH",
+    "difficulty": "MEDIUM",
+    "servings": 2,
+    "instructions": "1. Preparam carnea conform instructiunilor de la reteta din carte (Cheesy Stuffed Burger Patties). 2. Inainte sa punem carnea in tigaie preparam sosul cu maioneza light, iaurt, usturoi si usturoi granulat. 3. Dupa ce am preparat sosul, preparam si carnea, si apoi rumenim la foc mic chiflele (optional). 4. Punem sosul pe chifla, adaugam legumele, carnea, bucata de branza topita, si servim. Pofta buna!",
+    "totalCalories": 625,
+    "protein": 76,
+    "carbs": 26,
+    "fat": 25,
+    "ingredients": [
+      {"name": "pulpa de vita tocata", "quantity": 250, "unit": "GRAMS"},
+      {"name": "mozzarella light", "quantity": 60, "unit": "GRAMS"},
+      {"name": "chifla brioche", "quantity": 1, "unit": "PIECES"},
+      {"name": "iaurt grecesc", "quantity": 20, "unit": "GRAMS"},
+      {"name": "maioneza light", "quantity": 30, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 2, "unit": "PIECES"},
+      {"name": "rosie", "quantity": 40, "unit": "GRAMS"},
+      {"name": "ceapa rosie", "quantity": 30, "unit": "GRAMS"},
+      {"name": "branza topita cheddar", "quantity": 20, "unit": "GRAMS"},
+      {"name": "salata iceberg", "quantity": 50, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "McChicken Wrap with Salsa",
+    "category": "LUNCH",
+    "difficulty": "MEDIUM",
+    "servings": 1,
+    "instructions": "1. Punem rondelele de orez intr-un blender pana formam o textura de pesmet. 2. Punem pesmetul intr-o farfurie, iar apoi trecem puiul prin pesmet. 3. Bagam puiul la airfryer sau la cuptor la 180 grade 15-20min. 4. In timp ce se face puiul, realizam sosul de usturoi amestecand iaurtul si maioneza cu cei 2 catei de usturoi. 5. Luam un wrap integral, punem sosul de usturoi, salata eisberg, cateva felii de rosii si ceapa, adaugam puiul taiat, salsa deasupra, si servim. Pofta buna!",
+    "totalCalories": 469,
+    "protein": 41,
+    "carbs": 50,
+    "fat": 11,
+    "ingredients": [
+      {"name": "piept de pui", "quantity": 135, "unit": "GRAMS"},
+      {"name": "rondele de porumb", "quantity": 3, "unit": "PIECES"},
+      {"name": "tortilla integrala", "quantity": 1, "unit": "PIECES"},
+      {"name": "sos salsa", "quantity": 30, "unit": "GRAMS"},
+      {"name": "iaurt grecesc", "quantity": 20, "unit": "GRAMS"},
+      {"name": "maioneza light", "quantity": 30, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 2, "unit": "PIECES"}
+    ]
+  },
+  {
+    "name": "Spicy Crispy Strips with Honey",
+    "category": "LUNCH",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Adaugam puiul intr-un bol alaturi de sos si condimente, iar apoi amestecam bine. Puteti sa lasati puiul la marinat peste noapte. 2. Dupa ce l-ati marinat, il luati si il treceti prin fulgii de porumb zdrobiti si amestecati cu boia dulce, iar apoi bagati totul in airfryer sau la cuptor la 180 de grade 20-30 minute. 3. Dupa ce s-au facut stripsurile, le ungem cu sosul facut din 10g miere si 30g sos iute, si le servim. Pofta buna!",
+    "totalCalories": 440,
+    "protein": 49,
+    "carbs": 50,
+    "fat": 4,
+    "ingredients": [
+      {"name": "piept de pui", "quantity": 200, "unit": "GRAMS"},
+      {"name": "sos red hot", "quantity": 10, "unit": "GRAMS"},
+      {"name": "ou", "quantity": 1, "unit": "PIECES"},
+      {"name": "corn flakes", "quantity": 30, "unit": "GRAMS"},
+      {"name": "miere", "quantity": 10, "unit": "GRAMS"},
+      {"name": "ketchup", "quantity": 10, "unit": "GRAMS"},
+      {"name": "sos sriracha", "quantity": 30, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Zinger RiceBox KFC Style",
+    "category": "LUNCH",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Puneti puiul intr-un bol, adaugati condimentele, si amestecati. 2. Dupa ce ati amestecat, spargeti un ou intr-o farfurie si treceti puiul o data prin el, apoi prin fulgii de porumb zdrobiti si condimentati, si adaugati la airfryer 15-20 minute la 180 grade. 3. Intre timp trageti putin la tigaie ceapa rosie, porumbul, ardeiul alaturi de pasta de tomate. 4. Puneti orezul in farfurie alaturi de salata verde, sosul deasupra, apoi puiul, si serviti. Pofta buna!",
+    "totalCalories": 665,
+    "protein": 68,
+    "carbs": 81,
+    "fat": 23,
+    "ingredients": [
+      {"name": "piept de pui", "quantity": 200, "unit": "GRAMS"},
+      {"name": "corn flakes", "quantity": 50, "unit": "GRAMS"},
+      {"name": "orez basmati", "quantity": 50, "unit": "GRAMS"},
+      {"name": "sos barilla basilico", "quantity": 50, "unit": "GRAMS"},
+      {"name": "ceapa rosie", "quantity": 80, "unit": "GRAMS"},
+      {"name": "salata iceberg", "quantity": 80, "unit": "GRAMS"},
+      {"name": "porumb", "quantity": 50, "unit": "GRAMS"},
+      {"name": "ardei", "quantity": 50, "unit": "GRAMS"},
+      {"name": "iaurt grecesc", "quantity": 40, "unit": "GRAMS"},
+      {"name": "maioneza light", "quantity": 20, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 2, "unit": "PIECES"}
+    ]
+  },
+  {
+    "name": "KFC Healthy Zinger Burger",
+    "category": "LUNCH",
+    "difficulty": "EASY",
+    "servings": 1,
+    "instructions": "1. Puneti pieptul de pui pe un tocator si bateti puiul cu un ciocan de carne. Condimentati apoi puiul cu condimentele enumerate. 2. Treceti puiul condimentat prin pesmetul realizat cu fulgii de porumb, si apoi in airfryer sau la cuptor la 180 de grade 15-20min. 3. Intre timp pregatim sosul amestecand maioneza cu iaurtul, piperul si putina sare. 4. Punem sosul pe ambele chifle, adaugam carnea si salata iceberg, stropim chifla cu putin ulei si presaram susanul deasupra, iar apoi servim. Pofta buna!",
+    "totalCalories": 435,
+    "protein": 30,
+    "carbs": 47,
+    "fat": 13,
+    "ingredients": [
+      {"name": "piept de pui", "quantity": 100, "unit": "GRAMS"},
+      {"name": "corn flakes", "quantity": 30, "unit": "GRAMS"},
+      {"name": "ou", "quantity": 1, "unit": "PIECES"},
+      {"name": "maioneza light", "quantity": 30, "unit": "GRAMS"},
+      {"name": "iaurt grecesc", "quantity": 30, "unit": "GRAMS"},
+      {"name": "ceapa rosie", "quantity": 50, "unit": "GRAMS"},
+      {"name": "sos barilla basilico", "quantity": 50, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 1, "unit": "PIECES"},
+      {"name": "chifla brioche", "quantity": 1, "unit": "PIECES"}
+    ]
+  },
+  {
+    "name": "Nordsee Shrimp Burger",
+    "category": "LUNCH",
+    "difficulty": "EASY",
+    "servings": 1,
+    "instructions": "1. Tocati crevetii cu ajutorul unui cutit. 2. Dupa ce i-ati maruntit bine, maruntiti si legumele si le adaugati in bol peste creveti. Adaugati si condimentele, iar apoi amestecati. 3. Sosul se realizeaza prin amestecarea iaurtului, maionezei light, sosului sriracha, impreuna cu castravetele maruntit. 4. Dupa ce ati format 2 chiftele de burgeri, le puneti in tigaie, si le rumeniti bine pe ambele parti. 5. Ungeti chiflele cu sos, adaugati legumele, cheddar, adaugati si chifteaua si serviti. Pofta buna!",
+    "totalCalories": 608,
+    "protein": 46,
+    "carbs": 53,
+    "fat": 23,
+    "ingredients": [
+      {"name": "creveti", "quantity": 120, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 2, "unit": "PIECES"},
+      {"name": "iaurt grecesc", "quantity": 60, "unit": "GRAMS"},
+      {"name": "maioneza light", "quantity": 10, "unit": "GRAMS"},
+      {"name": "sos sriracha", "quantity": 15, "unit": "GRAMS"},
+      {"name": "castravete murat", "quantity": 30, "unit": "GRAMS"},
+      {"name": "ceapa rosie", "quantity": 50, "unit": "GRAMS"},
+      {"name": "rosie", "quantity": 50, "unit": "GRAMS"},
+      {"name": "avocado", "quantity": 50, "unit": "GRAMS"},
+      {"name": "chifla brioche", "quantity": 2, "unit": "PIECES"},
+      {"name": "salata iceberg", "quantity": 50, "unit": "GRAMS"},
+      {"name": "ketchup", "quantity": 30, "unit": "GRAMS"},
+      {"name": "cascaval cheddar", "quantity": 20, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Chicken Quesadilla Taco Bell",
+    "category": "LUNCH",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Condimentam puiul, stropim tigaia cu putin ulei si asezam puiul. 2. Dupa ce am prajit puiul, il maruntim cu o furculita, adaugam sosul, si amestecam bine. 3. Punem wrapul in tigaie, adaugam cascavalul si mozarella light, carnea, si alt wrap deasupra. Quesadilla se tine aproximativ 2 minute la foc mic pe fiecare parte. 4. Punem intr-o farfurie, taiem in 8 bucati egale, si servim. Pofta buna!",
+    "totalCalories": 529,
+    "protein": 49,
+    "carbs": 37,
+    "fat": 20,
+    "ingredients": [
+      {"name": "tortilla din porumb", "quantity": 80, "unit": "GRAMS"},
+      {"name": "piept de pui", "quantity": 130, "unit": "GRAMS"},
+      {"name": "mozzarella light", "quantity": 25, "unit": "GRAMS"},
+      {"name": "cascaval light", "quantity": 25, "unit": "GRAMS"},
+      {"name": "sos salsa", "quantity": 20, "unit": "GRAMS"},
+      {"name": "maioneza light", "quantity": 30, "unit": "GRAMS"},
+      {"name": "iaurt grecesc", "quantity": 20, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Big Mac Bowl McDonalds",
+    "category": "LUNCH",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Punem carnea de vita in tigaie si o lasam putin la rumenit, iar apoi adaugam mustarul, condimentele si amestecam. 2. Apoi taiem legumele si le punem in bol. Realizam sosul cu ingredientele mentionate. Punem putin din sos peste legume si amestecam. 3. Adaugam carnea deasupra legumelor, restul sosului, cascavalul cheddar si servim. Pofta buna!",
+    "totalCalories": 413,
+    "protein": 46,
+    "carbs": 23,
+    "fat": 15,
+    "ingredients": [
+      {"name": "pulpa de vita tocata", "quantity": 130, "unit": "GRAMS"},
+      {"name": "iaurt grecesc", "quantity": 80, "unit": "GRAMS"},
+      {"name": "maioneza light", "quantity": 20, "unit": "GRAMS"},
+      {"name": "ketchup", "quantity": 20, "unit": "GRAMS"},
+      {"name": "mustar", "quantity": 30, "unit": "GRAMS"},
+      {"name": "salata iceberg", "quantity": 150, "unit": "GRAMS"},
+      {"name": "rosii cherry", "quantity": 100, "unit": "GRAMS"},
+      {"name": "ceapa rosie", "quantity": 80, "unit": "GRAMS"},
+      {"name": "castraveti murati", "quantity": 50, "unit": "GRAMS"},
+      {"name": "cascaval cheddar", "quantity": 20, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Sweet Chilli Sticky Beef",
+    "category": "DINNER",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Luam vita, o condimentam si o punem in tigaie in care am pulverizat putin ulei. 2. In timp ce se rumeneste carnea pregatim sosul cu ingredientele mentionate. 3. Dupa ce am rumenit carnea o punem deoparte, si adaugam in tigaie ardeiul si ceapa. Dupa ce s-au calit, adaugam carnea, adaugam sosul, amestecam si servim cu orez. Pofta buna!",
+    "totalCalories": 433,
+    "protein": 71,
+    "carbs": 22,
+    "fat": 7,
+    "ingredients": [
+      {"name": "pulpa de vita", "quantity": 300, "unit": "GRAMS"},
+      {"name": "ceapa rosie", "quantity": 60, "unit": "GRAMS"},
+      {"name": "ardei kapia", "quantity": 100, "unit": "GRAMS"},
+      {"name": "sos sweet chilli", "quantity": 20, "unit": "MILLILITERS"},
+      {"name": "ketchup", "quantity": 20, "unit": "MILLILITERS"},
+      {"name": "sos de soia", "quantity": 10, "unit": "MILLILITERS"},
+      {"name": "usturoi", "quantity": 1, "unit": "PIECES"},
+      {"name": "ghimbir", "quantity": 2, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Chilli Cheese Loaded Wedges",
+    "category": "LUNCH",
+    "difficulty": "MEDIUM",
+    "servings": 2,
+    "instructions": "1. Taiem doi cartofi mari sub forma de Wedges, pulverizam putin ulei si punem condimentele enuntate. Adaugam in Airfryer sau la cuptor la 180 grade timp de 15-20 min. 2. In timp ce se fac cartofii adaugam in tigaie ceapa, ardeiul si ciupercile taiate, le calim, si apoi adaugam carnea, sosul barilla si ketchupul, usturoiul pisat, si condimentele. 3. Punem cartofii in farfurie, adaugam carnea deasupra, cascavalul light, si servim. Pofta buna!",
+    "totalCalories": 665,
+    "protein": 55,
+    "carbs": 77,
+    "fat": 17,
+    "ingredients": [
+      {"name": "cartof", "quantity": 300, "unit": "GRAMS"},
+      {"name": "pulpa de vita tocata", "quantity": 130, "unit": "GRAMS"},
+      {"name": "ceapa", "quantity": 50, "unit": "GRAMS"},
+      {"name": "ardei kapia", "quantity": 50, "unit": "GRAMS"},
+      {"name": "ciuperci", "quantity": 60, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 3, "unit": "PIECES"},
+      {"name": "sos barilla basilico", "quantity": 50, "unit": "GRAMS"},
+      {"name": "sos salsa", "quantity": 25, "unit": "GRAMS"},
+      {"name": "ketchup", "quantity": 25, "unit": "GRAMS"},
+      {"name": "lapte fara lactoza", "quantity": 100, "unit": "MILLILITERS"},
+      {"name": "cascaval cheddar", "quantity": 60, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Cheesy Stuffed Burger Patties",
+    "category": "LUNCH",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Condimentam carnea, apoi o intindem putin pe un tocator. 2. Adaugam mozarella light, pliam marginile si adaugam bucata de carne in tigaie la rumenit. 3. Puteti sa o serviti cu cartofi prajiti sau s-o puneti direct intr-o chifla de burger. Pofta buna!",
+    "totalCalories": 350,
+    "protein": 67,
+    "carbs": 1,
+    "fat": 11,
+    "ingredients": [
+      {"name": "pulpa de vita tocata", "quantity": 250, "unit": "GRAMS"},
+      {"name": "mozzarella light", "quantity": 60, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Salmon Crispy Nuggets",
+    "category": "DINNER",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Taiem somonul cubulete, spargem oul in bol, il amestecam cu sos de soia si bagam rondelele de porumb la blender cu condimentele enuntate. 2. Apoi trecem somonul prin ou, dupa prin pesmet, si dupa il punem pe foaia de copt in Airfryer sau la cuptor, si repetam procesul cu celelalte bucati. 3. Setam cuptorul sau Airfryerul la 180 grade, bagam somonul 15 minute la facut, si servim. Recomand un sos din: 15g sriracha, 20g maioneza light, 5ml sos de soia. Pofta buna!",
+    "totalCalories": 484,
+    "protein": 38,
+    "carbs": 25,
+    "fat": 23,
+    "ingredients": [
+      {"name": "somon", "quantity": 160, "unit": "GRAMS"},
+      {"name": "rondele de porumb", "quantity": 30, "unit": "GRAMS"},
+      {"name": "ou", "quantity": 1, "unit": "PIECES"},
+      {"name": "sos de soia", "quantity": 10, "unit": "MILLILITERS"}
+    ]
+  },
+  {
+    "name": "Garlic Teriyaki Salmon",
+    "category": "DINNER",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Crestati somonul, condimentati-l, si bagati la cuptor la 180 grade 10-15 minute. Timp in care faceti marinada cu ingredientele enuntate. 2. Dupa ce ati lasat somonul la cuptor, il scoateti, il ungeti cu marinada respectiva si il bagati iar timp de 5 minute la 180 grade. 3. Il scoateti si apoi il impartiti in doua portii, si-l serviti cu orez sau cartofi. Pofta buna!",
+    "totalCalories": 530,
+    "protein": 51,
+    "carbs": 1,
+    "fat": 33,
+    "ingredients": [
+      {"name": "file de somon", "quantity": 250, "unit": "GRAMS"},
+      {"name": "sos de soia", "quantity": 15, "unit": "MILLILITERS"},
+      {"name": "miere", "quantity": 10, "unit": "GRAMS"},
+      {"name": "ghimbir", "quantity": 5, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 3, "unit": "PIECES"},
+      {"name": "sos sriracha", "quantity": 5, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Thai Curry Salmon",
+    "category": "DINNER",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Taiem somonul cubulete si il tragem la tigaie. Dupa ce l-am rumenit, il punem de o parte. 2. Apoi punem legumele in tigaie la calit iar dupa ce le-am calit putin, adaugam sosul si amestecam. 3. Adaugam somonul in tigaie, amestecam, si servim alaturi de orez. Pofta buna!",
+    "totalCalories": 386,
+    "protein": 30,
+    "carbs": 22,
+    "fat": 20,
+    "ingredients": [
+      {"name": "somon", "quantity": 125, "unit": "GRAMS"},
+      {"name": "ceapa rosie", "quantity": 40, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 2, "unit": "PIECES"},
+      {"name": "ardei kapia", "quantity": 80, "unit": "GRAMS"},
+      {"name": "rosii cherry", "quantity": 45, "unit": "GRAMS"},
+      {"name": "ghimbir", "quantity": 10, "unit": "GRAMS"},
+      {"name": "smantana de gatit vegetala", "quantity": 100, "unit": "MILLILITERS"},
+      {"name": "rosii decojite", "quantity": 150, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Salmon Spring Rolls",
+    "category": "DINNER",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Gatim somonul la cuptor sau air fryer pana se rumeneste. Apoi il pisam, adaugam sosul pe care l-am preparat si amestecam. 2. Taiem si radem legumele. 3. Inmuiem aproximativ 30 de secunde foile de orez in apa, punem somonul, legumele, rulam si optional putem sa stropim pachetelele cu putin ulei, si sa le bagam la airfryer 180 grade 5-10 minute ca sa le rumenim. Pofta buna!",
+    "totalCalories": 661,
+    "protein": 49,
+    "carbs": 45,
+    "fat": 26,
+    "ingredients": [
+      {"name": "somon", "quantity": 200, "unit": "GRAMS"},
+      {"name": "morcov", "quantity": 60, "unit": "GRAMS"},
+      {"name": "castravete", "quantity": 40, "unit": "GRAMS"},
+      {"name": "foi de orez", "quantity": 6, "unit": "PIECES"},
+      {"name": "maioneza light", "quantity": 30, "unit": "GRAMS"},
+      {"name": "iaurt grecesc", "quantity": 80, "unit": "GRAMS"},
+      {"name": "sos sriracha", "quantity": 5, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 2, "unit": "PIECES"}
+    ]
+  },
+  {
+    "name": "Salmon Low Cal Rice Bowl",
+    "category": "DINNER",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Luam fileul de somon si il taiem sub forma de cubulete. Dupa care il condimentam si il amestecam bine cu sosul de soia, zeama de la lime, si miere. 2. Pulverizam putin ulei in tigaie si punem somonul la rumenit, timp in care fierbem orezul si pregatim legumele. 3. Punem orezul in bol, legumele rase si taiate, somonul, si servim. Pofta buna!",
+    "totalCalories": 509,
+    "protein": 38,
+    "carbs": 61,
+    "fat": 13,
+    "ingredients": [
+      {"name": "somon", "quantity": 150, "unit": "GRAMS"},
+      {"name": "sos de soia", "quantity": 5, "unit": "MILLILITERS"},
+      {"name": "miere", "quantity": 5, "unit": "GRAMS"},
+      {"name": "orez", "quantity": 50, "unit": "GRAMS"},
+      {"name": "castravete", "quantity": 50, "unit": "GRAMS"},
+      {"name": "ceapa", "quantity": 40, "unit": "GRAMS"},
+      {"name": "morcov", "quantity": 80, "unit": "GRAMS"},
+      {"name": "varza rosie", "quantity": 50, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Low Calorie Shrimp Bowl",
+    "category": "DINNER",
+    "difficulty": "EASY",
+    "servings": 1,
+    "instructions": "1. Condimentam crevetii cu usturoi granulat, patrunjel uscat, fulgi de chilli si sare. Adaugam crevetii la tigaie si ii gatim la foc mediu pentru aprox. 3 minute pe fiecare parte. 2. Maruntim conopida la blender pana prinde textura de orez, o tragem la tigaie, condimentam. Apoi adaugam legumele, putina apa, punem un capac deasupra si lasam 2-3 minute. 3. Tapetam cu un servetel conopida din tigaie ca sa absoarba excesul de apa. 4. Adaugam crevetii, ketchup, sriracha si sos de soya. Amestecam si lasam pe foc pentru inca 1-2 minute. 5. Adaugam ceapa verde deasupra si servim.",
+    "totalCalories": 229,
+    "protein": 35,
+    "carbs": 20,
+    "fat": 2,
+    "ingredients": [
+      {"name": "creveti", "quantity": 150, "unit": "GRAMS"},
+      {"name": "conopida", "quantity": 200, "unit": "GRAMS"},
+      {"name": "mix legume", "quantity": 50, "unit": "GRAMS"},
+      {"name": "ardei kapia", "quantity": 80, "unit": "GRAMS"},
+      {"name": "ceapa", "quantity": 50, "unit": "GRAMS"},
+      {"name": "ketchup", "quantity": 30, "unit": "GRAMS"},
+      {"name": "sos sriracha", "quantity": 10, "unit": "GRAMS"},
+      {"name": "sos de soia", "quantity": 15, "unit": "MILLILITERS"}
+    ]
+  },
+  {
+    "name": "Shrimp Spring Rolls",
+    "category": "DINNER",
+    "difficulty": "EASY",
+    "servings": 5,
+    "instructions": "1. Pregatim sosul pe care il punem in pachetele. 2. Gatim crevetii, iar in timp ce se fac crevetii pregatim marinada. 3. Facem marinada pentru creveti pe care o sa o punem peste ei la prajit. 4. Taiem crevetii marunt, legumele la fel, si incepem sa preparam foile de orez cu apa. 5. Inmuiam foile de orez in apa, le punem pe prosopul de bucatarie, adaugam sosul, creveti, legumele, avocado, si rulam. Repetam procesul cu toate bucatile si apoi servim. Pofta buna!",
+    "totalCalories": 379,
+    "protein": 33,
+    "carbs": 45,
+    "fat": 9,
+    "ingredients": [
+      {"name": "creveti", "quantity": 150, "unit": "GRAMS"},
+      {"name": "iaurt grecesc", "quantity": 25, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 2, "unit": "PIECES"},
+      {"name": "sos de soia", "quantity": 15, "unit": "MILLILITERS"},
+      {"name": "ghimbir", "quantity": 3, "unit": "GRAMS"},
+      {"name": "foi de orez", "quantity": 5, "unit": "PIECES"},
+      {"name": "avocado", "quantity": 50, "unit": "GRAMS"},
+      {"name": "morcov", "quantity": 50, "unit": "GRAMS"},
+      {"name": "ceapa verde", "quantity": 2, "unit": "PIECES"}
+    ]
+  },
+  {
+    "name": "Shrimp Protein Tacos",
+    "category": "DINNER",
+    "difficulty": "EASY",
+    "servings": 3,
+    "instructions": "1. Condimentam crevetii si ii punem la prajit. 2. Apoi taiem legumele super marunt ca sa le putem pune in tacos. 3. Preparam sosul la blender din ananas si iaurt si restul ingredientelor. 4. Punem legumele pe lipie, creveti, sosul iar apoi putem servi. Pofta buna!",
+    "totalCalories": 692,
+    "protein": 64,
+    "carbs": 76,
+    "fat": 14,
+    "ingredients": [
+      {"name": "creveti", "quantity": 250, "unit": "GRAMS"},
+      {"name": "rosii cherry", "quantity": 45, "unit": "GRAMS"},
+      {"name": "ardei rosu", "quantity": 40, "unit": "GRAMS"},
+      {"name": "ceapa rosie", "quantity": 40, "unit": "GRAMS"},
+      {"name": "tortilla din porumb", "quantity": 90, "unit": "GRAMS"},
+      {"name": "iaurt grecesc", "quantity": 120, "unit": "GRAMS"},
+      {"name": "sirop de agave", "quantity": 5, "unit": "GRAMS"},
+      {"name": "ananas", "quantity": 185, "unit": "GRAMS"},
+      {"name": "avocado", "quantity": 50, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Honey & Garlic Shrimp",
+    "category": "DINNER",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Punem crevetii intr-un castron si ii condimentam cu ce am mentionat la ingrediente. 2. Punem crevetii in tigaie si ii gatim pe fiecare parte pentru 2-3 minute. 3. Preparam sosul cu indicatiile mentionate. 4. Dupa aceea, adaugam sosul de soya si miere peste creveti. Amestecam. 5. Adaugam orezul fiert pe o farfurie. Adaugam si crevetii, iar apoi putem servi. Pofta buna!",
+    "totalCalories": 220,
+    "protein": 41,
+    "carbs": 12,
+    "fat": 1,
+    "ingredients": [
+      {"name": "creveti", "quantity": 220, "unit": "GRAMS"},
+      {"name": "sos sriracha", "quantity": 10, "unit": "MILLILITERS"},
+      {"name": "miere", "quantity": 10, "unit": "GRAMS"},
+      {"name": "sos de soia", "quantity": 15, "unit": "MILLILITERS"},
+      {"name": "ghimbir", "quantity": 2, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 1, "unit": "PIECES"},
+      {"name": "orez", "quantity": 50, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Creamy & Cheesy Shrimp Pasta",
+    "category": "DINNER",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Condimentam crevetii cu condimentele enuntate. 2. Punem apa intr-o oala, adaugam sare si lasam la fiert. Dupa ce a dat apa in clocot, adaugam pastele si le fierbem aproximativ 15 minute. Scurgem pastele dar pastram o cantitate de apa. 3. Punem ulei intr-o tigaie si adaugam crevetii pe care ii gatim 2-3 minute. 4. Adaugam in tigaie ingredientele pentru sos, putina apa de la paste si amestecam pana devine consistent. Adaugam spanac optional, crevetii, pastele, amestecam si apoi servim. Pofta buna!",
+    "totalCalories": 534,
+    "protein": 43,
+    "carbs": 50,
+    "fat": 17,
+    "ingredients": [
+      {"name": "creveti", "quantity": 120, "unit": "GRAMS"},
+      {"name": "paste integrale", "quantity": 70, "unit": "GRAMS"},
+      {"name": "crema de branza light", "quantity": 80, "unit": "GRAMS"},
+      {"name": "parmezan", "quantity": 20, "unit": "GRAMS"},
+      {"name": "busuioc", "quantity": 5, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Lotus Biscoff Spread",
+    "category": "OTHER",
+    "difficulty": "EASY",
+    "servings": 5,
+    "instructions": "1. Adaugam biscuitii in blender si ii maruntim pana se realizeaza un fel de pudra. 2. Adaugam apoi pudra proteica, un varf de sare si amestecam iar. 3. Si intr-un final, adaugam laptele si amestecam iar pana se face totul ca o crema. Punem in frigider si lasam peste noapte, iar apoi putem sa servim cu clatite, ovaz, sau orice altceva. Pofta buna!",
+    "totalCalories": 367,
+    "protein": 28,
+    "carbs": 35,
+    "fat": 12,
+    "ingredients": [
+      {"name": "biscuiti lotus biscoff", "quantity": 6, "unit": "PIECES"},
+      {"name": "pudra proteica whey", "quantity": 30, "unit": "GRAMS"},
+      {"name": "lapte de migdale", "quantity": 60, "unit": "MILLILITERS"}
+    ]
+  },
+  {
+    "name": "Low Calorie Veggie Dumplings",
+    "category": "OTHER",
+    "difficulty": "MEDIUM",
+    "servings": 8,
+    "instructions": "1. Punem legumele la calit intr-o tigaie pe care am stropit-o cu putin ulei. 2. Dupa ce le-am calit adaugam tofu, sosul de soia, uleiul, si amestecam foarte bine. Optional adaugati si susan. 3. Luam foile de orez, le inmuiam aproximativ 30 de secunde in apa, le umplem cu compozitia din tigaie si le impachetam. 4. Stropim tigaia cu putin ulei, si punem pachetele la rumenit pe ambele parti. Dupa ce le-am rumenit, putem sa le servim. Pofta buna!",
+    "totalCalories": 724,
+    "protein": 40,
+    "carbs": 97,
+    "fat": 23,
+    "ingredients": [
+      {"name": "ciuperci", "quantity": 300, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 4, "unit": "PIECES"},
+      {"name": "varza", "quantity": 200, "unit": "GRAMS"},
+      {"name": "morcov", "quantity": 150, "unit": "GRAMS"},
+      {"name": "ghimbir", "quantity": 3, "unit": "GRAMS"},
+      {"name": "tofu", "quantity": 150, "unit": "GRAMS"},
+      {"name": "sos de soia", "quantity": 30, "unit": "MILLILITERS"},
+      {"name": "ulei de masline", "quantity": 10, "unit": "MILLILITERS"},
+      {"name": "foi de orez", "quantity": 8, "unit": "PIECES"}
+    ]
+  },
+  {
+    "name": "Pepperoni Bacon Chicken Pasta",
+    "category": "OTHER",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Punem pastele la fiert in apa cu sare (dupa ce apa a dat in clocot) aprox 15 minute. 2. Punem la calit ciupercile, salamul, baconul si ceapa. Dupa ce le-am calit, le punem deoparte si adaugam puiul condimentat in tigaie. 3. Dupa ce am rumenit si puiul, adaugam baconul, ciupercile, ceapa si salamul in tigaie, smantana de gatit, barilla basilico, mozarella light si amestecam. Adaugam pastele, amestecam, radem parmezanul si servim! Pofta buna!",
+    "totalCalories": 720,
+    "protein": 70,
+    "carbs": 53,
+    "fat": 26,
+    "ingredients": [
+      {"name": "piept de pui", "quantity": 140, "unit": "GRAMS"},
+      {"name": "bacon", "quantity": 15, "unit": "GRAMS"},
+      {"name": "salam vegan", "quantity": 15, "unit": "GRAMS"},
+      {"name": "ceapa rosie", "quantity": 50, "unit": "GRAMS"},
+      {"name": "ciuperci", "quantity": 100, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 2, "unit": "PIECES"},
+      {"name": "smantana de gatit vegetala", "quantity": 100, "unit": "MILLILITERS"},
+      {"name": "sos barilla basilico", "quantity": 100, "unit": "GRAMS"},
+      {"name": "mozzarella light", "quantity": 25, "unit": "GRAMS"},
+      {"name": "parmezan", "quantity": 10, "unit": "GRAMS"},
+      {"name": "penne integrale", "quantity": 70, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Turkey Bacon Schnitzel",
+    "category": "OTHER",
+    "difficulty": "MEDIUM",
+    "servings": 2,
+    "instructions": "1. Maruntim rondelele de porumb. 2. Punem baconul in tigaie si il facem crispy, iar apoi il taiem marunt. 3. Amestecam rondelele maruntite cu baconul maruntit, le punem intr-o farfurie si spargem un ou in alta farfurie pe care il batem. Adaugam o bucata de usturoi pisata. 4. Batem carnea bine ca s-o intindem, o trecem prin ou, dupa care prin pesmetul facut. 5. Punem schnitzelul la cuptor sau in airfryer, il stropim cu putin ulei, la 180 grade timp de 15-20 min. Apoi putem servi. Pofta buna!",
+    "totalCalories": 353,
+    "protein": 37,
+    "carbs": 26,
+    "fat": 11,
+    "ingredients": [
+      {"name": "piept de curcan", "quantity": 120, "unit": "GRAMS"},
+      {"name": "bacon", "quantity": 20, "unit": "GRAMS"},
+      {"name": "rondele de porumb", "quantity": 30, "unit": "GRAMS"},
+      {"name": "ou", "quantity": 1, "unit": "PIECES"},
+      {"name": "usturoi", "quantity": 1, "unit": "PIECES"}
+    ]
+  },
+  {
+    "name": "Low Calorie Pizzadilla",
+    "category": "OTHER",
+    "difficulty": "EASY",
+    "servings": 1,
+    "instructions": "1. Pulverizam putin ulei de masline in tigaie iar dupa ce se incinge tigaia adaugam albusul de ou, punem tortilla deasupra, si gatim cu capac deasupra. 2. Dupa ce s-a gatit albusul, intoarcem, punem sos pe jumatate, mozarella, salamul, pliam si intoarcem pe cealalta parte. 3. Punem iar sos, mozarella, salam si optional busuioc fresh. 4. Scoatem Pizzadilla din tigaie, si o adaugam in cuptor la 180 grade 5-10 min ca sa topim mozarella de deasupra, iar apoi putem servi. Pofta buna!",
+    "totalCalories": 370,
+    "protein": 38,
+    "carbs": 29,
+    "fat": 11,
+    "ingredients": [
+      {"name": "albus de ou", "quantity": 200, "unit": "GRAMS"},
+      {"name": "tortilla integrala", "quantity": 1, "unit": "PIECES"},
+      {"name": "sos barilla basilico", "quantity": 45, "unit": "GRAMS"},
+      {"name": "mozzarella light", "quantity": 40, "unit": "GRAMS"},
+      {"name": "salam vegan", "quantity": 20, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Deep Dish Pizza",
+    "category": "OTHER",
+    "difficulty": "MEDIUM",
+    "servings": 2,
+    "instructions": "1. Condimentam carnea, o tragem la tigaie, si o punem deoparte. 2. Amestecam faina cu iaurtul si formam un aluat pe care il intindem si il punem intr-o forma rotunda cu margini. 3. Adaugam putin din sos, 60g mozarella light, carnea, sosul, si bagam la cuptor la 180 grade timp de 20 de minute. 4. Puteti pune busuioc fresh deasupra si oregano, si servim. Pofta buna!",
+    "totalCalories": 604,
+    "protein": 56,
+    "carbs": 65,
+    "fat": 14,
+    "ingredients": [
+      {"name": "pulpa de vita", "quantity": 130, "unit": "GRAMS"},
+      {"name": "faina", "quantity": 70, "unit": "GRAMS"},
+      {"name": "iaurt grecesc", "quantity": 80, "unit": "GRAMS"},
+      {"name": "praf de copt", "quantity": 5, "unit": "GRAMS"},
+      {"name": "mozzarella light", "quantity": 60, "unit": "GRAMS"},
+      {"name": "sos barilla basilico", "quantity": 150, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Garlic Cheesy Flatbread",
+    "category": "OTHER",
+    "difficulty": "MEDIUM",
+    "servings": 1,
+    "instructions": "1. Realizam sosul din maioneza light, usturoi granulat, si bucata de usturoi, iar apoi amestecam totul bine. 2. Trecem la aluat, amestecam faina cu iaurtul pana obtinem un aluat pe care il intindem pe masa. 3. Dupa ce am intins aluatul, ungem bine cu sos, punem oregano, mozarella light si pliam marginile spre mijloc. 4. Punem 5g de unt in tigaie, il topim, si punem Flatbreadul in tigaie. Tinem pe o parte pana se rumeneste, intoarcem si adaugam 10g de unt light si 5g de parmezan. Punem in farfurie si servim. Pofta buna!",
+    "totalCalories": 505,
+    "protein": 24,
+    "carbs": 57,
+    "fat": 21,
+    "ingredients": [
+      {"name": "faina", "quantity": 70, "unit": "GRAMS"},
+      {"name": "iaurt grecesc", "quantity": 80, "unit": "GRAMS"},
+      {"name": "mozzarella light", "quantity": 40, "unit": "GRAMS"},
+      {"name": "parmezan", "quantity": 10, "unit": "GRAMS"},
+      {"name": "maioneza light", "quantity": 25, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 1, "unit": "PIECES"},
+      {"name": "unt light", "quantity": 15, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Low Calorie Stuffed Chicken",
+    "category": "OTHER",
+    "difficulty": "EASY",
+    "servings": 1,
+    "instructions": "1. Taiem puiul la jumate, il condimentam pe dinafara si pe dinauntru, si il ungem cu sos pesto. 2. Adaugam mozarella light, salamul, busuiocul, si stropim puiul cu putin ulei. Optional radem 5g parmezan. 3. Adaugam puiul la airfryer sau cuptor la 180 grade timp de 10-15 minute si apoi servim. Pofta buna!",
+    "totalCalories": 229,
+    "protein": 33,
+    "carbs": 10,
+    "fat": 2,
+    "ingredients": [
+      {"name": "piept de pui", "quantity": 120, "unit": "GRAMS"},
+      {"name": "mozzarella light", "quantity": 25, "unit": "GRAMS"},
+      {"name": "parmezan", "quantity": 5, "unit": "GRAMS"},
+      {"name": "salam vegan", "quantity": 10, "unit": "GRAMS"},
+      {"name": "pesto rosu", "quantity": 15, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Low Calorie Banana Pie",
+    "category": "OTHER",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Punem wrapul integral intr-o forma rotunda de prajitura, si banana taiata rondele. 2. Intr-un bol separat spargem un ou si punem deasupra 150g de iaurt, adaugam Flavdrops, scortisoara, si amestecam bine. 3. Adaugam cantitatea lichida peste banane, punem afinele deasupra si bagam la cuptor la 180 grade 5-10 minute. Apoi scoatem, lasam putin la racit, si servim. Va recomand un sos din iaurt grecesc + Flavdrops toffee. Pofta buna!",
+    "totalCalories": 406,
+    "protein": 24,
+    "carbs": 56,
+    "fat": 10,
+    "ingredients": [
+      {"name": "tortilla integrala", "quantity": 1, "unit": "PIECES"},
+      {"name": "banana", "quantity": 100, "unit": "GRAMS"},
+      {"name": "ou", "quantity": 1, "unit": "PIECES"},
+      {"name": "iaurt grecesc", "quantity": 150, "unit": "GRAMS"},
+      {"name": "afine", "quantity": 50, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Pancake Cheesy Lasagna",
+    "category": "OTHER",
+    "difficulty": "HARD",
+    "servings": 7,
+    "instructions": "1. Amestecam toate ingredientele pentru clatite in blender, iar apoi gatim clatitele sub forma de crepes. 2. Bagam ingredientele pentru sos in blender si le amestecam bine, apoi le punem in tigaie ca sa intarim sosul. 3. Stropim tigaia cu putin ulei, adaugam legumele la calit. 4. Adaugam pulpa de vita tocata in tigaie, o gatim, apoi adaugam legumele calite, pasata de rosii, condimentele, si amestecam. 5. Luam clatitele, punem umplutura pe mijloc, adaugam mozarella si putin din sos deasupra, impachetam, si punem toate clatitele in tava, punem restul sosului deasupra, mozarella light ramasa, si bagam la cuptor la 180 grade timp de 10-15 minute. 6. Dupa ce le scoatem, le lasam putin la racit si apoi putem sa le servim. Pofta buna!",
+    "totalCalories": 1349,
+    "protein": 114,
+    "carbs": 99,
+    "fat": 54,
+    "ingredients": [
+      {"name": "ou", "quantity": 1, "unit": "PIECES"},
+      {"name": "albus de ou", "quantity": 200, "unit": "MILLILITERS"},
+      {"name": "lapte de soia", "quantity": 100, "unit": "MILLILITERS"},
+      {"name": "parmezan", "quantity": 30, "unit": "GRAMS"},
+      {"name": "ovaz", "quantity": 50, "unit": "GRAMS"},
+      {"name": "pulpa de vita tocata", "quantity": 200, "unit": "GRAMS"},
+      {"name": "ceapa alba", "quantity": 100, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 2, "unit": "PIECES"},
+      {"name": "ghimbir", "quantity": 5, "unit": "GRAMS"},
+      {"name": "morcov", "quantity": 80, "unit": "GRAMS"},
+      {"name": "ciuperci", "quantity": 100, "unit": "GRAMS"},
+      {"name": "ardei kapia", "quantity": 80, "unit": "GRAMS"},
+      {"name": "sos barilla basilico", "quantity": 200, "unit": "GRAMS"},
+      {"name": "mozzarella light", "quantity": 115, "unit": "GRAMS"},
+      {"name": "faina", "quantity": 30, "unit": "GRAMS"},
+      {"name": "unt light", "quantity": 20, "unit": "GRAMS"},
+      {"name": "lapte de soia", "quantity": 400, "unit": "MILLILITERS"}
+    ]
+  },
+  {
+    "name": "Rice Paper Quesadilla",
+    "category": "OTHER",
+    "difficulty": "EASY",
+    "servings": 1,
+    "instructions": "1. Calim baconul de curcan si ceapa verde, si le punem deoparte. 2. Incingem tigaia, punem foaia de orez in tigaie si oul batut deasupra. Adaugam baconul si ceapa, cascavalul light, si pliam. 3. Repetam procesul in cazul in care vrem sa facem mai multe bucati si servim. Pofta buna!",
+    "totalCalories": 178,
+    "protein": 10,
+    "carbs": 8,
+    "fat": 11,
+    "ingredients": [
+      {"name": "foi de orez", "quantity": 1, "unit": "PIECES"},
+      {"name": "ou", "quantity": 1, "unit": "PIECES"},
+      {"name": "bacon de curcan", "quantity": 10, "unit": "GRAMS"},
+      {"name": "cascaval light", "quantity": 10, "unit": "GRAMS"},
+      {"name": "ceapa verde", "quantity": 1, "unit": "PIECES"},
+      {"name": "maioneza light", "quantity": 10, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Sweet & Sour Turkey",
+    "category": "DINNER",
+    "difficulty": "EASY",
+    "servings": 1,
+    "instructions": "1. Taiem curcanul cubulete si il condimentam cu usturoi granulat, sare si amidon de porumb. Amestecam. 2. Intr-un bol punem sos de soia, ketchup -50%, zeama de la lime, suc de ananas si amestecam. 3. Punem o lingura de ulei in tigaie si adaugam curcanul la foc mediu. 4. Dupa ce scoatem curcanul din tigaie, adaugam ceapa si ardeiul. Adaugam sosul, 10g de amidon de porumb combinat cu apa si amestecam pana devine consistent. Adaugam curcanul peste.",
+    "totalCalories": 272,
+    "protein": 37,
+    "carbs": 10,
+    "fat": 8,
+    "ingredients": [
+      {"name": "piept de curcan", "quantity": 140, "unit": "GRAMS"},
+      {"name": "amidon de porumb", "quantity": 10, "unit": "GRAMS"},
+      {"name": "sos de soia", "quantity": 15, "unit": "MILLILITERS"},
+      {"name": "ketchup", "quantity": 30, "unit": "GRAMS"},
+      {"name": "sos sriracha", "quantity": 10, "unit": "GRAMS"},
+      {"name": "suc de ananas", "quantity": 50, "unit": "MILLILITERS"},
+      {"name": "ceapa alba", "quantity": 50, "unit": "GRAMS"},
+      {"name": "ardei rosu", "quantity": 100, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Sticky Lemon Turkey",
+    "category": "DINNER",
+    "difficulty": "EASY",
+    "servings": 1,
+    "instructions": "1. Taiem pieptul de curcan cubulete si il condimentam cu usturoi granulat, oregano, condiment tandori, piper negru si cateva pulverizari de ulei de masline. Amestecam. 2. Punem curcanul in tigaie si il gatim la foc mediu aproximativ 10 minute iar apoi il scoatem. 3. Adaugam unt light, usturoi si ghimbir fresh, piper negru, zeama de lamaie, sos de soya light, miere, piept de curcan si amestecam. 4. Lasam la gatit pentru 5-10 minute la foc mic. Adaugam patrunjel optional si servim. Pofta buna!",
+    "totalCalories": 279,
+    "protein": 39,
+    "carbs": 11,
+    "fat": 9,
+    "ingredients": [
+      {"name": "piept de curcan", "quantity": 170, "unit": "GRAMS"},
+      {"name": "ulei de masline", "quantity": 15, "unit": "MILLILITERS"},
+      {"name": "unt light", "quantity": 15, "unit": "GRAMS"},
+      {"name": "usturoi", "quantity": 2, "unit": "PIECES"},
+      {"name": "ghimbir", "quantity": 3, "unit": "GRAMS"},
+      {"name": "stevia", "quantity": 10, "unit": "GRAMS"},
+      {"name": "zeama de lime", "quantity": 50, "unit": "MILLILITERS"},
+      {"name": "sos de soia", "quantity": 10, "unit": "MILLILITERS"},
+      {"name": "miere", "quantity": 10, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Sticky Orange Turkey",
+    "category": "DINNER",
+    "difficulty": "MEDIUM",
+    "servings": 2,
+    "instructions": "1. Taiem curcanul cubulete si il condimentam cu usturoi granulat, boia de ardei, sare si piper. Apoi amestecam un ou cu 10g amidon de porumb, punem peste pui, si amestecam. Adaugam puiul in tigaie pana se rumeneste. 2. Amestecam intr-un bol, 200ml suc de portocale, stevia, sos de soya light, otet, si coaja de portocala optional. Punem sosul in tigaie deasupra puiului si adaugam 10g de amidon de porumb amestecat cu 1 lingura de apa, si amestecam totul la foc mic pentru aproximativ 3-5 minute. Adaugam optional si susan si servim. Pofta buna!",
+    "totalCalories": 590,
+    "protein": 74,
+    "carbs": 40,
+    "fat": 15,
+    "ingredients": [
+      {"name": "piept de curcan", "quantity": 300, "unit": "GRAMS"},
+      {"name": "ou", "quantity": 1, "unit": "PIECES"},
+      {"name": "amidon de porumb", "quantity": 20, "unit": "GRAMS"},
+      {"name": "ulei", "quantity": 5, "unit": "MILLILITERS"},
+      {"name": "suc de portocale", "quantity": 200, "unit": "MILLILITERS"},
+      {"name": "sos de soia", "quantity": 10, "unit": "MILLILITERS"},
+      {"name": "stevia", "quantity": 10, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Turkey Mac & Cheese",
+    "category": "DINNER",
+    "difficulty": "EASY",
+    "servings": 1,
+    "instructions": "1. Punem pastele la fiert in apa cu sare. 2. Preparam sosul intr-un bol. Adaugam laptele, pe care il amestecam cu amidon de porumb si apa. 3. Condimentam carnea cu condimentele mentionate. Punem carnea la prajit. Adaugam si sosul alb in tigaie, cascavalul light si parmezanul, pastele si amestecam. 4. Punem totul intr-o tava mica, adaugam mozzarella light, punem la cuptor la 180 grade pentru aproximativ 5-10 minute. Apoi scoatem, lasam putin la racit si servim. Pofta buna!",
+    "totalCalories": 506,
+    "protein": 47,
+    "carbs": 48,
+    "fat": 14,
+    "ingredients": [
+      {"name": "macaroane", "quantity": 60, "unit": "GRAMS"},
+      {"name": "lapte de soia", "quantity": 150, "unit": "MILLILITERS"},
+      {"name": "amidon de porumb", "quantity": 10, "unit": "GRAMS"},
+      {"name": "cascaval light", "quantity": 30, "unit": "GRAMS"},
+      {"name": "parmezan", "quantity": 10, "unit": "GRAMS"},
+      {"name": "mozzarella light", "quantity": 30, "unit": "GRAMS"},
+      {"name": "philadelphia light", "quantity": 20, "unit": "GRAMS"},
+      {"name": "piept de curcan", "quantity": 100, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Ricotta Stuffed Turkey",
+    "category": "DINNER",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Taiem curcanul pe jumate si il condimentam bine. 2. Taiem busuioc fresh si il amestecam intr-un bol cu ricotta si rosii uscate pe care le maruntim. 3. Umplem buzunarul curcanului cu umplutura si securizam curcanul cu cateva scobitori. 4. Adaugam la air fryer pentru aproximativ 15-20 minute la 180 de grade, iar apoi putem sa-l servim. Pofta buna!",
+    "totalCalories": 268,
+    "protein": 36,
+    "carbs": 11,
+    "fat": 10,
+    "ingredients": [
+      {"name": "piept de curcan", "quantity": 240, "unit": "GRAMS"},
+      {"name": "ricotta", "quantity": 100, "unit": "GRAMS"},
+      {"name": "pesto rosu", "quantity": 10, "unit": "GRAMS"},
+      {"name": "mozzarella light", "quantity": 20, "unit": "GRAMS"},
+      {"name": "rosii uscate", "quantity": 30, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Tandori Chicken Burger",
+    "category": "LUNCH",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Adaugam intr-o oala pieptul de pui si il lasam la fiert in apa cu sare. Dupa ce l-am fiert, adaugam si condimentele. 2. In nutribullet punem iaurt grecesc, cottage cheese light, sos red hot si mixam. 3. Maruntim pieptul de pui cu ajutorul furculitei. Adaugam 2/3 din sos peste puiul fiert, o mana plina de ceapa verde si amestecam. 4. Taiem pe jumate burgerii, adaugam dip-ul de pui, tragem o linie de sos picant, adaugam cascaval light, adaugam si cealalta jumatate de chifla. Ungem chiflele cu putin unt light. Adaugam chiflele la airfryer la 180 grade pentru aproximativ 5-10 minute. Servim! Pofta buna!",
+    "totalCalories": 762,
+    "protein": 70,
+    "carbs": 56,
+    "fat": 23,
+    "ingredients": [
+      {"name": "piept de pui", "quantity": 130, "unit": "GRAMS"},
+      {"name": "iaurt grecesc", "quantity": 140, "unit": "GRAMS"},
+      {"name": "cottage cheese light", "quantity": 120, "unit": "GRAMS"},
+      {"name": "sos red hot", "quantity": 40, "unit": "GRAMS"},
+      {"name": "chifla brioche", "quantity": 2, "unit": "PIECES"},
+      {"name": "ceapa verde", "quantity": 1, "unit": "PIECES"},
+      {"name": "branza topita cheddar", "quantity": 40, "unit": "GRAMS"},
+      {"name": "unt light", "quantity": 6, "unit": "GRAMS"},
+      {"name": "parmezan", "quantity": 5, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Smashed Egg Avo Sandwich",
+    "category": "LUNCH",
+    "difficulty": "EASY",
+    "servings": 1,
+    "instructions": "1. Punem ouale intr-o oala cu apa clocotita. Fierbem ouale pentru aproximativ 6 minute. 2. Intr-un bol adaugam ouale curatate, avocado, iaurt, sare, condimente si putina zeama de lime. Amestecam si pisam bine ouale si avocadoul. Adaugam rosii uscate optional, mustar si maioneza light. 3. Punem amestecul peste 2 felii de paine, adaugam piper, sare si putina varza rosie. Pofta buna!",
+    "totalCalories": 346,
+    "protein": 20,
+    "carbs": 18,
+    "fat": 21,
+    "ingredients": [
+      {"name": "ou", "quantity": 2, "unit": "PIECES"},
+      {"name": "avocado", "quantity": 75, "unit": "GRAMS"},
+      {"name": "iaurt grecesc", "quantity": 15, "unit": "GRAMS"},
+      {"name": "mustar", "quantity": 5, "unit": "GRAMS"},
+      {"name": "maioneza light", "quantity": 5, "unit": "GRAMS"},
+      {"name": "toast integral", "quantity": 2, "unit": "PIECES"},
+      {"name": "rosii uscate", "quantity": 10, "unit": "GRAMS"},
+      {"name": "varza rosie", "quantity": 30, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Tuna Crunch Wrap Supreme",
+    "category": "LUNCH",
+    "difficulty": "EASY",
+    "servings": 2,
+    "instructions": "1. Amestecam tonul cu iaurt, maioneza light, sos de soia, sos sriracha, jumatate de ceapa, jumatate de rosie taiata cubulete, o bucata de usturoi pisata si o ceapa verde maruntita. 2. Luam tortilla integrala, punem 15g mozarella light, carnea, rosiile, si chipsurile. Cu ajutorul unei forme rotunde decupam o lipie, o punem peste umplutura, si impachetam colturile. 3. Repetam procesul si cu a doua bucata, le punem in tigaie ca sa le rumenim, si apoi le servim. Pofta buna!",
+    "totalCalories": 732,
+    "protein": 53,
+    "carbs": 80,
+    "fat": 20,
+    "ingredients": [
+      {"name": "ton in suc propriu", "quantity": 150, "unit": "GRAMS"},
+      {"name": "iaurt grecesc", "quantity": 30, "unit": "GRAMS"},
+      {"name": "maioneza light", "quantity": 30, "unit": "GRAMS"},
+      {"name": "sos sriracha", "quantity": 20, "unit": "GRAMS"},
+      {"name": "rosie", "quantity": 50, "unit": "GRAMS"},
+      {"name": "ceapa verde", "quantity": 1, "unit": "PIECES"},
+      {"name": "usturoi", "quantity": 1, "unit": "PIECES"},
+      {"name": "sos de soia", "quantity": 15, "unit": "MILLILITERS"},
+      {"name": "chips paprika", "quantity": 10, "unit": "GRAMS"},
+      {"name": "tortilla integrala", "quantity": 160, "unit": "GRAMS"},
+      {"name": "mozzarella light", "quantity": 30, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Chicken & Bacon Quesadilla",
+    "category": "LUNCH",
+    "difficulty": "EASY",
+    "servings": 1,
+    "instructions": "1. Gatim pieptul de pui si baconul in tigaie, iar apoi intr-un bol maruntim puiul cu ajutorul unei furculite. 2. Preparam sosul cu ingredientele si condimentele mentionate, adaugam puiul si bacon-ul, si amestecam bine. 3. Luam apoi wrapul integral, iar pe jumatatea sa ungem sosul, adaugam cascavalul si mozarella, pliam si rumenim in tigaie pe ambele parti. Punem in farfurie si putem servi. Pofta buna!",
+    "totalCalories": 459,
+    "protein": 42,
+    "carbs": 29,
+    "fat": 19,
+    "ingredients": [
+      {"name": "piept de pui", "quantity": 100, "unit": "GRAMS"},
+      {"name": "iaurt grecesc", "quantity": 40, "unit": "GRAMS"},
+      {"name": "maioneza light", "quantity": 20, "unit": "GRAMS"},
+      {"name": "philadelphia light", "quantity": 20, "unit": "GRAMS"},
+      {"name": "ceapa verde", "quantity": 1, "unit": "PIECES"},
+      {"name": "bacon de curcan", "quantity": 25, "unit": "GRAMS"},
+      {"name": "tortilla integrala", "quantity": 1, "unit": "PIECES"},
+      {"name": "mozzarella light", "quantity": 25, "unit": "GRAMS"},
+      {"name": "cascaval light", "quantity": 10, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "White Choc & Caramel Doughnuts",
+    "category": "DESSERT",
+    "difficulty": "EASY",
+    "servings": 6,
+    "instructions": "1. Amestecam ovazul si praful de copt. 2. Apoi adaugam oul si amestecam, laptele si amestecam, si intr-un final iaurtul si amestecam. 3. Punem compozitia intr-un pos, si o distribuim egal in formele de gogoasa. 4. Bagam gogosile la cuptor la 180 grade 10-15 minute. Intre timp punem dulce de leche intr-un recipient, adaugam 10ml lapte, si punem la microunde 15 sec. 5. Dupa ce am scos gogosile si s-au racit, punem dulce de leche deasupra, apoi spread topit tot asa 15 sec la microunde si servim! Pofta buna!",
+    "totalCalories": 421,
+    "protein": 23,
+    "carbs": 49,
+    "fat": 13,
+    "ingredients": [
+      {"name": "ovaz instant", "quantity": 40, "unit": "GRAMS"},
+      {"name": "praf de copt", "quantity": 4, "unit": "GRAMS"},
+      {"name": "ou", "quantity": 1, "unit": "PIECES"},
+      {"name": "lapte de soia", "quantity": 40, "unit": "MILLILITERS"},
+      {"name": "iaurt grecesc", "quantity": 100, "unit": "GRAMS"},
+      {"name": "dulce de leche light", "quantity": 30, "unit": "GRAMS"},
+      {"name": "spread ciocolata alba", "quantity": 10, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Creamy Oreo Doughnuts",
+    "category": "DESSERT",
+    "difficulty": "EASY",
+    "servings": 6,
+    "instructions": "1. Amestecam ovazul, cacao de copt, si praful de copt. 2. Apoi adaugam oul si amestecam, laptele si amestecam, si intr-un final iaurtul si amestecam. 3. Punem compozitia intr-un pos, si o distribuim egal in formele de gogoasa. 4. Bagam gogosile la cuptor la 180 grade 10-15 minute. 5. Punem budinca de vanilie sau iaurtul intr-o farfurie, si inmuiam egal gogosile. Maruntim biscuitii, ii punem deasupra, si servim. Pofta buna!",
+    "totalCalories": 497,
+    "protein": 32,
+    "carbs": 48,
+    "fat": 16,
+    "ingredients": [
+      {"name": "ovaz instant", "quantity": 40, "unit": "GRAMS"},
+      {"name": "ou", "quantity": 1, "unit": "PIECES"},
+      {"name": "lapte de soia", "quantity": 30, "unit": "MILLILITERS"},
+      {"name": "iaurt grecesc", "quantity": 100, "unit": "GRAMS"},
+      {"name": "cacao de copt", "quantity": 10, "unit": "GRAMS"},
+      {"name": "praf de copt", "quantity": 4, "unit": "GRAMS"},
+      {"name": "budinca de vanilie", "quantity": 100, "unit": "GRAMS"},
+      {"name": "biscuiti oreo", "quantity": 3, "unit": "PIECES"}
+    ]
+  },
+  {
+    "name": "Low Calorie Nutella Doughnuts",
+    "category": "DESSERT",
+    "difficulty": "EASY",
+    "servings": 6,
+    "instructions": "1. Amestecam ovazul, cacao de copt, si praful de copt. 2. Apoi adaugam oul si amestecam, laptele si amestecam, si intr-un final iaurtul si amestecam. 3. Punem compozitia intr-un pos, si o distribuim egal in formele de gogoasa. 4. Bagam gogosile la cuptor la 180 grade 10-15 minute. 5. Topim spread-ul de ciocolata la microunde si il combinam cu 10ml lapte de soia optional, il punem intr-un pos sau il distribuim egal cu lingurita pe fiecare gogoasa. Pofta buna!",
+    "totalCalories": 529,
+    "protein": 30,
+    "carbs": 39,
+    "fat": 27,
+    "ingredients": [
+      {"name": "ovaz instant", "quantity": 40, "unit": "GRAMS"},
+      {"name": "ou", "quantity": 1, "unit": "PIECES"},
+      {"name": "lapte de soia", "quantity": 30, "unit": "MILLILITERS"},
+      {"name": "iaurt grecesc", "quantity": 100, "unit": "GRAMS"},
+      {"name": "cacao de copt", "quantity": 10, "unit": "GRAMS"},
+      {"name": "praf de copt", "quantity": 3, "unit": "GRAMS"},
+      {"name": "spread ciocolata lapte", "quantity": 40, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Coconut Raffaelo Doughnuts",
+    "category": "DESSERT",
+    "difficulty": "EASY",
+    "servings": 6,
+    "instructions": "1. Amestecam ovazul si praful de copt. 2. Apoi adaugam oul si amestecam, laptele si amestecam, si intr-un final iaurtul si amestecam. 3. Punem compozitia intr-un pos, si o distribuim egal in formele de gogoasa. 4. Bagam gogosile la cuptor la 180 grade 5-10 minute. 5. Amestecam 100g iaurt grecesc cu migdalele pisate si flavdrops cocos, punem iaurt deasupra gogosilor, fulgii de cocos, si servim. Pofta buna!",
+    "totalCalories": 729,
+    "protein": 41,
+    "carbs": 51,
+    "fat": 51,
+    "ingredients": [
+      {"name": "ovaz instant", "quantity": 40, "unit": "GRAMS"},
+      {"name": "ou", "quantity": 1, "unit": "PIECES"},
+      {"name": "lapte de soia", "quantity": 30, "unit": "MILLILITERS"},
+      {"name": "iaurt grecesc", "quantity": 300, "unit": "GRAMS"},
+      {"name": "praf de copt", "quantity": 3, "unit": "GRAMS"},
+      {"name": "fulgi de cocos", "quantity": 10, "unit": "GRAMS"},
+      {"name": "migdale pisate", "quantity": 20, "unit": "GRAMS"}
+    ]
+  },
+  {
+    "name": "Lotus Biscoff Doughnuts",
+    "category": "DESSERT",
+    "difficulty": "EASY",
+    "servings": 5,
+    "instructions": "1. Amestecam ovazul, jumatate de biscuiti lotus Biscoff, si praful de copt. 2. Apoi adaugam oul si amestecam, laptele si amestecam, si intr-un final iaurtul si amestecam. 3. Punem compozitia intr-un pos, si o distribuim egal in formele de gogoasa. 4. Bagam gogosile la cuptor la 180 grade 15 minute. 5. Luam 30g de biscoff spread si punem deasupra gogosilor, optional adaugati 10ml lapte. Faramitam 1.5 biscuiti deasupra, si servim. Pofta buna!",
+    "totalCalories": 441,
+    "protein": 27,
+    "carbs": 48,
+    "fat": 15,
+    "ingredients": [
+      {"name": "ovaz instant", "quantity": 40, "unit": "GRAMS"},
+      {"name": "ou", "quantity": 1, "unit": "PIECES"},
+      {"name": "lapte de soia", "quantity": 30, "unit": "MILLILITERS"},
+      {"name": "iaurt grecesc", "quantity": 100, "unit": "GRAMS"},
+      {"name": "praf de copt", "quantity": 4, "unit": "GRAMS"},
+      {"name": "biscoff spread", "quantity": 30, "unit": "GRAMS"},
+      {"name": "biscuiti lotus biscoff", "quantity": 2, "unit": "PIECES"}
+    ]
+  },
+  {
+    "name": "Spanish Churros Doughnuts",
+    "category": "DESSERT",
+    "difficulty": "EASY",
+    "servings": 4,
+    "instructions": "1. Amestecam ovazul, scortisoara si praful de copt. 2. Apoi adaugam oul si amestecam, laptele si amestecam, si intr-un final iaurtul si cottage cheese-ul si amestecam. 3. Punem compozitia intr-un pos, si o distribuim egal in formele de gogoasa. 4. Bagam gogosile la cuptor la 180 grade 5-10 minute. 5. Intr-o farfurie punem stevia si scortisoara, iar dupa ce s-au gatit gogosile, le scoatem din forma, le trecem prin scortisoara si stevia, si apoi le servim. Pofta buna!",
+    "totalCalories": 283,
+    "protein": 20,
+    "carbs": 29,
+    "fat": 9,
+    "ingredients": [
+      {"name": "ovaz instant", "quantity": 40, "unit": "GRAMS"},
+      {"name": "ou", "quantity": 1, "unit": "PIECES"},
+      {"name": "lapte de soia", "quantity": 30, "unit": "MILLILITERS"},
+      {"name": "iaurt grecesc", "quantity": 45, "unit": "GRAMS"},
+      {"name": "cottage cheese light", "quantity": 45, "unit": "GRAMS"},
+      {"name": "scortisoara", "quantity": 5, "unit": "GRAMS"},
+      {"name": "praf de copt", "quantity": 3, "unit": "GRAMS"}
+    ]
+  }
+]

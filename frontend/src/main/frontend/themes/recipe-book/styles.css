@@ -18,6 +18,8 @@ html {
   --lumo-contrast-5pct: rgba(216,220,228,0.05);
   --lumo-contrast-10pct: rgba(216,220,228,0.10);
   --lumo-contrast-20pct: rgba(216,220,228,0.20);
+  --lumo-contrast-30pct: rgba(216,220,228,0.30);
+  --lumo-contrast-40pct: rgba(216,220,228,0.40);
   --lumo-contrast-50pct: rgba(216,220,228,0.50);
   --lumo-contrast-60pct: rgba(216,220,228,0.60);
   --lumo-contrast-70pct: rgba(216,220,228,0.70);

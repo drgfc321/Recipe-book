@@ -153,8 +153,7 @@ public class RecipeListView extends VerticalLayout {
 
         // Image or placeholder
         if (recipe.imageUrl() != null && !recipe.imageUrl().isBlank()) {
-            String imgSrc = recipe.imageUrl().startsWith("http") ? recipe.imageUrl()
-                    : recipeService.getBackendUrl() + recipe.imageUrl();
+            String imgSrc = recipe.imageUrl();
             Image img = new Image(imgSrc, recipe.name());
             img.addClassName("recipe-list-card-img");
             card.add(img);

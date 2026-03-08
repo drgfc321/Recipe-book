@@ -14,6 +14,7 @@ import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -48,15 +49,27 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
         userSection.setSpacing(true);
 
         authService.getCurrentUser().ifPresent(user -> {
-            Span username = new Span(user.username());
-            username.getStyle().set("font-weight", "500");
+            if (user.avatarUrl() != null && !user.avatarUrl().isBlank()) {
+                Image avatar = new Image(user.avatarUrl(), "Avatar");
+                avatar.setWidth("32px");
+                avatar.setHeight("32px");
+                avatar.getStyle()
+                        .set("border-radius", "50%")
+                        .set("object-fit", "cover");
+                userSection.add(avatar);
+            }
+
+            Button usernameBtn = new Button(user.username(), e ->
+                    e.getSource().getUI().ifPresent(ui -> ui.navigate(ProfileView.class)));
+            usernameBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+            usernameBtn.getStyle().set("font-weight", "500");
 
             Span role = new Span("(" + user.role() + ")");
             role.getStyle()
                     .set("font-size", "var(--lumo-font-size-s)")
                     .set("color", "var(--lumo-secondary-text-color)");
 
-            userSection.add(username, role);
+            userSection.add(usernameBtn, role);
         });
 
         Button logoutButton = new Button("Logout", new Icon(VaadinIcon.SIGN_OUT), e -> logout());
@@ -83,6 +96,7 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
         nav.addItem(new SideNavItem("Pantry", PantryView.class, VaadinIcon.STORAGE.create()));
         nav.addItem(new SideNavItem("Shopping List", ShoppingListView.class, VaadinIcon.CART.create()));
         nav.addItem(new SideNavItem("Recommendations", RecommendationView.class, VaadinIcon.MAGIC.create()));
+        nav.addItem(new SideNavItem("Profile", ProfileView.class, VaadinIcon.USER.create()));
 
         VerticalLayout drawerContent = new VerticalLayout(nav);
         drawerContent.setSizeFull();
