@@ -13,8 +13,14 @@ import tools.jackson.databind.ObjectMapper;
 import java.util.Map;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.reactive.function.client.WebClientRequestException;
+
 @Service
 public class ApiClient {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ApiClient.class);
 
     private final WebClient webClient;
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -55,10 +61,16 @@ public class ApiClient {
                     spec.header(HttpHeaders.AUTHORIZATION, "Bearer " + token));
         }
 
-        String json = spec.bodyValue(body)
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+        String json;
+        try {
+            json = spec.bodyValue(body)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+        } catch (WebClientRequestException e) {
+            LOG.error("Backend unavailable: {}", e.getMessage());
+            throw new BackendUnavailableException("Server is unavailable. Please try again later.", e);
+        }
 
         try {
             JsonNode root = objectMapper.readTree(json);
@@ -75,6 +87,15 @@ public class ApiClient {
             return objectMapper.treeToValue(dataNode, responseType);
         } catch (JacksonException e) {
             throw new RuntimeException("Failed to parse GraphQL response: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Thrown when the backend API cannot be reached.
+     */
+    public static class BackendUnavailableException extends RuntimeException {
+        public BackendUnavailableException(String message, Throwable cause) {
+            super(message, cause);
         }
     }
 
