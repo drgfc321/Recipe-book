@@ -127,7 +127,7 @@ Schema management and query performance.
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #9  Connection pool tuning                                     ~ 15 min  │
+│  #9  Connection pool tuning                         DONE (2026-03-07)    │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  Problem:  Agroal connection pool uses defaults. Under load,              │
 │            connections may exhaust or idle connections waste resources.    │
@@ -146,7 +146,7 @@ Currently at **zero tests**. This is the biggest gap for long-term maintainabili
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #10  Unit tests for backend services                           ~ 4-6h    │
+│  #10  Unit tests for backend services          DONE (2026-03-08)          │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  Problem:  Zero tests exist. Any refactoring is a leap of faith.          │
 │  Fix:      Start with business-critical services:                         │
@@ -158,7 +158,7 @@ Currently at **zero tests**. This is the biggest gap for long-term maintainabili
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  #11  Integration tests for GraphQL API                         ~ 4-6h    │
+│  #11  Integration tests for GraphQL API          DONE (2026-03-08)       │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  Problem:  No tests verify that GraphQL mutations/queries work            │
 │            end-to-end with a real database.                               │
