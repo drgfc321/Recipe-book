@@ -7,4 +7,5 @@ public class DailyMealPlanResponse {
     public LocalDate date;
     public List<MealPlanResponse> meals;
     public MacroInfo totalMacros;
+    public String dayType;
 }

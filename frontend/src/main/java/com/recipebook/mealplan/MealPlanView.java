@@ -158,7 +158,11 @@ public class MealPlanView extends VerticalLayout {
             dayNum.getStyle().set("display", "block").set("font-size", "var(--lumo-font-size-xl)")
                     .set("font-weight", "700").set("line-height", "1.2");
 
-            dayHeader.add(dayName, dayNum);
+            // Day type toggle badge
+            String dayType = getDayType(i);
+            Span badge = createDayTypeBadge(date, dayType);
+
+            dayHeader.add(dayName, dayNum, badge);
             calendarGrid.add(dayHeader);
         }
 
@@ -294,6 +298,57 @@ public class MealPlanView extends VerticalLayout {
         pill.addClassName("macro-pill");
         pill.getStyle().set("--pill-color", color);
         return pill;
+    }
+
+    private String getDayType(int dayIndex) {
+        if (weekData == null || weekData.days() == null || dayIndex >= weekData.days().size()) {
+            return "DEFAULT";
+        }
+        String dt = weekData.days().get(dayIndex).dayType();
+        return dt != null ? dt : "DEFAULT";
+    }
+
+    private Span createDayTypeBadge(LocalDate date, String dayType) {
+        Span badge = new Span();
+        badge.addClassName("day-type-badge");
+        applyDayTypeBadgeStyle(badge, dayType);
+
+        badge.addClickListener(e -> {
+            String next = switch (dayType) {
+                case "DEFAULT" -> "TRAINING";
+                case "TRAINING" -> "REST";
+                default -> "DEFAULT";
+            };
+            try {
+                mealPlanService.setDayType(date, next);
+                loadWeek();
+            } catch (Exception ex) {
+                Notification.show("Failed: " + ex.getMessage(), 3000, Notification.Position.MIDDLE)
+                        .addThemeVariants(NotificationVariant.LUMO_ERROR);
+            }
+        });
+
+        return badge;
+    }
+
+    private void applyDayTypeBadgeStyle(Span badge, String dayType) {
+        badge.removeClassNames("training", "rest");
+        switch (dayType) {
+            case "TRAINING" -> {
+                badge.setText("T");
+                badge.addClassName("training");
+                badge.getElement().setAttribute("title", "Training Day — click to change");
+            }
+            case "REST" -> {
+                badge.setText("R");
+                badge.addClassName("rest");
+                badge.getElement().setAttribute("title", "Rest Day — click to change");
+            }
+            default -> {
+                badge.setText("·");
+                badge.getElement().setAttribute("title", "Default — click to set Training/Rest");
+            }
+        }
     }
 
     private void openRecipePicker(LocalDate date, String mealSlot) {

@@ -33,7 +33,7 @@ public class MealPlanService {
                 weeklyMealPlan(weekStart: $weekStart) {
                     weekStart weekEnd
                     days {
-                        date
+                        date dayType
                         meals { %s }
                         totalMacros { calories protein carbs fat }
                     }
@@ -54,6 +54,14 @@ public class MealPlanService {
     private static final String REMOVE_MUTATION = """
             mutation($date: Date!, $mealSlot: MealSlot!) {
                 removeMealPlan(date: $date, mealSlot: $mealSlot)
+            }
+            """;
+
+    private static final String SET_DAY_TYPE_MUTATION = """
+            mutation($date: Date!, $dayType: String!) {
+                setDayType(date: $date, dayType: $dayType) {
+                    date dayType
+                }
             }
             """;
 
@@ -101,6 +109,12 @@ public class MealPlanService {
                 Map.of("date", date.toString(), "mealSlot", mealSlot),
                 Boolean.class, "removeMealPlan");
         return Boolean.TRUE.equals(result);
+    }
+
+    public void setDayType(LocalDate date, String dayType) {
+        apiClient.mutate(SET_DAY_TYPE_MUTATION,
+                Map.of("date", date.toString(), "dayType", dayType),
+                Object.class, "setDayType");
     }
 
     public List<RecipeResponse> getRecipes(String search) {

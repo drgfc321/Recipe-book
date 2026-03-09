@@ -763,3 +763,41 @@ vaadin-button.toggle-inactive:hover {
     color: var(--lumo-body-text-color);
     white-space: nowrap;
 }
+
+/* ===== Day Type Badge (Meal Plan) ===== */
+
+.day-type-badge {
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    margin-top: 4px;
+    color: var(--lumo-tertiary-text-color);
+    transition: background 0.2s, color 0.2s;
+}
+
+.day-type-badge:hover {
+    background: rgba(216,220,228,0.1);
+}
+
+.day-type-badge.training {
+    background: rgba(90,158,126,0.2);
+    color: var(--lumo-success-color);
+}
+
+.day-type-badge.training:hover {
+    background: rgba(90,158,126,0.3);
+}
+
+.day-type-badge.rest {
+    background: rgba(192,144,60,0.2);
+    color: var(--recipe-warning-color);
+}
+
+.day-type-badge.rest:hover {
+    background: rgba(192,144,60,0.3);
+}

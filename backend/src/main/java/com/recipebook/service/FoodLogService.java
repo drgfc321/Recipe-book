@@ -59,7 +59,7 @@ public class FoodLogService {
             }
         }
 
-        UserNutritionTargetResponse targets = nutritionTargetService.getTarget(userId);
+        UserNutritionTargetResponse targets = nutritionTargetService.getTargetForDate(userId, date);
 
         List<MealPlan> plans = MealPlan.listWithRecipeDetails(
                 "mp.user.id = ?1 and mp.date = ?2", userId, date);

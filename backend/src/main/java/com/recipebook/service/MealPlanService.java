@@ -5,6 +5,7 @@ import com.recipebook.dto.MacroInfo;
 import com.recipebook.dto.MealPlanResponse;
 import com.recipebook.dto.RecipeResponse;
 import com.recipebook.dto.WeeklyMealPlanResponse;
+import com.recipebook.entity.DayType;
 import com.recipebook.entity.MealPlan;
 import com.recipebook.entity.MealSlot;
 import com.recipebook.entity.Recipe;
@@ -31,6 +32,9 @@ public class MealPlanService {
     @Inject
     MacroCalculationService macroService;
 
+    @Inject
+    DayTypeService dayTypeService;
+
     public List<MealPlanResponse> getMealPlansByDateRange(Long userId, LocalDate startDate, LocalDate endDate) {
         List<MealPlan> plans = MealPlan.listWithRecipeDetails(
                 "mp.user.id = ?1 and mp.date >= ?2 and mp.date <= ?3",
@@ -49,6 +53,8 @@ public class MealPlanService {
         Map<LocalDate, List<MealPlan>> byDate = plans.stream()
                 .collect(Collectors.groupingBy(mp -> mp.date));
 
+        Map<LocalDate, DayType> dayTypes = dayTypeService.getDayTypesForWeek(userId, weekStart);
+
         double totalCal = 0, totalPro = 0, totalCarbs = 0, totalFat = 0;
 
         List<DailyMealPlanResponse> days = new ArrayList<>();
@@ -56,6 +62,7 @@ public class MealPlanService {
             LocalDate date = weekStart.plusDays(i);
             DailyMealPlanResponse day = new DailyMealPlanResponse();
             day.date = date;
+            day.dayType = dayTypes.getOrDefault(date, DayType.DEFAULT).name();
 
             List<MealPlan> dayPlans = byDate.getOrDefault(date, List.of());
             day.meals = dayPlans.stream().map(this::toResponse).collect(Collectors.toList());

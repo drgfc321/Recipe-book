@@ -4,6 +4,7 @@ public record UserNutritionTargetResponse(
         double calories,
         double protein,
         double carbs,
-        double fat
+        double fat,
+        String dayType
 ) {
 }

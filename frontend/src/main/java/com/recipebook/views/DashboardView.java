@@ -133,6 +133,15 @@ public class DashboardView extends VerticalLayout {
             UserNutritionTargetResponse targets = data != null ? data.targets() : null;
             if (actual == null) actual = new MacroInfo(0, 0, 0, 0);
 
+            // Show day type badge if not DEFAULT
+            if (targets != null && targets.dayType() != null && !"DEFAULT".equals(targets.dayType())) {
+                Span dayTypeBadge = new Span("TRAINING".equals(targets.dayType()) ? "Training Day" : "Rest Day");
+                dayTypeBadge.addClassName("day-type-badge");
+                dayTypeBadge.addClassName("TRAINING".equals(targets.dayType()) ? "training" : "rest");
+                dayTypeBadge.getStyle().set("cursor", "default");
+                card.add(dayTypeBadge);
+            }
+
             double tCal = targets != null ? targets.calories() : 2000;
             double tPro = targets != null ? targets.protein() : 150;
             double tCarbs = targets != null ? targets.carbs() : 250;

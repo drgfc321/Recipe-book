@@ -7,6 +7,7 @@ import java.util.List;
 public record DailyMealPlanResponse(
         String date,
         List<MealPlanResponse> meals,
-        MacroInfo totalMacros
+        MacroInfo totalMacros,
+        String dayType
 ) {
 }

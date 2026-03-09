@@ -3,6 +3,7 @@ package com.recipebook.graphql;
 import com.recipebook.dto.BMRResultResponse;
 import com.recipebook.dto.UserPhysicalDataResponse;
 import com.recipebook.entity.User;
+import com.recipebook.entity.DayType;
 import com.recipebook.service.BMRCalculatorService;
 import com.recipebook.service.NutritionTargetService;
 import io.quarkus.security.Authenticated;
@@ -75,7 +76,7 @@ public class BMRGraphQL {
                 input.proteinPct, input.carbsPct, input.fatPct
         );
 
-        nutritionTargetService.updateTarget(userId,
+        nutritionTargetService.updateTarget(userId, DayType.DEFAULT,
                 (int) Math.round(result.adjustedCalories()),
                 result.proteinGrams(),
                 result.carbsGrams(),
