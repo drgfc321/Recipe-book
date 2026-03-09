@@ -801,3 +801,14 @@ vaadin-button.toggle-inactive:hover {
 .day-type-badge.rest:hover {
     background: rgba(192,144,60,0.3);
 }
+
+/* ===== Nutrition History Charts ===== */
+
+.nutrition-chart-card {
+    background: #232838;
+    border-radius: var(--lumo-border-radius-l);
+    box-shadow: var(--lumo-box-shadow-m);
+    padding: var(--lumo-space-m);
+    width: 100%;
+    box-sizing: border-box;
+}

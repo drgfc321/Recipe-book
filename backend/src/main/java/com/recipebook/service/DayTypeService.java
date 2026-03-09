@@ -48,8 +48,12 @@ public class DayTypeService {
 
     public Map<LocalDate, DayType> getDayTypesForWeek(Long userId, LocalDate weekStart) {
         LocalDate weekEnd = weekStart.plusDays(6);
+        return getDayTypesForRange(userId, weekStart, weekEnd);
+    }
+
+    public Map<LocalDate, DayType> getDayTypesForRange(Long userId, LocalDate start, LocalDate end) {
         List<UserDayType> entries = UserDayType.find(
-                "user.id = ?1 and date >= ?2 and date <= ?3", userId, weekStart, weekEnd).list();
+                "user.id = ?1 and date >= ?2 and date <= ?3", userId, start, end).list();
 
         Map<LocalDate, DayType> result = new HashMap<>();
         for (UserDayType entry : entries) {
