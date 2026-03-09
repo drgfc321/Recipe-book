@@ -4,6 +4,7 @@ import com.recipebook.dto.MacroInfo;
 import com.recipebook.dto.MealPlanResponse;
 import com.recipebook.dto.WeeklyMealPlanResponse;
 import com.recipebook.entity.MealSlot;
+import com.recipebook.service.MealPlanAutoGenerateService;
 import com.recipebook.service.MealPlanService;
 import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
@@ -25,6 +26,9 @@ public class MealPlanGraphQL {
 
     @Inject
     MealPlanService mealPlanService;
+
+    @Inject
+    MealPlanAutoGenerateService autoGenerateService;
 
     @Query("mealPlansByDateRange")
     @Description("List meal plans for a date range")
@@ -72,5 +76,20 @@ public class MealPlanGraphQL {
         Long userId = Long.parseLong(jwt.getSubject());
         LOG.infof("Removing meal plan: userId=%d, date=%s, slot=%s", userId, date, mealSlot);
         return mealPlanService.removeMealPlan(userId, date, mealSlot);
+    }
+
+    @Mutation("autoGenerateMealPlan")
+    @Description("Auto-generate meal plan for a week")
+    @Authenticated
+    @Transactional
+    public List<MealPlanResponse> autoGenerateMealPlan(@Name("input") AutoGenerateInput input) throws GraphQLException {
+        Long userId = Long.parseLong(jwt.getSubject());
+        LOG.infof("Auto-generating meal plan: userId=%d, weekStart=%s", userId, input.weekStart);
+        try {
+            return autoGenerateService.autoGenerate(userId, input.weekStart, input.replaceExisting, input.preferPantry);
+        } catch (Exception e) {
+            LOG.errorf(e, "Auto-generate failed for userId=%d, weekStart=%s", userId, input.weekStart);
+            throw new GraphQLException("Auto-generate failed: " + e.getMessage());
+        }
     }
 }

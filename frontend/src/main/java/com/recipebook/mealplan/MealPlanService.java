@@ -65,6 +65,14 @@ public class MealPlanService {
             }
             """;
 
+    private static final String AUTO_GENERATE_MUTATION = """
+            mutation($input: AutoGenerateInput!) {
+                autoGenerateMealPlan(input: $input) {
+                    %s
+                }
+            }
+            """.formatted(MEAL_PLAN_FIELDS);
+
     private static final String RECIPES_QUERY = """
             query($search: String) {
                 recipes(search: $search) {
@@ -115,6 +123,17 @@ public class MealPlanService {
         apiClient.mutate(SET_DAY_TYPE_MUTATION,
                 Map.of("date", date.toString(), "dayType", dayType),
                 Object.class, "setDayType");
+    }
+
+    public List<MealPlanResponse> autoGenerateMealPlan(LocalDate weekStart, boolean replaceExisting, boolean preferPantry) {
+        Map<String, Object> input = new HashMap<>();
+        input.put("weekStart", weekStart.toString());
+        input.put("replaceExisting", replaceExisting);
+        input.put("preferPantry", preferPantry);
+        MealPlanResponse[] result = apiClient.mutate(AUTO_GENERATE_MUTATION,
+                Map.of("input", input),
+                MealPlanResponse[].class, "autoGenerateMealPlan");
+        return result != null ? Arrays.asList(result) : List.of();
     }
 
     public List<RecipeResponse> getRecipes(String search) {
