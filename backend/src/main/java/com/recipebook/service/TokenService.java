@@ -4,6 +4,7 @@ import com.recipebook.entity.User;
 import io.smallrye.jwt.build.Jwt;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.jboss.logging.Logger;
 
 import java.time.Duration;
 import java.util.HashSet;
@@ -12,6 +13,8 @@ import java.util.Set;
 @ApplicationScoped
 public class TokenService {
 
+    private static final Logger LOG = Logger.getLogger(TokenService.class);
+
     @ConfigProperty(name = "mp.jwt.verify.issuer")
     String issuer;
 
@@ -19,6 +22,7 @@ public class TokenService {
     int durationHours;
 
     public String generateToken(User user) {
+        LOG.debugf("Generating token for userId=%s, role=%s, duration=%dh", (Object) user.id, user.role, durationHours);
         Set<String> roles = new HashSet<>();
         roles.add(user.role);
 

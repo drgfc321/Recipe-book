@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "meal_plan", uniqueConstraints = {
@@ -31,4 +32,17 @@ public class MealPlan extends PanacheEntity {
 
     @ManyToOne
     public Recipe recipe;
+
+    public static List<MealPlan> listWithRecipeDetails(String whereClause, Object... params) {
+        return find(
+            "FROM MealPlan mp " +
+            "JOIN FETCH mp.recipe r " +
+            "LEFT JOIN FETCH r.owner " +
+            "LEFT JOIN FETCH r.ingredients ri " +
+            "LEFT JOIN FETCH ri.ingredient " +
+            "WHERE " + whereClause +
+            " ORDER BY mp.date, mp.mealSlot",
+            params
+        ).list();
+    }
 }

@@ -7,8 +7,10 @@ import com.recipebook.entity.Unit;
 import com.recipebook.entity.User;
 import com.recipebook.graphql.PantryItemInput;
 import com.recipebook.graphql.PantryItemUpdateInput;
+import com.recipebook.exception.NotFoundException;
+import io.quarkus.cache.CacheInvalidateAll;
 import jakarta.enterprise.context.ApplicationScoped;
-import org.eclipse.microprofile.graphql.GraphQLException;
+import org.jboss.logging.Logger;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,30 +19,37 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class PantryService {
 
+    private static final Logger LOG = Logger.getLogger(PantryService.class);
+
     public List<PantryItemResponse> getPantryItems(Long userId) {
-        List<PantryItem> items = PantryItem.list("user.id", userId);
+        List<PantryItem> items = PantryItem.find(
+                "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.user.id = ?1", userId).list();
         return items.stream().map(this::toResponse).collect(Collectors.toList());
     }
 
     public List<PantryItemResponse> getExpiringItems(Long userId, int withinDays) {
+        LOG.debugf("getExpiringItems userId=%s, withinDays=%d", (Object) userId, withinDays);
         LocalDate threshold = LocalDate.now().plusDays(withinDays);
-        List<PantryItem> items = PantryItem.list(
-                "user.id = ?1 and expirationDate is not null and expirationDate <= ?2",
-                userId, threshold);
+        List<PantryItem> items = PantryItem.find(
+                "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.user.id = ?1 AND pi.expirationDate IS NOT NULL AND pi.expirationDate <= ?2",
+                userId, threshold).list();
         return items.stream().map(this::toResponse).collect(Collectors.toList());
     }
 
-    public PantryItemResponse addPantryItem(Long userId, PantryItemInput input) throws GraphQLException {
+    @CacheInvalidateAll(cacheName = "recommendations-cache")
+    public PantryItemResponse addPantryItem(Long userId, PantryItemInput input) {
+        LOG.debugf("addPantryItem userId=%d, ingredientId=%d", userId, input.ingredientId);
         User user = User.findById(userId);
         Ingredient ingredient = Ingredient.findById(input.ingredientId);
         if (ingredient == null) {
-            throw new GraphQLException("Ingredient not found");
+            throw new NotFoundException("Ingredient not found");
         }
 
         PantryItem existing = PantryItem.find("user.id = ?1 and ingredient.id = ?2", userId, input.ingredientId).firstResult();
         if (existing != null) {
             double existingGrams = MacroCalculationService.toGrams(existing.quantity, existing.unit);
             double newGrams = MacroCalculationService.toGrams(input.quantity, input.unit);
+            LOG.debugf("Merging pantry quantities: existing=%.1fg + new=%.1fg for ingredient '%s'", existingGrams, newGrams, ingredient.name);
             existing.quantity = existingGrams + newGrams;
             existing.unit = Unit.GRAMS;
             if (input.expirationDate != null) {
@@ -61,13 +70,13 @@ public class PantryService {
         return toResponse(item);
     }
 
-    public PantryItemResponse updatePantryItem(Long userId, Long itemId, PantryItemUpdateInput input) throws GraphQLException {
-        PantryItem item = PantryItem.findById(itemId);
+    @CacheInvalidateAll(cacheName = "recommendations-cache")
+    public PantryItemResponse updatePantryItem(Long userId, Long itemId, PantryItemUpdateInput input) {
+        PantryItem item = PantryItem.find(
+                "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.id = ?1 AND pi.user.id = ?2",
+                itemId, userId).firstResult();
         if (item == null) {
-            throw new GraphQLException("Pantry item not found");
-        }
-        if (!item.user.id.equals(userId)) {
-            throw new GraphQLException("You can only modify your own pantry items");
+            throw new NotFoundException("Pantry item not found");
         }
         if (input.quantity != null) {
             item.quantity = input.quantity;
@@ -81,13 +90,11 @@ public class PantryService {
         return toResponse(item);
     }
 
-    public boolean removePantryItem(Long userId, Long itemId) throws GraphQLException {
-        PantryItem item = PantryItem.findById(itemId);
+    @CacheInvalidateAll(cacheName = "recommendations-cache")
+    public boolean removePantryItem(Long userId, Long itemId) {
+        PantryItem item = PantryItem.find("id = ?1 and user.id = ?2", itemId, userId).firstResult();
         if (item == null) {
-            throw new GraphQLException("Pantry item not found");
-        }
-        if (!item.user.id.equals(userId)) {
-            throw new GraphQLException("You can only modify your own pantry items");
+            throw new NotFoundException("Pantry item not found");
         }
         item.delete();
         return true;

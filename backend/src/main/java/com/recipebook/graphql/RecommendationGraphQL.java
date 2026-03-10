@@ -10,11 +10,13 @@ import com.recipebook.entity.Unit;
 import com.recipebook.entity.User;
 import com.recipebook.service.MacroCalculationService;
 import com.recipebook.service.RecommendationService;
+import com.recipebook.exception.NotFoundException;
 import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.graphql.*;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.jboss.logging.Logger;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -23,6 +25,8 @@ import java.util.Map;
 
 @GraphQLApi
 public class RecommendationGraphQL {
+
+    private static final Logger LOG = Logger.getLogger(RecommendationGraphQL.class);
 
     @Inject
     JsonWebToken jwt;
@@ -35,6 +39,7 @@ public class RecommendationGraphQL {
     @Authenticated
     public List<RecipeRecommendationResponse> getRecipeRecommendations(@Name("filter") RecommendationFilterInput filter) {
         Long userId = Long.parseLong(jwt.getSubject());
+        LOG.debugf("getRecipeRecommendations userId=%d", userId);
         return recommendationService.getRecommendations(userId, filter);
     }
 
@@ -42,18 +47,19 @@ public class RecommendationGraphQL {
     @Description("Add missing ingredients for a recipe to the shopping list")
     @Authenticated
     @Transactional
-    public boolean addMissingToShoppingList(@Name("recipeId") Long recipeId, @Name("weekStart") LocalDate weekStart) throws GraphQLException {
+    public boolean addMissingToShoppingList(@Name("recipeId") Long recipeId, @Name("weekStart") LocalDate weekStart) {
         Long userId = Long.parseLong(jwt.getSubject());
 
-        Recipe recipe = Recipe.findById(recipeId);
+        Recipe recipe = Recipe.findByIdWithDetails(recipeId);
         if (recipe == null) {
-            throw new GraphQLException("Recipe not found");
+            throw new NotFoundException("Recipe not found");
         }
 
         User user = User.findById(userId);
 
         // Get pantry
-        List<PantryItem> pantryItems = PantryItem.list("user.id", userId);
+        List<PantryItem> pantryItems = PantryItem.find(
+                "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.user.id = ?1", userId).list();
         Map<Long, Double> pantry = new HashMap<>();
         for (PantryItem pi : pantryItems) {
             pantry.put(pi.ingredient.id, MacroCalculationService.toGrams(pi.quantity, pi.unit));
@@ -78,6 +84,7 @@ public class RecommendationGraphQL {
             }
         }
 
+        LOG.infof("Added missing ingredients to shopping list: recipeId=%d, weekStart=%s, userId=%d", recipeId, weekStart, userId);
         return true;
     }
 }

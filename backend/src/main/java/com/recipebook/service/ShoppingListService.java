@@ -9,9 +9,10 @@ import com.recipebook.entity.RecipeIngredient;
 import com.recipebook.entity.ShoppingListItem;
 import com.recipebook.entity.Unit;
 import com.recipebook.entity.User;
+import com.recipebook.exception.NotFoundException;
 import com.recipebook.graphql.ShoppingListItemInput;
 import jakarta.enterprise.context.ApplicationScoped;
-import org.eclipse.microprofile.graphql.GraphQLException;
+import org.jboss.logging.Logger;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -22,20 +23,24 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class ShoppingListService {
 
+    private static final Logger LOG = Logger.getLogger(ShoppingListService.class);
+
     public ShoppingListResponse getShoppingList(Long userId, LocalDate weekStart) {
-        List<ShoppingListItem> items = ShoppingListItem.list(
-                "user.id = ?1 and weekStartDate = ?2", userId, weekStart);
+        List<ShoppingListItem> items = ShoppingListItem.find(
+                "FROM ShoppingListItem si LEFT JOIN FETCH si.ingredient WHERE si.user.id = ?1 AND si.weekStartDate = ?2",
+                userId, weekStart).list();
         return buildResponse(weekStart, items);
     }
 
-    public ShoppingListResponse generateShoppingList(Long userId, LocalDate weekStart) throws GraphQLException {
+    public ShoppingListResponse generateShoppingList(Long userId, LocalDate weekStart) {
+        LOG.debugf("Generating shopping list for userId=%d, weekStart=%s", userId, weekStart);
         LocalDate weekEnd = weekStart.plusDays(6);
 
-        List<MealPlan> plans = MealPlan.list(
-                "user.id = ?1 and date >= ?2 and date <= ?3", userId, weekStart, weekEnd);
+        List<MealPlan> plans = MealPlan.listWithRecipeDetails(
+                "mp.user.id = ?1 and mp.date >= ?2 and mp.date <= ?3", userId, weekStart, weekEnd);
 
         if (plans.isEmpty()) {
-            throw new GraphQLException("No meal plans found for this week");
+            throw new NotFoundException("No meal plans found for this week");
         }
 
         // Aggregate all recipe ingredients -> Map<ingredientId, totalGrams>
@@ -50,7 +55,8 @@ public class ShoppingListService {
         }
 
         // Get pantry quantities
-        List<PantryItem> pantryItems = PantryItem.list("user.id", userId);
+        List<PantryItem> pantryItems = PantryItem.find(
+                "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.user.id = ?1", userId).list();
         Map<Long, Double> pantry = new HashMap<>();
         for (PantryItem pi : pantryItems) {
             double grams = MacroCalculationService.toGrams(pi.quantity, pi.unit);
@@ -58,6 +64,7 @@ public class ShoppingListService {
         }
 
         // Clear existing items for this week
+        LOG.debugf("Clearing existing shopping list items for userId=%d, weekStart=%s", userId, weekStart);
         ShoppingListItem.delete("user.id = ?1 and weekStartDate = ?2", userId, weekStart);
 
         User user = User.findById(userId);
@@ -83,15 +90,17 @@ public class ShoppingListService {
             }
         }
 
-        List<ShoppingListItem> items = ShoppingListItem.list(
-                "user.id = ?1 and weekStartDate = ?2", userId, weekStart);
+        List<ShoppingListItem> items = ShoppingListItem.find(
+                "FROM ShoppingListItem si LEFT JOIN FETCH si.ingredient WHERE si.user.id = ?1 AND si.weekStartDate = ?2",
+                userId, weekStart).list();
+        LOG.debugf("Generated shopping list with %d items", items.size());
         return buildResponse(weekStart, items);
     }
 
-    public ShoppingListItemResponse addShoppingListItem(Long userId, ShoppingListItemInput input) throws GraphQLException {
+    public ShoppingListItemResponse addShoppingListItem(Long userId, ShoppingListItemInput input) {
         Ingredient ingredient = Ingredient.findById(input.ingredientId);
         if (ingredient == null) {
-            throw new GraphQLException("Ingredient not found");
+            throw new NotFoundException("Ingredient not found");
         }
 
         User user = User.findById(userId);
@@ -107,25 +116,21 @@ public class ShoppingListService {
         return toItemResponse(item);
     }
 
-    public ShoppingListItemResponse toggleShoppingListItem(Long userId, Long itemId) throws GraphQLException {
-        ShoppingListItem item = ShoppingListItem.findById(itemId);
+    public ShoppingListItemResponse toggleShoppingListItem(Long userId, Long itemId) {
+        ShoppingListItem item = ShoppingListItem.find(
+                "FROM ShoppingListItem si LEFT JOIN FETCH si.ingredient WHERE si.id = ?1 AND si.user.id = ?2",
+                itemId, userId).firstResult();
         if (item == null) {
-            throw new GraphQLException("Shopping list item not found");
-        }
-        if (!item.user.id.equals(userId)) {
-            throw new GraphQLException("You can only modify your own shopping list");
+            throw new NotFoundException("Shopping list item not found");
         }
         item.purchased = !item.purchased;
         return toItemResponse(item);
     }
 
-    public boolean removeShoppingListItem(Long userId, Long itemId) throws GraphQLException {
-        ShoppingListItem item = ShoppingListItem.findById(itemId);
+    public boolean removeShoppingListItem(Long userId, Long itemId) {
+        ShoppingListItem item = ShoppingListItem.find("id = ?1 and user.id = ?2", itemId, userId).firstResult();
         if (item == null) {
-            throw new GraphQLException("Shopping list item not found");
-        }
-        if (!item.user.id.equals(userId)) {
-            throw new GraphQLException("You can only modify your own shopping list");
+            throw new NotFoundException("Shopping list item not found");
         }
         item.delete();
         return true;
@@ -136,7 +141,8 @@ public class ShoppingListService {
         return true;
     }
 
-    private ShoppingListResponse buildResponse(LocalDate weekStart, List<ShoppingListItem> items) {
+    // package-private for testing
+    ShoppingListResponse buildResponse(LocalDate weekStart, List<ShoppingListItem> items) {
         ShoppingListResponse response = new ShoppingListResponse();
         response.weekStart = weekStart;
         response.items = items.stream().map(this::toItemResponse).collect(Collectors.toList());
@@ -146,7 +152,8 @@ public class ShoppingListService {
         return response;
     }
 
-    private ShoppingListItemResponse toItemResponse(ShoppingListItem item) {
+    // package-private for testing
+    ShoppingListItemResponse toItemResponse(ShoppingListItem item) {
         ShoppingListItemResponse response = new ShoppingListItemResponse();
         response.id = item.id;
         response.ingredientId = item.ingredient != null ? item.ingredient.id : null;

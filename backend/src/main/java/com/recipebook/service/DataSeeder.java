@@ -14,6 +14,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
 import java.time.LocalDateTime;
@@ -28,6 +29,9 @@ public class DataSeeder {
     @Inject
     PasswordService passwordService;
 
+    @ConfigProperty(name = "recipebook.admin.password")
+    String adminPassword;
+
     @Transactional
     public void onStartup(@Observes StartupEvent event) {
         if (Ingredient.count() > 0) {
@@ -41,7 +45,7 @@ public class DataSeeder {
         User admin = new User();
         admin.username = "chef_admin";
         admin.email = "admin@recipebook.com";
-        admin.passwordHash = passwordService.hashPassword("admin123");
+        admin.passwordHash = passwordService.hashPassword(adminPassword);
         admin.role = "ADMIN";
         admin.createdAt = LocalDateTime.now();
         admin.persist();

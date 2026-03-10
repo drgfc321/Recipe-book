@@ -13,6 +13,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "recipe")
@@ -54,4 +55,25 @@ public class Recipe extends PanacheEntity {
 
     @Column(name = "created_at")
     public LocalDateTime createdAt = LocalDateTime.now();
+
+    public static Recipe findByIdWithDetails(Long id) {
+        return find(
+            "FROM Recipe r " +
+            "LEFT JOIN FETCH r.owner " +
+            "LEFT JOIN FETCH r.ingredients ri " +
+            "LEFT JOIN FETCH ri.ingredient " +
+            "WHERE r.id = ?1", id
+        ).firstResult();
+    }
+
+    public static List<Recipe> listWithDetails(String whereClause, Map<String, Object> params) {
+        return find(
+            "SELECT DISTINCT r FROM Recipe r " +
+            "LEFT JOIN FETCH r.owner " +
+            "LEFT JOIN FETCH r.ingredients ri " +
+            "LEFT JOIN FETCH ri.ingredient " +
+            "WHERE " + whereClause,
+            params
+        ).list();
+    }
 }

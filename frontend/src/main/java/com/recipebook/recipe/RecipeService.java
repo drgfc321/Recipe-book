@@ -24,8 +24,8 @@ public class RecipeService {
             createdAt""";
 
     private static final String RECIPES_QUERY = """
-            query($category: RecipeCategory, $difficulty: Difficulty, $search: String) {
-                recipes(category: $category, difficulty: $difficulty, search: $search) {
+            query($category: RecipeCategory, $difficulty: Difficulty, $search: String, $ingredientIds: [BigInteger]) {
+                recipes(category: $category, difficulty: $difficulty, search: $search, ingredientIds: $ingredientIds) {
                     %s
                 }
             }
@@ -82,10 +82,15 @@ public class RecipeService {
     }
 
     public List<RecipeResponse> getRecipes(String category, String difficulty, String search) {
+        return getRecipes(category, difficulty, search, null);
+    }
+
+    public List<RecipeResponse> getRecipes(String category, String difficulty, String search, List<Long> ingredientIds) {
         Map<String, Object> vars = new HashMap<>();
         if (category != null && !category.isBlank()) vars.put("category", category);
         if (difficulty != null && !difficulty.isBlank()) vars.put("difficulty", difficulty);
         if (search != null && !search.isBlank()) vars.put("search", search);
+        if (ingredientIds != null && !ingredientIds.isEmpty()) vars.put("ingredientIds", ingredientIds);
 
         RecipeResponse[] result = apiClient.query(RECIPES_QUERY, vars, RecipeResponse[].class, "recipes");
         return result != null ? Arrays.asList(result) : List.of();

@@ -115,12 +115,7 @@ public class RecipeDetailView extends VerticalLayout implements HasUrlParameter<
 
         // --- Recipe Image ---
         if (recipe.imageUrl() != null && !recipe.imageUrl().isBlank()) {
-            String imgSrc;
-            if (recipe.imageUrl().startsWith("http://") || recipe.imageUrl().startsWith("https://")) {
-                imgSrc = recipe.imageUrl();
-            } else {
-                imgSrc = recipeService.getBackendUrl() + recipe.imageUrl();
-            }
+            String imgSrc = recipe.imageUrl();
             Image recipeImage = new Image(imgSrc, recipe.name());
             recipeImage.setWidthFull();
             recipeImage.setMaxHeight("300px");

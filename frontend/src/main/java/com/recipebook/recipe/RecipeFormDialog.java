@@ -285,10 +285,7 @@ public class RecipeFormDialog extends Dialog {
     }
 
     private String resolveImageUrl(String url) {
-        if (url.startsWith("http://") || url.startsWith("https://")) {
-            return url;
-        }
-        return recipeService.getBackendUrl() + url;
+        return url;
     }
 
     private void buildFooter() {

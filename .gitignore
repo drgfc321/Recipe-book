@@ -67,3 +67,17 @@ surefire-reports/
 # Temporary files
 tmp/
 temp/
+
+# Documentation
+ARCHITECTURE.md
+
+# Security - RSA keys and TLS certificates
+*.pem
+*.crt
+*.key
+nginx/certs/
+
+# E2E tests
+e2e/node_modules/
+e2e/test-results/
+e2e/playwright-report/

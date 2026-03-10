@@ -8,8 +8,10 @@ import com.recipebook.entity.Recipe;
 import com.recipebook.entity.RecipeIngredient;
 import com.recipebook.entity.Unit;
 import com.recipebook.graphql.RecommendationFilterInput;
+import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.jboss.logging.Logger;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -21,12 +23,17 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class RecommendationService {
 
+    private static final Logger LOG = Logger.getLogger(RecommendationService.class);
+
     @Inject
     MacroCalculationService macroService;
 
+    @CacheResult(cacheName = "recommendations-cache")
     public List<RecipeRecommendationResponse> getRecommendations(Long userId, RecommendationFilterInput filter) {
         // Get pantry as map of ingredientId -> grams
-        List<PantryItem> pantryItems = PantryItem.list("user.id", userId);
+        List<PantryItem> pantryItems = PantryItem.find(
+                "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.user.id = ?1", userId).list();
+        LOG.debugf("Loaded %d pantry items for userId=%d", pantryItems.size(), userId);
         Map<Long, Double> pantry = new HashMap<>();
         for (PantryItem pi : pantryItems) {
             pantry.put(pi.ingredient.id, MacroCalculationService.toGrams(pi.quantity, pi.unit));
@@ -37,16 +44,17 @@ public class RecommendationService {
         Map<String, Object> params = new HashMap<>();
         if (filter != null) {
             if (filter.category != null) {
-                query.append(" and category = :category");
+                query.append(" and r.category = :category");
                 params.put("category", filter.category);
             }
             if (filter.difficulty != null) {
-                query.append(" and difficulty = :difficulty");
+                query.append(" and r.difficulty = :difficulty");
                 params.put("difficulty", filter.difficulty);
             }
         }
 
-        List<Recipe> recipes = Recipe.find(query.toString(), params).list();
+        List<Recipe> recipes = Recipe.listWithDetails(query.toString(), params);
+        LOG.debugf("Evaluating %d recipes for recommendations", recipes.size());
 
         List<RecipeRecommendationResponse> recommendations = new ArrayList<>();
         for (Recipe recipe : recipes) {
@@ -58,16 +66,18 @@ public class RecommendationService {
         }
 
         recommendations.sort(Comparator.comparingDouble((RecipeRecommendationResponse r) -> r.matchPercent).reversed());
+        LOG.debugf("Returning %d recommendations", recommendations.size());
         return recommendations;
     }
 
     public List<MissingIngredientResponse> getMissingIngredients(Long userId, Long recipeId) {
-        Recipe recipe = Recipe.findById(recipeId);
+        Recipe recipe = Recipe.findByIdWithDetails(recipeId);
         if (recipe == null) {
             return List.of();
         }
 
-        List<PantryItem> pantryItems = PantryItem.list("user.id", userId);
+        List<PantryItem> pantryItems = PantryItem.find(
+                "FROM PantryItem pi JOIN FETCH pi.ingredient WHERE pi.user.id = ?1", userId).list();
         Map<Long, Double> pantry = new HashMap<>();
         for (PantryItem pi : pantryItems) {
             pantry.put(pi.ingredient.id, MacroCalculationService.toGrams(pi.quantity, pi.unit));
@@ -77,7 +87,8 @@ public class RecommendationService {
         return rec.missingIngredients;
     }
 
-    private RecipeRecommendationResponse analyzeRecipe(Recipe recipe, Map<Long, Double> pantry) {
+    // package-private for testing
+    RecipeRecommendationResponse analyzeRecipe(Recipe recipe, Map<Long, Double> pantry) {
         RecipeRecommendationResponse rec = new RecipeRecommendationResponse();
         rec.recipe = macroService.toResponse(recipe);
         rec.totalIngredients = recipe.ingredients.size();

@@ -1,6 +1,11 @@
 package com.recipebook.views;
 
+import com.recipebook.foodlog.DailyFoodLogResponse;
+import com.recipebook.foodlog.FoodLogService;
+import com.recipebook.foodlog.UserNutritionTargetResponse;
 import com.recipebook.ingredient.IngredientService;
+import com.recipebook.pantry.PantryItemResponse;
+import com.recipebook.pantry.PantryService;
 import com.recipebook.recipe.MacroInfo;
 import com.recipebook.recipe.RecipeResponse;
 import com.recipebook.recipe.RecipeService;
@@ -9,6 +14,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
@@ -19,7 +25,10 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,14 +36,22 @@ import java.util.stream.Collectors;
 @PageTitle("Dashboard | Recipe Book")
 public class DashboardView extends VerticalLayout {
 
+    private static final Logger LOG = LoggerFactory.getLogger(DashboardView.class);
+
     private final AuthService authService;
     private final RecipeService recipeService;
     private final IngredientService ingredientService;
+    private final PantryService pantryService;
+    private final FoodLogService foodLogService;
 
-    public DashboardView(AuthService authService, RecipeService recipeService, IngredientService ingredientService) {
+    public DashboardView(AuthService authService, RecipeService recipeService,
+                         IngredientService ingredientService, PantryService pantryService,
+                         FoodLogService foodLogService) {
         this.authService = authService;
         this.recipeService = recipeService;
         this.ingredientService = ingredientService;
+        this.pantryService = pantryService;
+        this.foodLogService = foodLogService;
 
         setPadding(true);
         setSpacing(true);
@@ -65,6 +82,11 @@ public class DashboardView extends VerticalLayout {
         // Stats cards
         add(createStatsRow());
 
+        // Today's Nutrition card (only for logged in users)
+        if (authService.isLoggedIn()) {
+            add(createNutritionCard());
+        }
+
         // Recent recipes
         add(createRecentRecipes());
 
@@ -74,10 +96,124 @@ public class DashboardView extends VerticalLayout {
         }
     }
 
+    private Div createNutritionCard() {
+        Div card = new Div();
+        card.getStyle()
+                .set("background", "#232838")
+                .set("border-radius", "var(--lumo-border-radius-l)")
+                .set("padding", "var(--lumo-space-m)")
+                .set("box-shadow", "var(--lumo-box-shadow-m)")
+                .set("width", "100%")
+                .set("box-sizing", "border-box");
+
+        HorizontalLayout titleRow = new HorizontalLayout();
+        titleRow.setWidthFull();
+        titleRow.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
+        titleRow.setAlignItems(FlexComponent.Alignment.CENTER);
+
+        H3 title = new H3("Today's Nutrition");
+        title.getStyle().set("margin", "0");
+
+        Button calcBtn = new Button("Calculate Your Targets", VaadinIcon.CALC.create(),
+                e -> UI.getCurrent().navigate("bmr-wizard"));
+        calcBtn.addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
+
+        Button viewLogBtn = new Button("View Food Log", e -> UI.getCurrent().navigate("food-log"));
+        viewLogBtn.addThemeVariants(ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
+
+        HorizontalLayout btnRow = new HorizontalLayout(calcBtn, viewLogBtn);
+        btnRow.setSpacing(true);
+
+        titleRow.add(title, btnRow);
+        card.add(titleRow);
+
+        try {
+            DailyFoodLogResponse data = foodLogService.getDailyFoodLog(LocalDate.now());
+            MacroInfo actual = data != null ? data.totalActualMacros() : new MacroInfo(0, 0, 0, 0);
+            UserNutritionTargetResponse targets = data != null ? data.targets() : null;
+            if (actual == null) actual = new MacroInfo(0, 0, 0, 0);
+
+            // Show day type badge if not DEFAULT
+            if (targets != null && targets.dayType() != null && !"DEFAULT".equals(targets.dayType())) {
+                Span dayTypeBadge = new Span("TRAINING".equals(targets.dayType()) ? "Training Day" : "Rest Day");
+                dayTypeBadge.addClassName("day-type-badge");
+                dayTypeBadge.addClassName("TRAINING".equals(targets.dayType()) ? "training" : "rest");
+                dayTypeBadge.getStyle().set("cursor", "default");
+                card.add(dayTypeBadge);
+            }
+
+            double tCal = targets != null ? targets.calories() : 2000;
+            double tPro = targets != null ? targets.protein() : 150;
+            double tCarbs = targets != null ? targets.carbs() : 250;
+            double tFat = targets != null ? targets.fat() : 65;
+
+            card.add(createDashboardProgressBar("Calories", actual.calories(), tCal, "kcal", "var(--lumo-error-color)"));
+            card.add(createDashboardProgressBar("Protein", actual.protein(), tPro, "g", "var(--macro-protein, #4caf50)"));
+            card.add(createDashboardProgressBar("Carbs", actual.carbs(), tCarbs, "g", "var(--macro-carbs, #ff9800)"));
+            card.add(createDashboardProgressBar("Fat", actual.fat(), tFat, "g", "var(--macro-fat, #2196f3)"));
+        } catch (Exception e) {
+            LOG.warn("Failed to load nutrition data for dashboard: {}", e.getMessage());
+            Span error = new Span("Could not load nutrition data");
+            error.getStyle().set("color", "var(--lumo-secondary-text-color)");
+            card.add(error);
+        }
+
+        return card;
+    }
+
+    private Div createDashboardProgressBar(String label, double actual, double target, String unit, String color) {
+        Div row = new Div();
+        row.getStyle()
+                .set("margin-top", "var(--lumo-space-s)")
+                .set("display", "flex")
+                .set("flex-direction", "column")
+                .set("gap", "2px");
+
+        HorizontalLayout labelRow = new HorizontalLayout();
+        labelRow.setWidthFull();
+        labelRow.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
+        labelRow.setPadding(false);
+        labelRow.setSpacing(false);
+
+        Span labelSpan = new Span(label);
+        labelSpan.getStyle().set("font-weight", "500").set("font-size", "var(--lumo-font-size-s)");
+
+        Span valueSpan = new Span("%.0f / %.0f %s".formatted(actual, target, unit));
+        valueSpan.getStyle().set("font-size", "var(--lumo-font-size-s)")
+                .set("color", "var(--lumo-secondary-text-color)");
+
+        labelRow.add(labelSpan, valueSpan);
+
+        Div track = new Div();
+        track.getStyle()
+                .set("width", "100%")
+                .set("height", "8px")
+                .set("background", "var(--lumo-contrast-10pct)")
+                .set("border-radius", "4px")
+                .set("overflow", "hidden");
+
+        double pct = target > 0 ? Math.min((actual / target) * 100, 100) : 0;
+        boolean over = target > 0 && actual > target;
+
+        Div fill = new Div();
+        fill.getStyle()
+                .set("width", "%.1f%%".formatted(pct))
+                .set("height", "100%")
+                .set("background", over ? "var(--lumo-error-color)" : color)
+                .set("border-radius", "4px")
+                .set("transition", "width 0.3s ease");
+        track.add(fill);
+
+        row.add(labelRow, track);
+        return row;
+    }
+
     private HorizontalLayout createStatsRow() {
         long recipeCount = 0;
         long ingredientCount = 0;
         long categoryCount = 0;
+        long pantryCount = 0;
+        long expiringCount = 0;
 
         try {
             List<RecipeResponse> recipes = recipeService.getRecipes(null, null, null);
@@ -87,12 +223,27 @@ public class DashboardView extends VerticalLayout {
                     .filter(c -> c != null && !c.isBlank())
                     .distinct()
                     .count();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            LOG.warn("Failed to load recipes for dashboard stats: {}", e.getMessage());
         }
 
         try {
             ingredientCount = ingredientService.getIngredients(null, null).size();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            LOG.warn("Failed to load ingredients for dashboard stats: {}", e.getMessage());
+        }
+
+        try {
+            List<PantryItemResponse> pantryItems = pantryService.getPantryItems();
+            pantryCount = pantryItems.size();
+        } catch (Exception e) {
+            LOG.warn("Failed to load pantry items for dashboard stats: {}", e.getMessage());
+        }
+
+        try {
+            expiringCount = pantryService.getExpiringItems(3).size();
+        } catch (Exception e) {
+            LOG.warn("Failed to load expiring items for dashboard stats: {}", e.getMessage());
         }
 
         HorizontalLayout statsRow = new HorizontalLayout();
@@ -103,6 +254,10 @@ public class DashboardView extends VerticalLayout {
         statsRow.add(createStatCard(VaadinIcon.BOOK, String.valueOf(recipeCount), "Total Recipes", "var(--lumo-primary-color)"));
         statsRow.add(createStatCard(VaadinIcon.CART, String.valueOf(ingredientCount), "Total Ingredients", "var(--lumo-success-color)"));
         statsRow.add(createStatCard(VaadinIcon.TAGS, String.valueOf(categoryCount), "Categories Used", "var(--recipe-warning-color)"));
+        statsRow.add(createStatCard(VaadinIcon.STORAGE, String.valueOf(pantryCount), "Pantry Items", "var(--lumo-success-color)"));
+        if (expiringCount > 0) {
+            statsRow.add(createStatCard(VaadinIcon.WARNING, String.valueOf(expiringCount), "Expiring Soon", "var(--lumo-error-color)"));
+        }
 
         return statsRow;
     }
@@ -151,6 +306,7 @@ public class DashboardView extends VerticalLayout {
         try {
             recipes = recipeService.getRecipes(null, null, null);
         } catch (Exception e) {
+            LOG.warn("Failed to load recent recipes for dashboard: {}", e.getMessage());
             Span error = new Span("Could not load recipes");
             error.getStyle().set("color", "var(--lumo-secondary-text-color)");
             section.add(error);
@@ -192,8 +348,7 @@ public class DashboardView extends VerticalLayout {
 
         // Image or placeholder
         if (recipe.imageUrl() != null && !recipe.imageUrl().isBlank()) {
-            String imgSrc = recipe.imageUrl().startsWith("http") ? recipe.imageUrl()
-                    : recipeService.getBackendUrl() + recipe.imageUrl();
+            String imgSrc = recipe.imageUrl();
             Image img = new Image(imgSrc, recipe.name());
             img.setWidthFull();
             img.setHeight("160px");
@@ -281,7 +436,19 @@ public class DashboardView extends VerticalLayout {
                 e -> UI.getCurrent().navigate("ingredients"));
         browseIngredients.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
 
-        HorizontalLayout buttons = new HorizontalLayout(newRecipe, browseIngredients);
+        Button mealPlanner = new Button("Meal Planner", VaadinIcon.CALENDAR.create(),
+                e -> UI.getCurrent().navigate("meal-plan"));
+        mealPlanner.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+
+        Button pantry = new Button("Pantry", VaadinIcon.STORAGE.create(),
+                e -> UI.getCurrent().navigate("pantry"));
+        pantry.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+
+        Button shoppingList = new Button("Shopping List", VaadinIcon.CART.create(),
+                e -> UI.getCurrent().navigate("shopping-list"));
+        shoppingList.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+
+        HorizontalLayout buttons = new HorizontalLayout(newRecipe, browseIngredients, mealPlanner, pantry, shoppingList);
         buttons.setSpacing(true);
 
         VerticalLayout section = new VerticalLayout(title, buttons);
