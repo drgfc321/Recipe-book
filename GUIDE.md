@@ -109,7 +109,7 @@ http://localhost:8081
 │                  POSTGRESQL 16  (Docker)                      │
 │                        :5432                                  │
 │                                                              │
-│   9 tables. All user data is scoped by userId.               │
+│   12 tables. All user data is scoped by userId.              │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -131,6 +131,10 @@ http://localhost:8081
 │ Database   │ PostgreSQL 16          │
 │ API        │ SmallRye GraphQL       │
 │ Auth       │ JWT (RSA256, 24h)      │
+│ OAuth      │ Google + GitHub        │
+│ DB Migrate │ Flyway                 │
+│ Caching    │ Caffeine               │
+│ i18n       │ EN + RO                │
 │ Build      │ Maven                  │
 │ Containers │ Docker Compose         │
 └────────────┴────────────────────────┘
@@ -278,32 +282,183 @@ http://localhost:8081
 └────────────────────────────────────────────────────────┘
 ```
 
+### OAuth Login
+
+```
+┌─ OAUTH LOGIN ─────────────────────────────────────────┐
+│                                                        │
+│  Sign in with your existing Google or GitHub account.  │
+│                                                        │
+│  - One-click social login buttons on the login page    │
+│  - Automatic account creation on first OAuth login     │
+│  - Links to existing account if email matches          │
+│  - Fetches profile picture from OAuth provider         │
+│  - Falls back to standard email + password login       │
+│                                                        │
+│  Providers: Google, GitHub                              │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+```
+
+### User Profile
+
+```
+┌─ USER PROFILE ────────────────────────────────────────┐
+│                                                        │
+│  View and edit your account details.                   │
+│                                                        │
+│  - Change username and email                           │
+│  - Upload a custom avatar image                        │
+│  - View account info (role, join date, auth provider)  │
+│  - Change password dialog (for local accounts)         │
+│                                                        │
+│  Route: /profile                                       │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+```
+
+### Password Change & Reset
+
+```
+┌─ PASSWORD CHANGE & RESET ─────────────────────────────┐
+│                                                        │
+│  Change your password or recover a forgotten one.      │
+│                                                        │
+│  - In-app password change (current + new password)     │
+│  - "Forgot Password" flow on the login page            │
+│  - Email with secure reset link (15-min token expiry)  │
+│  - Token verification + new password form              │
+│                                                        │
+│  Routes: /forgot-password, /reset-password             │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+```
+
+### BMR / TDEE Calculator
+
+```
+┌─ BMR / TDEE CALCULATOR ───────────────────────────────┐
+│                                                        │
+│  Calculate your daily calorie needs with a wizard.     │
+│                                                        │
+│  - Multi-step wizard: gender → age → height → weight   │
+│    → activity level → fitness goal                     │
+│  - Mifflin-St Jeor equation for BMR                   │
+│  - Activity multiplier for TDEE                        │
+│  - Goal adjustment: Lose (−500), Maintain, Gain (+300) │
+│  - Auto-calculates protein, carbs, fat targets         │
+│  - Saves results to your nutrition targets             │
+│                                                        │
+│  Route: /bmr-wizard                                    │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+```
+
+### Variable Nutrition Targets (Day Types)
+
+```
+┌─ VARIABLE NUTRITION TARGETS ──────────────────────────┐
+│                                                        │
+│  Different macro targets for different days.           │
+│                                                        │
+│  - 3 day types: Training, Rest, Default                │
+│  - Set separate calorie/protein/carb/fat targets each  │
+│  - Assign day types on the meal plan calendar          │
+│  - Food log compares against that day's targets        │
+│  - Settings page to manage all target profiles         │
+│                                                        │
+│  Route: /nutrition-settings                            │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+```
+
+### Nutrition Trends
+
+```
+┌─ NUTRITION TRENDS ────────────────────────────────────┐
+│                                                        │
+│  See your nutrition history over time.                 │
+│                                                        │
+│  - Line chart: daily calorie intake over weeks         │
+│  - Bar chart: protein / carbs / fat breakdown          │
+│  - Powered by ApexCharts (rendered in Vaadin)          │
+│  - Date range selection for custom periods             │
+│  - Visual comparison against your targets              │
+│                                                        │
+│  Route: /nutrition-history                             │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+```
+
+### Meal Plan Auto-Generation
+
+```
+┌─ MEAL PLAN AUTO-GENERATION ───────────────────────────┐
+│                                                        │
+│  Let the app fill your meal plan intelligently.        │
+│                                                        │
+│  - One-click auto-generate for a full week             │
+│  - Smart scoring: macro fit (40-55%) + category match  │
+│    (20%) + pantry preference (0-25%) + variety (15%)   │
+│  - Respects day-type nutrition targets                  │
+│  - Slot calorie distribution: Breakfast 25%,           │
+│    Lunch 30%, Dinner 30%, Snack 15%                    │
+│  - Option to keep existing meals or replace all        │
+│  - Prefers recipes you can make with pantry items      │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+```
+
+### Internationalization (i18n)
+
+```
+┌─ INTERNATIONALIZATION ────────────────────────────────┐
+│                                                        │
+│  Full app translation in two languages.                │
+│                                                        │
+│  - English (EN) — default                              │
+│  - Romanian (RO) — complete translation                │
+│  - Language preference saved per user                   │
+│  - All UI labels, messages, and notifications          │
+│    translated via resource bundles                      │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+```
+
 ### How Features Connect
 
 ```
-                    ┌──────────┐
-                    │ RECIPES  │
-                    └────┬─────┘
-                         │
-          ┌──────────────┼──────────────┐
-          │              │              │
-          ▼              ▼              ▼
-    ┌───────────┐  ┌──────────┐  ┌──────────────┐
-    │INGREDIENTS│  │MEAL PLAN │  │  FOOD LOG    │
-    └─────┬─────┘  └────┬─────┘  └──────────────┘
-          │              │              │
-          │              ▼              │ tracks against
-          │       ┌──────────────┐     ▼
-          │       │SHOPPING LIST │  ┌──────────────────┐
-          │       └──────┬───────┘  │NUTRITION TARGETS │
-          │              │          └──────────────────┘
-          │         subtracts
-          │              │
-          ▼              ▼
-    ┌──────────┐   ┌──────────┐
-    │  PANTRY  │───│RECOMMEND.│
-    └──────────┘   └──────────┘
-      matches ──────►
+                          ┌──────────┐
+                          │ RECIPES  │
+                          └────┬─────┘
+                               │
+            ┌──────────────────┼──────────────────┐
+            │                  │                  │
+            ▼                  ▼                  ▼
+      ┌───────────┐     ┌──────────┐       ┌──────────────┐
+      │INGREDIENTS│     │MEAL PLAN │       │  FOOD LOG    │
+      └─────┬─────┘     └────┬─────┘       └──────┬───────┘
+            │                 │                     │
+            │    ┌────────────┤              tracks against
+            │    │            │                     │
+            │    │  auto-     ▼                     ▼
+            │    │ generate  ┌──────────────┐  ┌──────────────────┐
+            │    │           │SHOPPING LIST │  │NUTRITION TARGETS │
+            │    │           └──────┬───────┘  └────────┬─────────┘
+            │    │            subtracts                  │
+            │    │                 │              set by │
+            ▼    ▼                 ▼                     ▼
+      ┌──────────┐          ┌──────────┐         ┌───────────┐
+      │  PANTRY  │──────────│RECOMMEND.│         │BMR WIZARD │
+      └──────────┘ matches  └──────────┘         └───────────┘
+
+      ┌────────────────────────────────────────────────────┐
+      │  OAUTH ──► USER ──► PROFILE ──► PASSWORD CHANGE    │
+      │                       │                             │
+      │                       ▼                             │
+      │               NUTRITION TRENDS                      │
+      │           (historical charts via Food Log)          │
+      └────────────────────────────────────────────────────┘
 ```
 
 > For complete API details on any feature, see `DOCUMENTATION.md` Sections 6-11.
@@ -367,6 +522,26 @@ http://localhost:8081
                                            └───────────────┘
 ```
 
+### Journey 4: "I want to set smart nutrition goals"
+
+```
+  Calculate BMR       Set day types        Track progress
+ ┌──────────┐      ┌──────────────┐     ┌──────────────────┐
+ │ Open     │      │ Go to        │     │ Log food daily   │
+ │ BMR      │─────►│ Nutrition    │────►│ in Food Log      │
+ │ Wizard   │      │ Settings     │     │                  │
+ │          │      │              │     │ See progress     │
+ │ Enter    │      │ Set Training │     │ bars vs targets  │
+ │ weight,  │      │ / Rest /     │     │                  │
+ │ height,  │      │ Default      │     │ Open Nutrition   │
+ │ activity │      │ targets      │     │ Trends for       │
+ │ & goal   │      │              │     │ weekly/monthly   │
+ └──────────┘      └──────────────┘     │ charts           │
+                                        └──────────────────┘
+  Mifflin-St Jeor    Different macros      ApexCharts line
+  equation            per day type          + bar charts
+```
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ## PROJECT MAP
@@ -376,38 +551,53 @@ recipe-book/
 │
 ├── backend/                        ← Quarkus backend (Java 21)
 │   └── src/main/java/com/recipebook/
-│       ├── entity/                 ← 9 database entities + enums
-│       ├── graphql/                ← 9 GraphQL resolver classes
-│       ├── service/                ← Business logic services
-│       ├── dto/                    ← Input/Response types (22)
-│       └── rest/                   ← Image upload REST endpoint
+│       ├── entity/                 ← 12 entities + 4 enums (16 files)
+│       ├── graphql/                ← 12 GraphQL resolvers + 12 inputs (24)
+│       ├── service/                ← 18 business logic services
+│       ├── dto/                    ← 27 response/request types
+│       ├── rest/                   ← Image upload + OAuth callback
+│       └── exception/              ← Custom exception hierarchy (5)
+│   └── src/main/resources/
+│       └── db/migration/           ← 8 Flyway SQL migrations
+│   └── src/test/                   ← 58 tests across 10 test classes
 │
 ├── frontend/                       ← Vaadin frontend (Spring Boot)
 │   └── src/main/
 │       ├── java/com/recipebook/
-│       │   ├── views/              ← Layout, Dashboard, Login, Register
-│       │   ├── recipe/             ← Recipe views + service
-│       │   ├── ingredient/         ← Ingredient views + service
-│       │   ├── mealplan/           ← Meal plan calendar + service
-│       │   ├── pantry/             ← Pantry management + service
-│       │   ├── shopping/           ← Shopping list + QR sharing
-│       │   ├── foodlog/            ← Food logging + nutrition
-│       │   ├── recommendation/     ← Recipe recommendations
-│       │   └── service/            ← ApiClient, AuthService
+│       │   ├── views/              ← Layout, Dashboard, Login, Register,
+│       │   │                         Profile, BMR Wizard, Settings,
+│       │   │                         OAuth, Forgot/Reset Password (11)
+│       │   ├── recipe/             ← Recipe views + service (8)
+│       │   ├── ingredient/         ← Ingredient views + service (4)
+│       │   ├── mealplan/           ← Meal plan calendar + service (5)
+│       │   ├── pantry/             ← Pantry management + service (4)
+│       │   ├── shopping/           ← Shopping list + QR sharing (6)
+│       │   ├── foodlog/            ← Food logging + nutrition (7)
+│       │   ├── recommendation/     ← Recipe recommendations (4)
+│       │   ├── nutritionhistory/   ← Nutrition trend charts (3)
+│       │   ├── service/            ← ApiClient, AuthService, BMR,
+│       │   │                         NutritionTarget, ErrorHandler (6)
+│       │   ├── dto/                ← Auth + BMR + OAuth DTOs (7)
+│       │   ├── ui/                 ← Shared components (MacroBar)
+│       │   └── i18n/               ← TranslationProvider (EN + RO)
+│       ├── resources/i18n/         ← messages.properties, messages_ro
 │       └── frontend/themes/
-│           └── recipe-book/        ← Dark theme (CSS)
+│           └── recipe-book/        ← Dark theme (9 CSS files)
 │
-├── docker-compose.yml              ← PostgreSQL + Adminer
+├── docker-compose.yml              ← PostgreSQL + Adminer (dev)
+├── docker-compose.prod.yml         ← Full stack + nginx (production)
+├── nginx/                          ← Reverse proxy + TLS certs
 ├── .env.example                    ← Environment template
-├── DOCUMENTATION.md                ← Full technical reference (2600 lines)
+├── DOCUMENTATION.md                ← Full technical reference
 └── GUIDE.md                        ← You are here!
 ```
 
 ```
-┌──────────────────────────────────────────────────────┐
-│  Backend: 69 Java files   │  Frontend: 52 Java files │
-│  Theme: 9 CSS files       │  Total: ~173 files       │
-└──────────────────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────┐
+│  Backend:  92 Java files  │  Frontend: 68 Java files  │
+│  Tests:    10 test files  │  Migrations: 8 SQL files  │
+│  Theme:     9 CSS files   │  Total: ~180+ files       │
+└───────────────────────────────────────────────────────┘
 ```
 
 > For the complete file inventory, see `DOCUMENTATION.md` Section 15.
@@ -419,24 +609,29 @@ recipe-book/
 ### Entity Relationships
 
 ```
-                       ┌──────────┐
-                       │   User   │
-                       └────┬─────┘
-        ┌────────┬──────┬───┴───┬──────────┬────────────┐
-        ▼        ▼      ▼       ▼          ▼            ▼
-    ┌────────┐ ┌────┐ ┌─────┐ ┌────────┐ ┌──────────┐ ┌────────┐
-    │ Recipe │ │Meal│ │Panty│ │Shopping│ │Nutrition │ │Food   │
-    │        │ │Plan│ │Item │ │List    │ │Target    │ │Log    │
-    └───┬────┘ └────┘ └──┬──┘ │Item    │ └──────────┘ └───┬────┘
-        │                │    └───┬────┘                   │
-        ▼                │        │                        │
-  ┌───────────┐          ▼        ▼                        ▼
-  │  Recipe   │    ┌────────────────────────────────────────┐
-  │ Ingredient│───►│              Ingredient                │
-  └───────────┘    └────────────────────────────────────────┘
+                           ┌──────────┐
+                           │   User   │
+                           └────┬─────┘
+    ┌────────┬──────┬───┬───┴───┬──────────┬───────────┬──────────┐
+    ▼        ▼      ▼   ▼       ▼          ▼           ▼          ▼
+┌────────┐┌────┐┌─────┐┌────────┐┌──────────┐┌────────┐┌─────────┐
+│ Recipe ││Meal││Panty││Shopping││Nutrition ││Food   ││UserDay │
+│        ││Plan││Item ││List   ││Target   ││Log    ││Type    │
+└───┬────┘└────┘└──┬──┘│Item   │└──────────┘└───┬────┘└─────────┘
+    │              │   └───┬────┘                │
+    ▼              │       │                     │
+┌───────────┐      ▼       ▼                     ▼
+│  Recipe   │┌────────────────────────────────────────┐
+│ Ingredient│►│             Ingredient                │
+└───────────┘└────────────────────────────────────────┘
 ```
 
-**9 tables total** — All user-specific data is scoped by `userId` for multi-user support.
+**12 tables total** — All user-specific data is scoped by `userId` for multi-user support.
+
+New entities since v1:
+- **FoodLog** — tracks what you eat (recipe, ingredient, or custom food)
+- **UserNutritionTarget** — per-day-type macro goals (Training / Rest / Default)
+- **UserDayType** — assigns a day type (Training/Rest) to a specific date
 
 ### Enums Quick Reference
 
@@ -456,7 +651,14 @@ recipe-book/
 │ MealSlot         │ BREAKFAST, LUNCH, DINNER, SNACK              │
 ├──────────────────┼──────────────────────────────────────────────┤
 │ FoodSourceType   │ RECIPE, INGREDIENT, CUSTOM                   │
+├──────────────────┼──────────────────────────────────────────────┤
+│ DayType          │ DEFAULT, TRAINING, REST                      │
 └──────────────────┴──────────────────────────────────────────────┘
+
+User entity also stores (as strings):
+  AuthProvider:  LOCAL, GOOGLE, GITHUB
+  ActivityLevel: SEDENTARY, LIGHTLY_ACTIVE, MODERATE, ACTIVE, VERY_ACTIVE
+  FitnessGoal:   LOSE, MAINTAIN, GAIN
 ```
 
 > For full column details on every table, see `DOCUMENTATION.md` Section 4.
@@ -537,7 +739,8 @@ Throughout the app, nutrition macros are consistently color-coded:
 │      psql -U recipebook_user recipebook < backup.sql          │
 │                                                                │
 │  TEST                                                         │
-│    cd tests && npx playwright test                            │
+│    cd backend && ./mvnw test         58 integration tests     │
+│    cd tests && npx playwright test   E2E browser tests        │
 └────────────────────────────────────────────────────────────────┘
 ```
 
@@ -577,8 +780,8 @@ Throughout the app, nutrition macros are consistently color-coded:
 │ Change business logic    │ backend/.../service/                 │
 │ Add a new page           │ frontend/.../views/ or feature pkg   │
 │ Change the theme         │ frontend/.../themes/recipe-book/     │
-│ Modify the DB schema     │ Just change the entity — Hibernate   │
-│                          │ auto-updates on restart              │
+│ Modify the DB schema     │ Add a Flyway migration in            │
+│                          │ backend/.../db/migration/            │
 │ Check environment vars   │ .env.example                         │
 │ Read the full docs       │ DOCUMENTATION.md                     │
 │ See the architecture     │ ARCHITECTURE.md                      │
@@ -592,12 +795,12 @@ Throughout the app, nutrition macros are consistently color-coded:
 
 Planned features that haven't been built yet:
 
-- **User profile editing** — change username, email, password
 - **Recipe sharing** — share recipes between users
 - **Meal plan templates** — save and reuse weekly plans
 - **Recipe scaling** — dynamically adjust servings and quantities
-- **Nutritional goal wizard** — BMR/TDEE calculator to set smart targets
 - **Mobile-responsive PWA** — optimized for phone screens
+- **Admin dashboard** — user management for admins
+- **Notification system** — expiry alerts, meal reminders
 
 > See `ROADMAP.md` for the full development roadmap.
 

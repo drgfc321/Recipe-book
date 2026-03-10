@@ -7,11 +7,26 @@ A full-stack recipe management and meal planning application with macronutrient 
 - **Recipe Management** — Create, edit, and delete recipes with ingredients, categories, difficulty levels, prep/cook times, and step-by-step instructions
 - **Ingredient Management** — Full CRUD for ingredients with per-100g macronutrient data (calories, protein, carbs, fat)
 - **Macronutrient Tracking** — Automatic macro calculation per recipe and per serving based on ingredient quantities
-- **Meal Planning** — Weekly calendar with 4 daily meal slots (Breakfast, Lunch, Dinner, Snack) and daily/weekly macro summaries
+- **Meal Planning** — Weekly calendar with 4 daily meal slots and daily/weekly macro summaries
+- **Meal Plan Auto-Generation** — Smart algorithm fills weekly slots based on macro targets, pantry, and variety scoring
+- **Food Log** — Daily nutrition tracker with progress bars vs personal targets (recipe, ingredient, or custom entries)
+- **BMR/TDEE Calculator** — Multi-step wizard (Mifflin-St Jeor) to set personalized calorie and macro targets
+- **Variable Nutrition Targets** — Different macro goals for Training / Rest / Default day types
+- **Nutrition Trends** — Historical line + bar charts (ApexCharts) for calories, protein, carbs, fat over time
 - **Shopping Lists** — Auto-generated from meal plans, aggregated by category, with pantry subtraction and progress tracking
 - **Pantry Management** — Track available ingredients with quantities and expiration dates
 - **Recipe Recommendations** — Ranked by pantry match percentage with missing ingredient details
-- **Authentication** — JWT-based user registration and login
+- **Recipe Import** — Bulk import from JSON files with Romanian nutrition data lookup; PDF image extraction
+- **OAuth Login** — Sign in with Google or GitHub; auto-creates account and links by email
+- **User Profile** — Edit username, email, upload avatar image
+- **Password Change & Reset** — In-app password change + email-based forgot/reset password flow
+- **Authentication** — JWT-based (RSA256, 24h) with user registration and login
+- **Internationalization** — Full EN + RO translations throughout the app
+- **58 Integration Tests** — GraphQL tests with real PostgreSQL via Quarkus Dev Services
+- **Flyway Migrations** — 8 versioned SQL migrations (replaced Hibernate auto-DDL)
+- **Caffeine Caching** — On recipes, ingredients, meal plans, and recommendations
+- **HTTPS / nginx** — Production reverse proxy with TLS termination
+- **Health Checks** — Docker HEALTHCHECK on all services (PostgreSQL, backend, frontend, nginx)
 
 ## Tech Stack
 
@@ -82,18 +97,33 @@ recipe-book/
 ├── .env.example                # Environment variable template
 ├── nginx/                      # Nginx reverse proxy config + certs
 ├── scripts/                    # Utility scripts (cert generation)
-├── backend/                    # Quarkus GraphQL API
+├── backend/                    # Quarkus GraphQL API (92 Java files)
 │   └── src/main/java/com/recipebook/
-│       ├── entity/             # JPA entities (Recipe, Ingredient, MealPlan, etc.)
-│       ├── graphql/            # GraphQL resolvers and input types
-│       ├── service/            # Business logic and data seeding
-│       └── dto/                # Response/request DTOs
-├── frontend/                   # Vaadin UI
+│       ├── entity/             # 12 entities + 4 enums
+│       ├── graphql/            # 12 resolvers + 12 input types
+│       ├── service/            # 18 business logic services
+│       ├── dto/                # 27 response/request DTOs
+│       ├── rest/               # Image upload + OAuth callback
+│       └── exception/          # Custom exception hierarchy
+│   └── src/main/resources/
+│       └── db/migration/       # 8 Flyway SQL migrations
+│   └── src/test/               # 58 integration tests (10 classes)
+├── frontend/                   # Vaadin UI (68 Java files)
 │   └── src/main/java/com/recipebook/
-│       ├── views/              # MainLayout, Dashboard, Login, Register
+│       ├── views/              # MainLayout, Dashboard, Login, Register,
+│       │                       # Profile, BMR Wizard, Settings, OAuth,
+│       │                       # Forgot/Reset Password
 │       ├── recipe/             # Recipe list, detail, and form views
 │       ├── ingredient/         # Ingredient list and form views
-│       └── service/            # ApiClient, AuthService
+│       ├── mealplan/           # Meal plan calendar + auto-generate
+│       ├── pantry/             # Pantry management
+│       ├── shopping/           # Shopping list + QR sharing
+│       ├── foodlog/            # Food logging + nutrition tracking
+│       ├── recommendation/     # Recipe recommendations
+│       ├── nutritionhistory/   # Nutrition trend charts (ApexCharts)
+│       ├── service/            # ApiClient, AuthService, BMR, etc.
+│       ├── i18n/               # TranslationProvider (EN + RO)
+│       └── dto/                # Auth + BMR + OAuth DTOs
 └── tests/                      # Playwright E2E tests
 ```
 
