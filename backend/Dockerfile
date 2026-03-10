@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jdk AS build
+FROM eclipse-temurin:25-jdk AS build
 
 WORKDIR /app
 COPY . .
@@ -7,7 +7,7 @@ RUN chmod +x mvnw
 RUN --mount=type=cache,target=/root/.m2 \
     ./mvnw clean package -DskipTests
 
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:25-jre-alpine
 
 RUN apk add --no-cache curl
 RUN mkdir -p /deployments/uploads/images
