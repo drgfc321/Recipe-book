@@ -86,7 +86,7 @@ public class RecipeListView extends VerticalLayout {
         return toolbar;
     }
 
-    private HorizontalLayout createFilters() {
+    private FlexLayout createFilters() {
         categoryFilter.setItems("BREAKFAST", "LUNCH", "DINNER", "DESSERT", "SNACK", "OTHER");
         categoryFilter.setPlaceholder("All");
         categoryFilter.setClearButtonVisible(true);
@@ -128,8 +128,11 @@ public class RecipeListView extends VerticalLayout {
             if (!suppressIngredientListener) refreshCards();
         });
 
-        HorizontalLayout filters = new HorizontalLayout(categoryFilter, difficultyFilter, searchField, ingredientFilter);
-        filters.setAlignItems(FlexComponent.Alignment.BASELINE);
+        FlexLayout filters = new FlexLayout(categoryFilter, difficultyFilter, searchField, ingredientFilter);
+        filters.setFlexWrap(FlexLayout.FlexWrap.WRAP);
+        filters.getStyle()
+                .set("gap", "var(--lumo-space-s)")
+                .set("align-items", "baseline");
         filters.setWidthFull();
         return filters;
     }
@@ -144,14 +147,17 @@ public class RecipeListView extends VerticalLayout {
 
     private VerticalLayout createRecipeCard(RecipeResponse recipe) {
         VerticalLayout card = new VerticalLayout();
-        card.setPadding(true);
+        card.setPadding(false);
         card.setSpacing(false);
+        card.getThemeList().clear();
         card.addClassName("recipe-list-card");
         card.getStyle()
                 .set("flex", "1 1 280px")
-                .set("max-width", "380px");
+                .set("max-width", "380px")
+                .set("overflow", "hidden")
+                .set("padding", "0");
 
-        // Image or placeholder
+        // Image or placeholder — full width, no padding
         if (recipe.imageUrl() != null && !recipe.imageUrl().isBlank()) {
             String imgSrc = recipe.imageUrl();
             Image img = new Image(imgSrc, recipe.name());
@@ -167,6 +173,10 @@ public class RecipeListView extends VerticalLayout {
             card.add(placeholder);
         }
 
+        // Content wrapper with padding
+        Div content = new Div();
+        content.addClassName("recipe-list-card-content");
+
         // Category badge overlay
         if (recipe.category() != null) {
             Span catBadge = new Span(recipe.category());
@@ -175,13 +185,13 @@ public class RecipeListView extends VerticalLayout {
                     .set("background-color", "var(--lumo-primary-color)")
                     .set("color", "white")
                     .set("margin-top", "var(--lumo-space-s)");
-            card.add(catBadge);
+            content.add(catBadge);
         }
 
         // Recipe name
         H3 name = new H3(recipe.name());
         name.getStyle().set("margin", "var(--lumo-space-xs) 0 0 0");
-        card.add(name);
+        content.add(name);
 
         // Owner
         if (recipe.ownerUsername() != null) {
@@ -189,7 +199,7 @@ public class RecipeListView extends VerticalLayout {
             owner.getStyle()
                     .set("color", "var(--lumo-secondary-text-color)")
                     .set("font-size", "var(--lumo-font-size-s)");
-            card.add(owner);
+            content.add(owner);
         }
 
         // Difficulty + Time + Servings row
@@ -237,14 +247,16 @@ public class RecipeListView extends VerticalLayout {
             infoRow.add(servingsSpan);
         }
 
-        card.add(infoRow);
+        content.add(infoRow);
 
         // Macro bar
         if (recipe.perServingMacros() != null) {
             MacroBar macroBar = new MacroBar(recipe.perServingMacros());
             macroBar.getStyle().set("margin-top", "var(--lumo-space-s)");
-            card.add(macroBar);
+            content.add(macroBar);
         }
+
+        card.add(content);
 
         // Click navigation
         card.addClickListener(e -> UI.getCurrent().navigate("recipes/" + recipe.id()));

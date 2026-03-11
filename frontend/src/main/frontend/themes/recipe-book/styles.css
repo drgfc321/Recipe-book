@@ -298,20 +298,20 @@ html {
     width: 100%;
     height: 180px;
     object-fit: cover;
-    border-radius: var(--lumo-border-radius-l) var(--lumo-border-radius-l) 0 0;
-    margin: calc(var(--lumo-space-m) * -1) calc(var(--lumo-space-m) * -1) 0 calc(var(--lumo-space-m) * -1);
     display: block;
 }
 
 .recipe-list-card-img-placeholder {
-    width: calc(100% + var(--lumo-space-m) * 2);
+    width: 100%;
     height: 180px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--lumo-contrast-5pct);
-    border-radius: var(--lumo-border-radius-l) var(--lumo-border-radius-l) 0 0;
-    margin: calc(var(--lumo-space-m) * -1) calc(var(--lumo-space-m) * -1) 0 calc(var(--lumo-space-m) * -1);
+}
+
+.recipe-list-card-content {
+    padding: var(--lumo-space-m);
 }
 
 /* ===== Dashboard Stat Cards ===== */

@@ -18,6 +18,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -552,9 +553,10 @@ public class FoodLogView extends VerticalLayout {
         servingsField.setStep(0.5);
         servingsField.setWidthFull();
 
-        HorizontalLayout controls = new HorizontalLayout(slotCombo, servingsField);
+        FlexLayout controls = new FlexLayout(slotCombo, servingsField);
         controls.setWidthFull();
-        controls.setSpacing(true);
+        controls.setFlexWrap(FlexLayout.FlexWrap.WRAP);
+        controls.getStyle().set("gap", "var(--lumo-space-s)");
 
         // Toggle buttons: Recipe / Ingredient / Custom
         Button recipeBtn = new Button("Recipe");

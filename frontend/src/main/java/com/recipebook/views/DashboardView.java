@@ -338,23 +338,23 @@ public class DashboardView extends VerticalLayout {
 
     private VerticalLayout createRecipeCard(RecipeResponse recipe) {
         VerticalLayout card = new VerticalLayout();
-        card.setPadding(true);
+        card.setPadding(false);
         card.setSpacing(false);
+        card.getThemeList().clear();
         card.addClassName("recipe-list-card");
         card.getStyle()
                 .set("flex", "1 1 280px")
                 .set("max-width", "380px")
-                .set("cursor", "pointer");
+                .set("cursor", "pointer")
+                .set("overflow", "hidden")
+                .set("padding", "0");
 
-        // Image or placeholder
+        // Image or placeholder — full width, no margin hacks
         if (recipe.imageUrl() != null && !recipe.imageUrl().isBlank()) {
             String imgSrc = recipe.imageUrl();
             Image img = new Image(imgSrc, recipe.name());
-            img.setWidthFull();
+            img.addClassName("recipe-list-card-img");
             img.setHeight("160px");
-            img.getStyle().set("object-fit", "cover")
-                    .set("border-radius", "var(--lumo-border-radius-l) var(--lumo-border-radius-l) 0 0")
-                    .set("margin", "calc(var(--lumo-space-m) * -1) calc(var(--lumo-space-m) * -1) 0 calc(var(--lumo-space-m) * -1)");
             card.add(img);
         } else {
             Div placeholder = new Div();
@@ -362,24 +362,21 @@ public class DashboardView extends VerticalLayout {
             icon.setSize("48px");
             icon.setColor("var(--lumo-contrast-30pct)");
             placeholder.add(icon);
-            placeholder.getStyle()
-                    .set("width", "100%")
-                    .set("height", "160px")
-                    .set("display", "flex")
-                    .set("align-items", "center")
-                    .set("justify-content", "center")
-                    .set("background", "var(--lumo-contrast-5pct)")
-                    .set("border-radius", "var(--lumo-border-radius-l) var(--lumo-border-radius-l) 0 0")
-                    .set("margin", "calc(var(--lumo-space-m) * -1) calc(var(--lumo-space-m) * -1) 0 calc(var(--lumo-space-m) * -1)");
+            placeholder.addClassName("recipe-list-card-img-placeholder");
+            placeholder.getStyle().set("height", "160px");
             card.add(placeholder);
         }
+
+        // Content wrapper with padding
+        Div content = new Div();
+        content.addClassName("recipe-list-card-content");
 
         // Name
         Span name = new Span(recipe.name());
         name.getStyle().set("font-weight", "600")
                 .set("font-size", "var(--lumo-font-size-l)")
                 .set("margin-top", "var(--lumo-space-s)");
-        card.add(name);
+        content.add(name);
 
         // Category + Difficulty badges
         HorizontalLayout badges = new HorizontalLayout();
@@ -399,7 +396,7 @@ public class DashboardView extends VerticalLayout {
             diffBadge.getStyle().set("background-color", getDifficultyColor(recipe.difficulty())).set("color", "white");
             badges.add(diffBadge);
         }
-        card.add(badges);
+        content.add(badges);
 
         // Time + calories info
         int totalTime = recipe.prepTime() + recipe.cookTime();
@@ -416,15 +413,16 @@ public class DashboardView extends VerticalLayout {
                     .set("color", "var(--lumo-secondary-text-color)")
                     .set("font-size", "var(--lumo-font-size-s)")
                     .set("margin-top", "var(--lumo-space-xs)");
-            card.add(infoSpan);
+            content.add(infoSpan);
         }
 
+        card.add(content);
         card.addClickListener(e -> UI.getCurrent().navigate("recipes/" + recipe.id()));
 
         return card;
     }
 
-    private HorizontalLayout createQuickActions() {
+    private VerticalLayout createQuickActions() {
         H3 title = new H3("Quick Actions");
         title.getStyle().set("margin-bottom", "0");
 
@@ -448,16 +446,17 @@ public class DashboardView extends VerticalLayout {
                 e -> UI.getCurrent().navigate("shopping-list"));
         shoppingList.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
 
-        HorizontalLayout buttons = new HorizontalLayout(newRecipe, browseIngredients, mealPlanner, pantry, shoppingList);
-        buttons.setSpacing(true);
+        FlexLayout buttons = new FlexLayout(newRecipe, browseIngredients, mealPlanner, pantry, shoppingList);
+        buttons.setFlexWrap(FlexLayout.FlexWrap.WRAP);
+        buttons.getStyle().set("gap", "var(--lumo-space-s)");
+        buttons.setWidthFull();
 
         VerticalLayout section = new VerticalLayout(title, buttons);
         section.setPadding(false);
         section.setSpacing(true);
+        section.setWidthFull();
 
-        HorizontalLayout wrapper = new HorizontalLayout(section);
-        wrapper.setWidthFull();
-        return wrapper;
+        return section;
     }
 
     private String getDifficultyColor(String difficulty) {

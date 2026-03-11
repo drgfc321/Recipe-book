@@ -13,6 +13,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -39,6 +40,7 @@ public class IngredientListView extends VerticalLayout {
         setPadding(true);
         setSpacing(true);
         setSizeFull();
+        getStyle().set("overflow-x", "hidden");
 
         add(createToolbar());
         add(createFilters());
@@ -67,7 +69,7 @@ public class IngredientListView extends VerticalLayout {
         return toolbar;
     }
 
-    private HorizontalLayout createFilters() {
+    private FlexLayout createFilters() {
         categoryFilter.setItems("DAIRY", "MEAT", "VEGETABLES", "FRUITS", "GRAINS", "SPICES", "OILS", "BEVERAGES", "OTHER");
         categoryFilter.setPlaceholder("All");
         categoryFilter.setClearButtonVisible(true);
@@ -79,8 +81,12 @@ public class IngredientListView extends VerticalLayout {
         searchField.setValueChangeMode(ValueChangeMode.LAZY);
         searchField.addValueChangeListener(e -> refreshGrid());
 
-        HorizontalLayout filters = new HorizontalLayout(categoryFilter, searchField);
-        filters.setAlignItems(FlexComponent.Alignment.BASELINE);
+        FlexLayout filters = new FlexLayout(categoryFilter, searchField);
+        filters.setFlexWrap(FlexLayout.FlexWrap.WRAP);
+        filters.getStyle()
+                .set("gap", "var(--lumo-space-s)")
+                .set("align-items", "baseline");
+        filters.setWidthFull();
         return filters;
     }
 
