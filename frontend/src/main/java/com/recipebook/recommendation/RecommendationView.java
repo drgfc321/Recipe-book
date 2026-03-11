@@ -70,7 +70,7 @@ public class RecommendationView extends VerticalLayout {
         return header;
     }
 
-    private HorizontalLayout createFilters() {
+    private FlexLayout createFilters() {
         categoryFilter.setItems("BREAKFAST", "LUNCH", "DINNER", "DESSERT", "SNACK", "OTHER");
         categoryFilter.setPlaceholder("All");
         categoryFilter.setClearButtonVisible(true);
@@ -86,8 +86,12 @@ public class RecommendationView extends VerticalLayout {
         maxMissingFilter.setClearButtonVisible(true);
         maxMissingFilter.addValueChangeListener(e -> refreshRecommendations());
 
-        HorizontalLayout filters = new HorizontalLayout(categoryFilter, difficultyFilter, maxMissingFilter);
-        filters.setAlignItems(FlexComponent.Alignment.BASELINE);
+        FlexLayout filters = new FlexLayout(categoryFilter, difficultyFilter, maxMissingFilter);
+        filters.setFlexWrap(FlexLayout.FlexWrap.WRAP);
+        filters.getStyle()
+                .set("gap", "var(--lumo-space-s)")
+                .set("align-items", "baseline");
+        filters.setWidthFull();
         return filters;
     }
 

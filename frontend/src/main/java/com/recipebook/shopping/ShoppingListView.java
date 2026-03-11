@@ -21,6 +21,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
@@ -141,7 +142,7 @@ public class ShoppingListView extends VerticalLayout {
         return section;
     }
 
-    private HorizontalLayout createActionButtons() {
+    private FlexLayout createActionButtons() {
         Button generateBtn = new Button("Generate from Meal Plan", VaadinIcon.MAGIC.create(), e -> generateList());
         generateBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
@@ -151,8 +152,9 @@ public class ShoppingListView extends VerticalLayout {
         Button clearBtn = new Button("Clear List", VaadinIcon.TRASH.create(), e -> confirmClear());
         clearBtn.addThemeVariants(ButtonVariant.LUMO_ERROR, ButtonVariant.LUMO_TERTIARY);
 
-        HorizontalLayout actions = new HorizontalLayout(generateBtn, qrBtn, clearBtn);
-        actions.setSpacing(true);
+        FlexLayout actions = new FlexLayout(generateBtn, qrBtn, clearBtn);
+        actions.setFlexWrap(FlexLayout.FlexWrap.WRAP);
+        actions.getStyle().set("gap", "var(--lumo-space-s)");
         return actions;
     }
 
