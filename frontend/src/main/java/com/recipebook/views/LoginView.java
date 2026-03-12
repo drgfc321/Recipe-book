@@ -92,13 +92,13 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         divider.add(dividerText);
         formLayout.add(divider);
 
-        Anchor googleBtn = new Anchor(apiClient.getBackendUrl() + "/api/auth/google",
+        Anchor googleBtn = new Anchor("/api/auth/google",
                 getTranslation("oauth.google", "Sign in with Google"));
         googleBtn.addClassNames("oauth-btn", "oauth-btn-google");
         googleBtn.setWidthFull();
         formLayout.add(googleBtn);
 
-        Anchor githubBtn = new Anchor(apiClient.getBackendUrl() + "/api/auth/github",
+        Anchor githubBtn = new Anchor("/api/auth/github",
                 getTranslation("oauth.github", "Sign in with GitHub"));
         githubBtn.addClassNames("oauth-btn", "oauth-btn-github");
         githubBtn.setWidthFull();
