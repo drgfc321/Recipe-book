@@ -812,3 +812,20 @@ vaadin-button.toggle-inactive:hover {
     width: 100%;
     box-sizing: border-box;
 }
+
+/* ===== Mobile Header Compact ===== */
+
+@media (max-width: 480px) {
+    .role-badge {
+        display: none;
+    }
+    .username-btn {
+        max-width: 90px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .header-user-section {
+        gap: var(--lumo-space-xs) !important;
+    }
+}

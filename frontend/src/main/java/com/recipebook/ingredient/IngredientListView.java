@@ -40,7 +40,7 @@ public class IngredientListView extends VerticalLayout {
         setPadding(true);
         setSpacing(true);
         setSizeFull();
-        getStyle().set("overflow-x", "hidden");
+        getStyle().set("overflow-x", "auto");
 
         add(createToolbar());
         add(createFilters());
@@ -96,7 +96,7 @@ public class IngredientListView extends VerticalLayout {
             Span name = new Span(ingredient.name());
             name.getStyle().set("font-weight", "600");
             return name;
-        }).setHeader("Name").setSortable(true).setFlexGrow(2);
+        }).setHeader("Name").setSortable(true).setFlexGrow(2).setAutoWidth(true);
 
         // Category column — colored badge
         grid.addComponentColumn(ingredient -> {
@@ -106,7 +106,7 @@ public class IngredientListView extends VerticalLayout {
                     .set("background-color", getCategoryColor(ingredient.category()))
                     .set("color", "white");
             return badge;
-        }).setHeader("Category").setSortable(true);
+        }).setHeader("Category").setSortable(true).setAutoWidth(true);
 
         // Calories column — badge
         grid.addComponentColumn(ingredient -> {
@@ -114,7 +114,7 @@ public class IngredientListView extends VerticalLayout {
             badge.getElement().getThemeList().add("badge small");
             badge.addClassNames("macro-badge", "calories");
             return badge;
-        }).setHeader("Calories/100g").setSortable(true);
+        }).setHeader("Calories/100g").setSortable(true).setAutoWidth(true);
 
         // Protein column — badge
         grid.addComponentColumn(ingredient -> {
@@ -122,7 +122,7 @@ public class IngredientListView extends VerticalLayout {
             badge.getElement().getThemeList().add("badge small");
             badge.addClassNames("macro-badge", "protein");
             return badge;
-        }).setHeader("Protein/100g").setSortable(true);
+        }).setHeader("Protein/100g").setSortable(true).setAutoWidth(true);
 
         // Carbs column — badge
         grid.addComponentColumn(ingredient -> {
@@ -130,7 +130,7 @@ public class IngredientListView extends VerticalLayout {
             badge.getElement().getThemeList().add("badge small");
             badge.addClassNames("macro-badge", "carbs");
             return badge;
-        }).setHeader("Carbs/100g").setSortable(true);
+        }).setHeader("Carbs/100g").setSortable(true).setAutoWidth(true);
 
         // Fat column — badge
         grid.addComponentColumn(ingredient -> {
@@ -138,7 +138,7 @@ public class IngredientListView extends VerticalLayout {
             badge.getElement().getThemeList().add("badge small");
             badge.addClassNames("macro-badge", "fat");
             return badge;
-        }).setHeader("Fat/100g").setSortable(true);
+        }).setHeader("Fat/100g").setSortable(true).setAutoWidth(true);
 
         if (authService.isLoggedIn()) {
             grid.addComponentColumn(ingredient -> {

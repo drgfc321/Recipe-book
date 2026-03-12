@@ -138,16 +138,19 @@ public class RecipeDetailView extends VerticalLayout implements HasUrlParameter<
         // --- Ingredients ---
         if (recipe.ingredients() != null && !recipe.ingredients().isEmpty()) {
             Grid<RecipeIngredientResponse> ingredientGrid = new Grid<>(RecipeIngredientResponse.class, false);
-            ingredientGrid.addColumn(RecipeIngredientResponse::ingredientName).setHeader("Ingredient").setFlexGrow(2);
-            ingredientGrid.addColumn(r -> r.quantity() + " " + r.unit()).setHeader("Amount");
-            ingredientGrid.addColumn(RecipeIngredientResponse::ingredientCategory).setHeader("Category");
+            ingredientGrid.addColumn(RecipeIngredientResponse::ingredientName).setHeader("Ingredient").setFlexGrow(2).setAutoWidth(true);
+            ingredientGrid.addColumn(r -> r.quantity() + " " + r.unit()).setHeader("Amount").setAutoWidth(true);
+            ingredientGrid.addColumn(RecipeIngredientResponse::ingredientCategory).setHeader("Category").setAutoWidth(true);
             ingredientGrid.addColumn(r -> {
                 MacroInfo m = r.macros();
                 return m != null ? "%.0f kcal".formatted(m.calories()) : "";
-            }).setHeader("Calories");
+            }).setHeader("Calories").setAutoWidth(true);
             ingredientGrid.setItems(recipe.ingredients());
             ingredientGrid.setAllRowsVisible(true);
-            card.add(createSection("Ingredients", ingredientGrid));
+            Div gridWrapper = new Div(ingredientGrid);
+            gridWrapper.setWidthFull();
+            gridWrapper.getStyle().set("overflow-x", "auto");
+            card.add(createSection("Ingredients", gridWrapper));
         }
 
         // --- Total Macros ---

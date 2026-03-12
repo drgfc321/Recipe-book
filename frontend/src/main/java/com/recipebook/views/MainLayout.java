@@ -42,12 +42,17 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
         logo.getStyle()
                 .set("font-size", "var(--lumo-font-size-l)")
                 .set("margin", "0")
-                .set("padding-left", "var(--lumo-space-m)");
+                .set("padding-left", "var(--lumo-space-m)")
+                .set("white-space", "nowrap");
 
         // User info and logout button
         HorizontalLayout userSection = new HorizontalLayout();
         userSection.setAlignItems(FlexComponent.Alignment.CENTER);
         userSection.setSpacing(true);
+        userSection.addClassName("header-user-section");
+        userSection.getStyle()
+                .set("flex-shrink", "1")
+                .set("min-width", "0");
 
         authService.getCurrentUser().ifPresent(user -> {
             if (user.avatarUrl() != null && !user.avatarUrl().isBlank()) {
@@ -63,9 +68,11 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
             Button usernameBtn = new Button(user.username(), e ->
                     e.getSource().getUI().ifPresent(ui -> ui.navigate(ProfileView.class)));
             usernameBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+            usernameBtn.addClassName("username-btn");
             usernameBtn.getStyle().set("font-weight", "500");
 
             Span role = new Span("(" + user.role() + ")");
+            role.addClassName("role-badge");
             role.getStyle()
                     .set("font-size", "var(--lumo-font-size-s)")
                     .set("color", "var(--lumo-secondary-text-color)");
@@ -73,8 +80,9 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
             userSection.add(usernameBtn, role);
         });
 
-        Button logoutButton = new Button("Logout", new Icon(VaadinIcon.SIGN_OUT), e -> logout());
+        Button logoutButton = new Button(new Icon(VaadinIcon.SIGN_OUT), e -> logout());
         logoutButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        logoutButton.getElement().setAttribute("title", "Logout");
         userSection.add(logoutButton);
 
         HorizontalLayout header = new HorizontalLayout(new DrawerToggle(), logo, userSection);
@@ -82,6 +90,7 @@ public class MainLayout extends AppLayout implements BeforeEnterObserver {
         header.expand(logo);
         header.setWidthFull();
         header.setPadding(true);
+        header.getStyle().set("overflow", "hidden");
 
         addToNavbar(header);
     }
