@@ -106,10 +106,13 @@ public class DashboardView extends VerticalLayout {
                 .set("width", "100%")
                 .set("box-sizing", "border-box");
 
-        HorizontalLayout titleRow = new HorizontalLayout();
+        FlexLayout titleRow = new FlexLayout();
         titleRow.setWidthFull();
-        titleRow.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
+        titleRow.setFlexWrap(FlexLayout.FlexWrap.WRAP);
         titleRow.setAlignItems(FlexComponent.Alignment.CENTER);
+        titleRow.getStyle()
+                .set("justify-content", "space-between")
+                .set("gap", "var(--lumo-space-s)");
 
         H3 title = new H3("Today's Nutrition");
         title.getStyle().set("margin", "0");
