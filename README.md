@@ -2,6 +2,8 @@
 
 A full-stack recipe management and meal planning application with macronutrient tracking, pantry management, shopping lists, and smart recipe recommendations.
 
+> **Development note:** Built with AI-assisted development (Claude Code). Architecture, technology selection, data modelling, and code review were my own — including decisions such as replacing Hibernate auto-DDL with versioned Flyway migrations, choosing GraphQL over REST for the API layer, and the design of the meal-plan generation algorithm. See [ARCHITECTURE.md](ARCHITECTURE.md) for the reasoning behind the main technical choices.
+
 ## Features
 
 - **Recipe Management** — Create, edit, and delete recipes with ingredients, categories, difficulty levels, prep/cook times, and step-by-step instructions
@@ -49,8 +51,8 @@ A full-stack recipe management and meal planning application with macronutrient 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/drgfc321/Recipe-book-.git
-   cd Recipe-book-
+   git clone https://github.com/drgfc321/Recipe-book.git
+   cd Recipe-book
    ```
 
 2. **Set up environment variables**
@@ -61,7 +63,7 @@ A full-stack recipe management and meal planning application with macronutrient 
 
 3. **Start the database**
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 4. **Start the backend** (Terminal 1)
@@ -80,13 +82,13 @@ A full-stack recipe management and meal planning application with macronutrient 
 
 ## Access Points
 
-| Service    | URL                    | Credentials                          |
-|------------|------------------------|--------------------------------------|
-| Frontend   | http://localhost:8081   | Register a new account               |
-| Backend    | http://localhost:8080   | GraphQL API                          |
-| GraphQL UI | http://localhost:8080/q/graphql-ui | Interactive GraphQL explorer |
-| Adminer    | http://localhost:8082   | Server: postgres, User: recipebook_user, Password: recipebook_secret, DB: recipebook |
-| PostgreSQL | localhost:5432         | (same credentials as above)          |
+| Service    | URL                                | Credentials                                  |
+|------------|------------------------------------|----------------------------------------------|
+| Frontend   | http://localhost:8081              | Register a new account                       |
+| Backend    | http://localhost:8080              | GraphQL API                                  |
+| GraphQL UI | http://localhost:8080/q/graphql-ui | Interactive GraphQL explorer                 |
+| Adminer    | http://localhost:8082              | Credentials from `.env` (see `.env.example`) |
+| PostgreSQL | localhost:5432                     | Credentials from `.env` (see `.env.example`) |
 
 ## Project Structure
 
@@ -124,7 +126,7 @@ recipe-book/
 │       ├── service/            # ApiClient, AuthService, BMR, etc.
 │       ├── i18n/               # TranslationProvider (EN + RO)
 │       └── dto/                # Auth + BMR + OAuth DTOs
-└── tests/                      # Playwright E2E tests
+└── e2e/                        # Playwright E2E tests
 ```
 
 ## Production Deployment (Docker + HTTPS)
@@ -153,10 +155,10 @@ The production stack runs all services behind an nginx reverse proxy with TLS te
 
 4. **Access** at [https://localhost](https://localhost) (accept the self-signed certificate warning)
 
-| Service  | URL                          |
-|----------|------------------------------|
-| App      | https://localhost             |
-| GraphQL  | https://localhost/graphql     |
+| Service    | URL                            |
+|------------|--------------------------------|
+| App        | https://localhost              |
+| GraphQL    | https://localhost/graphql      |
 | GraphQL UI | https://localhost/q/graphql-ui |
 
 ## Docker Commands
