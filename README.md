@@ -2,7 +2,7 @@
 
 A full-stack recipe management and meal planning application with macronutrient tracking, pantry management, shopping lists, and smart recipe recommendations.
 
-> **Development note:** Built with AI-assisted development (Claude Code). Architecture, technology selection, data modelling, and code review were my own — including decisions such as replacing Hibernate auto-DDL with versioned Flyway migrations, choosing GraphQL over REST for the API layer, and the design of the meal-plan generation algorithm. See [ARCHITECTURE.md](ARCHITECTURE.md) for the reasoning behind the main technical choices.
+> **Development note:** Built with AI-assisted development (Claude Code). I directed the project end to end — scope, feature design, application logic, testing and debugging — and made the technical decisions, consulting the tooling on implementation approaches and evaluating its proposals rather than writing the code line by line. The stack (Quarkus + Vaadin) was chosen deliberately as an unfamiliar ecosystem to learn. See [ARCHITECTURE.md](ARCHITECTURE.md) for how the system is put together.
 
 ## Features
 
